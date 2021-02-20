@@ -1,0 +1,52 @@
+stages:
+  - build
+  - test
+  - deploy
+
+default:
+  tags:
+    - dalfcs_gitlab_docker_ci
+
+buildProject:
+  stage: build
+  image: gradle
+  script:
+    - ./gradlew --no-daemon assemble
+
+testProject:
+  stage: test
+  image: gradle
+  script:
+    - ./gradlew --no-daemon test
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+
+deployStaging:
+  stage: deploy
+  image: ruby:latest
+  when: on_success
+  only:
+    - refs:
+      - develop
+  before_script:
+    - apt-get -qy update
+    - apt-get install -qy ruby-dev
+    - gem install dpl
+  script:
+    - dpl --cleanup --provider=heroku --api_key=$HEROKU_API_KEY --app=$HEROKU_STAGING_APP_NAME
+
+deployProduction:
+  stage: deploy
+  image: ruby:latest
+  only:
+    - refs:
+      - master
+  when: on_success
+  before_script:
+    - apt-get -qy update
+    - apt-get install -qy ruby-dev
+    - gem install dpl
+  script:
+    - dpl --cleanup --provider=heroku --api_key=$HEROKU_API_KEY --app=$HEROKU_PROD_APP_NAME
