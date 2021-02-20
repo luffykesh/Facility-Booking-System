@@ -28,7 +28,7 @@ deployStaging:
   image: ruby:latest
   when: on_success
   only:
-    - refs:
+    refs:
       - develop
   before_script:
     - apt-get -qy update
@@ -41,7 +41,7 @@ deployProduction:
   stage: deploy
   image: ruby:latest
   only:
-    - refs:
+    refs:
       - master
   when: on_success
   before_script:
