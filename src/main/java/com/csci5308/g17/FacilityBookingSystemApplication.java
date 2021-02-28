@@ -13,19 +13,9 @@ import org.springframework.stereotype.Controller;
 @SpringBootApplication(exclude={SecurityAutoConfiguration.class})
 @Controller
 public class FacilityBookingSystemApplication{
-	private JdbcTemplate template;
 
-	public FacilityBookingSystemApplication(JdbcTemplate template){
-		this.template = template;
-
-	}
 	public static void main(String[] args){
-
 		SpringApplication.run(FacilityBookingSystemApplication.class, args);
-	}
-	@EventListener(ApplicationReadyEvent.class)
-	public void doSomethingAfterStartup() {
-		this.template.execute("show tables");
 	}
 
 }
