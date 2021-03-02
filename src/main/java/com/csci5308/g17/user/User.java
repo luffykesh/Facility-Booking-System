@@ -1,4 +1,4 @@
-package com.csci5308.g17.model;
+package com.csci5308.g17.user;
 
 public class User {
     Integer id;

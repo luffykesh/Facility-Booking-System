@@ -1,9 +1,8 @@
-package com.csci5308.g17.repository;
+package com.csci5308.g17.user;
 
 import java.util.Optional;
 
-import com.csci5308.g17.model.User;
-
+import com.csci5308.g17.repository.CrudRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ public class UserRepository implements CrudRepository<User, Integer> {
 
 	@Override
 	public long count() {
-		Long count = this.db.queryForObject(this.COUNT_QUERY, Long.class);
+		Long count = this.db.queryForObject(UserRepository.COUNT_QUERY, Long.class);
 		return count;
 	}
 

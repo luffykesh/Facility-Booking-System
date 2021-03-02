@@ -1,6 +1,6 @@
-package com.csci5308.g17.service;
+package com.csci5308.g17.user;
 
-import com.csci5308.g17.repository.UserRepository;
+import com.csci5308.g17.user.UserRepository;
 
 import org.springframework.stereotype.Service;
 

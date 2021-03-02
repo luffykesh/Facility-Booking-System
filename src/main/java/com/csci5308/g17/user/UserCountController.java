@@ -1,6 +1,4 @@
-package com.csci5308.g17.controller;
-
-import com.csci5308.g17.service.UserService;
+package com.csci5308.g17.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
