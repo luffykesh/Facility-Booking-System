@@ -8,7 +8,7 @@ public class User {
     String password;
     String role;
     String bannerId;
-    Boolean verified;
+    Boolean isVerified;
 
     public Integer getId() {
         return id;
@@ -51,11 +51,11 @@ public class User {
     }
 
     public Boolean getVerified() {
-        return verified;
+        return isVerified;
     }
 
     public void setVerified(Boolean verified) {
-        this.verified = verified;
+        this.isVerified = verified;
     }
 
     public String getBannerId() {
@@ -84,8 +84,8 @@ public class User {
             && this.name.equals(u2.name)
             && this.password.equals(u2.password)
             && this.role.equals(u2.role)
-            && this.verified == u2.verified
             && this.bannerId.equals(u2.bannerId)
+            && this.isVerified.equals(u2.isVerified)
         );
     }
 
