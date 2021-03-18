@@ -1,5 +1,6 @@
 package com.csci5308.g17.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,14 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserCountController {
 
+    @Autowired
     UserService userService;
-
-    public UserCountController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/count")
     public long getUserCount(){
-        return this.userService.getUserCount();
+        return userService.getUserCount();
     }
 }
