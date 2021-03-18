@@ -1,4 +1,4 @@
-package com.csci5308.g17.controller;
+package com.csci5308.g17;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
