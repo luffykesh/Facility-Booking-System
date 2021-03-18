@@ -10,6 +10,7 @@ public class UserRepository implements IUserRepository {
 
 	private String QCOUNT_USERS = "SELECT count(*) FROM user";
 	private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
+	private String QUSER_BY_ID = "SELECT * from user where id = ?";
 
 	public UserRepository(JdbcTemplate db) {
 		this.db = db;
@@ -29,7 +30,11 @@ public class UserRepository implements IUserRepository {
 
 	@Override
 	public User getUserById(Integer Id) {
-		// TODO Auto-generated method stub
-		return null;
+		User user =
+			db.queryForObject(
+				QUSER_BY_ID,
+				new UserRowMapper(),
+				new Object[]{Id});
+		return user;
 	}
 }

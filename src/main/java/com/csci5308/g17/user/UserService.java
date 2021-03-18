@@ -17,8 +17,8 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepo.getUserByEmail(email);
     }
+
     public User getUserById(Integer Id) {
-        // TODO
-        return null;
+        return userRepo.getUserById(Id);
     }
 }
