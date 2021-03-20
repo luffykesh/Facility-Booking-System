@@ -10,6 +10,7 @@ public class User {
     String bannerId;
     Boolean isVerified;
 
+
     public Integer getId() {
         return id;
     }
