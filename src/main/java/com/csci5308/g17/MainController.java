@@ -23,9 +23,6 @@ public class MainController {
 
     @GetMapping("/admin/home")
     public ModelAndView adminHome(Principal principal) {
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // Principal loggedUser =
-        System.out.println("\n\nQuerying user by: " + principal.getName());
         User u = userService.getUserByEmail(principal.getName());
         ModelAndView mav = new ModelAndView();
         mav.setViewName("admin");
