@@ -22,6 +22,8 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile 'org.apache.commons:commons-csv:1.8'
 }
 
 test {
