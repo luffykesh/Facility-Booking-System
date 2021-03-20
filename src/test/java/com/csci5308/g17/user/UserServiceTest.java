@@ -3,6 +3,7 @@ package com.csci5308.g17.user;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class UserServiceTest {
 
@@ -55,5 +56,38 @@ public class UserServiceTest {
         User returnedUser = userService.getUserById(userId);
         Assertions.assertNotNull(returnedUser);
         Assertions.assertTrue(returnedUser.equals(dbUser));
+    }
+
+    @Test
+    void loadUserByUsernameTest() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+        final String EMAIL="user@host.com";
+
+        User dbUser = new User();
+        dbUser.setEmail(EMAIL);
+        dbUser.setId(100);
+        dbUser.setName("name");
+        dbUser.setPassword("password");
+        dbUser.setRole(UserConstants.USER_ROLE_ADMIN);
+        dbUser.setVerified(true);
+
+        Mockito.when(userRepository.getUserByEmail(EMAIL)).thenReturn(dbUser);
+        Assertions.assertNotNull(userService.loadUserByUsername(EMAIL));
+    }
+
+    @Test
+    void loadUserByUsername_UsernameNotFoundException_Test() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+        final String JANE_DOE_EMAIL = "jane.doe@host.com";
+
+        Mockito.when(userRepository.getUserByEmail(JANE_DOE_EMAIL)).thenThrow(UsernameNotFoundException.class);
+
+        Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+            userService.loadUserByUsername(JANE_DOE_EMAIL);
+        });
     }
 }
