@@ -12,9 +12,17 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
 
     private IUserRepository userRepo;
+    private static UserService instance;
 
     public UserService(IUserRepository userRepo) {
         this.userRepo = userRepo;
+    }
+
+    public static UserService getInstance() {
+        if(instance == null) {
+            instance = new UserService(UserRepository.getInstance());
+        }
+        return instance;
     }
 
     public long getUserCount() {

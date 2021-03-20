@@ -2,13 +2,18 @@ package com.csci5308.g17.user;
 
 import java.util.List;
 
+import com.csci5308.g17.config.DatabaseConfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserRepository implements IUserRepository {
 
+    @Autowired
     private JdbcTemplate db;
+    private static UserRepository instance;
 
     private String QCOUNT_USERS = "SELECT count(*) FROM user";
     private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
@@ -16,6 +21,13 @@ public class UserRepository implements IUserRepository {
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
+    }
+
+    public static UserRepository getInstance() {
+        if(instance == null) {
+            instance = new UserRepository(DatabaseConfig.getJdbcTemplate());
+        }
+        return instance;
     }
 
     @Override
