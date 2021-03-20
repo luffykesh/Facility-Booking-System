@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class FacilityBookingSystemApplication{
 
-	public static void main(String[] args){
-		SpringApplication.run(FacilityBookingSystemApplication.class, args);
-	}
-	@GetMapping("/")
-	public String login(){
-		return "login";
-	}
+    public static void main(String[] args){
+        SpringApplication.run(FacilityBookingSystemApplication.class, args);
+    }
+
+    @GetMapping("/")
+    public String login(){
+        return "login";
+    }
 }
