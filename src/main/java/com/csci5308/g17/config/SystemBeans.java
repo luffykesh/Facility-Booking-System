@@ -10,9 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class SystemBeans {
+
+    private static JdbcTemplate jdbcTemplate;
 
     @Value("${spring.datasource.jdbc-url}")
     private String jdbcUrl;
@@ -36,5 +39,13 @@ public class SystemBeans {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JdbcTemplate getJdbcTemplate() {
+        if(jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate(getDataSource());
+        }
+        return jdbcTemplate;
     }
 }

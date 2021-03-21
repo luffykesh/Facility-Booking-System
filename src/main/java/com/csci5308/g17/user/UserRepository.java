@@ -18,7 +18,7 @@ public class UserRepository implements IUserRepository {
     private String QCOUNT_USERS = "SELECT count(*) FROM user";
     private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
     private String QUSER_BY_ID = "SELECT * from user where id = ?";
-	public static String saveUser="INSERT INTO user(id, name, email, password, role, bannerId) VALUES (,?,?,?,?,?,?)";
+	public static String saveUser="INSERT INTO user(name, email, password, role, bannerId) VALUES (,?,?,?,?,?,?)";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
