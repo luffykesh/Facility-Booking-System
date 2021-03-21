@@ -2,8 +2,8 @@ package com.csci5308.g17.facility;
 
 public class Facility {
 
-    int id, occupancy;
-    String name, description, location, manager, time_slot;
+    int id, occupancy, manager_id;
+    String name, description, location, time_slot;
     Boolean active, approval_required;
 
     public int getId() {
@@ -46,12 +46,12 @@ public class Facility {
         this.location = location;
     }
 
-    public String getManager() {
-        return manager;
+    public int getManager_id() {
+        return manager_id;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
     }
 
     public String getTime_slot() {
