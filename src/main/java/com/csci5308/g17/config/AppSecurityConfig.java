@@ -1,6 +1,7 @@
 package com.csci5308.g17.config;
 
 import com.csci5308.g17.auth.AuthSuccessHandler;
+import com.csci5308.g17.user.UserConstants;
 import com.csci5308.g17.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/css/**")
-                .permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/upload", "/admin/**").hasAuthority(UserConstants.USER_ROLE_ADMIN)
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
