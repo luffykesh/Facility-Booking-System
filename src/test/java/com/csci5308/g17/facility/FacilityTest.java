@@ -3,107 +3,106 @@ package com.csci5308.g17.facility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class FacilityTest {
 
     Facility facility = new Facility();
+
     @Test
     void getIdTest() {
         int id = 1;
         facility.setId(id);
-        Assertions.assertEquals(id,facility.getId());
+        Assertions.assertEquals(id, facility.getId());
     }
 
     @Test
     void setIdTest() {
         int id = 1;
         facility.setId(id);
-        Assertions.assertEquals(id,facility.getId());
+        Assertions.assertEquals(id, facility.getId());
     }
 
     @Test
     void getOccupancyTest() {
         int occupancy = 10;
         facility.setOccupancy(occupancy);
-        Assertions.assertEquals(occupancy,facility.getOccupancy());
+        Assertions.assertEquals(occupancy, facility.getOccupancy());
     }
 
     @Test
     void setOccupancyTest() {
         int occupancy = 10;
         facility.setOccupancy(occupancy);
-        Assertions.assertEquals(occupancy,facility.getOccupancy());
+        Assertions.assertEquals(occupancy, facility.getOccupancy());
     }
 
     @Test
     void getNameTest() {
         String name = "XYZ";
         facility.setName(name);
-        Assertions.assertEquals(name,facility.getName());
+        Assertions.assertEquals(name, facility.getName());
     }
 
     @Test
     void setNameTest() {
         String name = "XYZ";
         facility.setName(name);
-        Assertions.assertEquals(name,facility.getName());
+        Assertions.assertEquals(name, facility.getName());
     }
 
     @Test
     void getDescriptionTest() {
         String description = "Standup Comedy";
         facility.setDescription(description);
-        Assertions.assertEquals(description,facility.getDescription());
+        Assertions.assertEquals(description, facility.getDescription());
     }
 
     @Test
     void setDescriptionTest() {
         String description = "Drama";
         facility.setDescription(description);
-        Assertions.assertEquals(description,facility.getDescription());
+        Assertions.assertEquals(description, facility.getDescription());
     }
 
     @Test
     void getLocationTest() {
         String location = "Ground";
         facility.setLocation(location);
-        Assertions.assertEquals(location,facility.getLocation());
+        Assertions.assertEquals(location, facility.getLocation());
     }
 
     @Test
     void setLocationTest() {
         String location = "Theatre";
         facility.setLocation(location);
-        Assertions.assertEquals(location,facility.getLocation());
+        Assertions.assertEquals(location, facility.getLocation());
     }
 
     @Test
-    void getManagerTest() {
-        String manager = "vv@dal.ca";
-        facility.setManager(manager);
-        Assertions.assertEquals(manager,facility.getManager());
+    void getManager_idTest() {
+        int manager = 2;
+        facility.setManager_id(manager);
+        Assertions.assertEquals(manager, facility.getManager_id());
     }
 
     @Test
-    void setManagerTest() {
-        String manager = "XYZ@dal.ca";
-        facility.setManager(manager);
-        Assertions.assertEquals(manager,facility.getManager());
+    void setManager_idTest() {
+        int manager = 1;
+        facility.setManager_id(manager);
+        Assertions.assertEquals(manager, facility.getManager_id());
     }
 
     @Test
     void getTime_slotTest() {
         String time_slot = "09:00:00";
         facility.setTime_slot(time_slot);
-        Assertions.assertEquals(time_slot,facility.getTime_slot());
+        Assertions.assertEquals(time_slot, facility.getTime_slot());
     }
 
     @Test
     void setTime_slotTest() {
         String time_slot = "09:00:00";
         facility.setTime_slot(time_slot);
-        Assertions.assertEquals(time_slot,facility.getTime_slot());
+        Assertions.assertEquals(time_slot, facility.getTime_slot());
     }
 
     @Test
