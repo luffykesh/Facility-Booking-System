@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-public class UserCountController {
+public class UserController {
 
     IUserService userService;
 
-    public UserCountController() {
+    public UserController() {
         userService = UserService.getInstance();
     }
 
