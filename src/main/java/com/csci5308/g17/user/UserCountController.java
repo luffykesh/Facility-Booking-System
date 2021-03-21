@@ -1,7 +1,5 @@
 package com.csci5308.g17.user;
 
-import com.csci5308.g17.config.DatabaseConfig;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserCountController {
 
-    UserService userService;
+    IUserService userService;
 
     public UserCountController() {
         userService = UserService.getInstance();

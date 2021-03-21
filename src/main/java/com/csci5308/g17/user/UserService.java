@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements IUserService {
 
     private IUserRepository userRepo;
     private static UserService instance;
@@ -25,14 +25,17 @@ public class UserService implements UserDetailsService {
         return instance;
     }
 
+    @Override
     public long getUserCount() {
         return this.userRepo.count();
     }
 
+    @Override
     public User getUserByEmail(String email) {
         return userRepo.getUserByEmail(email);
     }
 
+    @Override
     public User getUserById(Integer Id) {
         return userRepo.getUserById(Id);
     }
