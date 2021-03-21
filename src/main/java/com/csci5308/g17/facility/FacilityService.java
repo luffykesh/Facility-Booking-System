@@ -14,18 +14,19 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public List<Facility> getFacilityById(int id){
-
+    public Facility getFacilityById(int id) {
         return this.facilityRepo.getFacilityById(id);
     }
 
     @Override
-    public void Save(Facility facility)
-    {
-        this.facilityRepo.Save(facility);
+    public void Save(FormFacility formFacility) {
+        this.facilityRepo.Save(formFacility);
     }
 
-
+    @Override
+    public List<Facility> findAll() {
+        return this.facilityRepo.findAll();
+    }
 
 
 }
