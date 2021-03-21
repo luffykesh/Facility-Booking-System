@@ -70,4 +70,24 @@ class FacilityServiceTest {
         List<Facility> returnedFacility = facilityService.findAll();
         Assertions.assertTrue(returnedFacility.equals(facility));
     }
+
+    @Test
+    void updateFacility(){
+        FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
+
+        Facility dbUser = new Facility();
+        int id = 1;
+        dbUser.setName("name");
+        dbUser.setDescription("Description");
+        dbUser.setLocation("Location");
+        dbUser.setActive(true);
+        dbUser.setApprovalRequired(true);
+        dbUser.setTimeSlot("09:00:00");
+        dbUser.setOccupancy(20);
+
+        facilityRepository.updateFacility(id,dbUser);
+        Assertions.assertNotNull(dbUser);
+    }
 }
