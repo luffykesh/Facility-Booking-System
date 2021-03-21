@@ -46,5 +46,21 @@ public class FacilityService implements IFacilityService {
         return this.facilityRepo.findAll();
     }
 
+    @Override
+    public void updateFacility(int id, FormFacility formFacility){
 
+        User u = userRepo.getUserByEmail(formFacility.managerEmail);
+        Facility facility = new Facility();
+        facility.setApprovalRequired(formFacility.getApprovalRequired());
+        facility.setManagerId(u.getId());
+        facility.setActive(formFacility.getActive());
+        facility.setOccupancy(formFacility.getOccupancy());
+        facility.setTimeSlot(formFacility.getTimeSlot());
+        facility.setLocation(formFacility.getLocation());
+        facility.setName(formFacility.getName());
+        facility.setDescription(formFacility.getDescription());
+
+        this.facilityRepo.updateFacility(id,facility);
+
+    }
 }

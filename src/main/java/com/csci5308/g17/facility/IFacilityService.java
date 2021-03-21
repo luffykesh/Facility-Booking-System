@@ -8,4 +8,6 @@ public interface IFacilityService {
     void save(FormFacility formFacility);
 
     List<Facility> findAll();
+
+    void updateFacility(int id, FormFacility formFacility);
 }

@@ -9,4 +9,6 @@ public interface IFacilityRepository {
     void save(Facility facility);
 
     List<Facility> findAll();
+
+    void updateFacility(int id, Facility facility);
 }

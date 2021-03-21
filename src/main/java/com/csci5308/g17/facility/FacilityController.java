@@ -29,4 +29,11 @@ public class FacilityController {
     public List<Facility> findAll() {
         return this.facilityService.findAll();
     }
+
+    @PutMapping(value = "/{id}")
+    public void updateFacility(@PathVariable(value = "id") int id,@ModelAttribute("facility") FormFacility formFacility){
+        System.out.println(id);
+        System.out.println(formFacility.managerEmail);
+        this.facilityService.updateFacility(id,formFacility);
+    }
 }

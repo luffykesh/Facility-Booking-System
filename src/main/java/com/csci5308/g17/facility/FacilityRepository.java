@@ -15,6 +15,7 @@ public class FacilityRepository implements IFacilityRepository {
     private final String QUERY_BY_ID = "SELECT * from facility where id = ?";
     private final String QUERY_FINDALL = "Select * from facility;";
     private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
+    private final String QUERY_UPDATE = "update facility set name = ?,description = ?, location = ?, occupancy = ?, manager_id = ?, time_slot = ?, active = ?, approval_required =? where id = ?";
 
     public FacilityRepository(JdbcTemplate db, IUserRepository userRepo) {
         this.db = db;
@@ -42,6 +43,11 @@ public class FacilityRepository implements IFacilityRepository {
 
         List<Facility> facilityList = this.db.query(QUERY_FINDALL, new FacilityRowMapper());
         return facilityList;
+    }
+
+    @Override
+    public void updateFacility(int id, Facility facility){
+        this.db.update(QUERY_UPDATE,facility.name, facility.description, facility.location, facility.occupancy, facility.managerId, facility.timeSlot, facility.active, facility.approvalRequired,id);
     }
 
 }
