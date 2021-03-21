@@ -1,5 +1,6 @@
 package com.csci5308.g17.facility;
 
+import com.csci5308.g17.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,7 +13,9 @@ class FacilityServiceTest {
     @Test
     void getFacilityById() {
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
-        FacilityService facilityService = new FacilityService(facilityRepository);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
+
         final int ID=10;
 
         Facility dbUser = new Facility();
@@ -22,8 +25,8 @@ class FacilityServiceTest {
         dbUser.setDescription("Description");
         dbUser.setLocation("Location");
         dbUser.setActive(true);
-        dbUser.setApproval_required(true);
-        dbUser.setTime_slot("09:00:00");
+        dbUser.setApprovalRequired(true);
+        dbUser.setTimeSlot("09:00:00");
         dbUser.setOccupancy(20);
 
         Mockito.when(facilityRepository.getFacilityById(ID)).thenReturn(dbUser);
@@ -31,33 +34,34 @@ class FacilityServiceTest {
         Facility returnedFacility = facilityService.getFacilityById(ID);
         Assertions.assertNotNull(returnedFacility);
         Assertions.assertTrue(returnedFacility.equals(dbUser));
-
-
     }
 
     @Test
     void saveTest() {
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
-        FacilityService facilityService = new FacilityService(facilityRepository);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
 
-        FormFacility dbUser = new FormFacility();
+        Facility dbUser = new Facility();
 
         dbUser.setName("name");
         dbUser.setDescription("Description");
         dbUser.setLocation("Location");
         dbUser.setActive(true);
-        dbUser.setApproval_required(true);
-        dbUser.setTime_slot("09:00:00");
+        dbUser.setApprovalRequired(true);
+        dbUser.setTimeSlot("09:00:00");
         dbUser.setOccupancy(20);
 
-        facilityRepository.Save(dbUser);
+        facilityRepository.save(dbUser);
         Assertions.assertNotNull(dbUser);
     }
 
     @Test
     void findAllTest(){
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
-        FacilityService facilityService = new FacilityService(facilityRepository);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
+
         Facility fac = new Facility();
         List<Facility> facility = new ArrayList<>();
 
@@ -65,9 +69,5 @@ class FacilityServiceTest {
         Mockito.when(facilityRepository.findAll()).thenReturn(facility);
         List<Facility> returnedFacility = facilityService.findAll();
         Assertions.assertTrue(returnedFacility.equals(facility));
-
-
-
-
     }
 }

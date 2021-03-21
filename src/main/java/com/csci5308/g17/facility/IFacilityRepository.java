@@ -6,7 +6,7 @@ public interface IFacilityRepository {
 
     Facility getFacilityById(int id);
 
-    void Save(FormFacility formFacility);
+    void save(Facility facility);
 
     List<Facility> findAll();
 }

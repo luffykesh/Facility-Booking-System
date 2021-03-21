@@ -21,8 +21,8 @@ public class FacilityController {
     }
 
     @PostMapping()
-    public void Save(@ModelAttribute("facility") FormFacility formFacility) {
-        this.facilityService.Save(formFacility);
+    public void save(@ModelAttribute("facility") FormFacility formFacility) {
+        this.facilityService.save(formFacility);
     }
 
     @GetMapping()

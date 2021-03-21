@@ -2,9 +2,15 @@ package com.csci5308.g17.facility;
 
 public class Facility {
 
-    int id, occupancy, manager_id;
-    String name, description, location, time_slot;
-    Boolean active, approval_required;
+    Integer id;
+    Integer occupancy;
+    Integer managerId;
+    String name;
+    String description;
+    String location;
+    String timeSlot;
+    Boolean active;
+    Boolean approvalRequired;
 
     public int getId() {
         return id;
@@ -46,20 +52,20 @@ public class Facility {
         this.location = location;
     }
 
-    public int getManager_id() {
-        return manager_id;
+    public int getManagerId() {
+        return managerId;
     }
 
-    public void setManager_id(int manager_id) {
-        this.manager_id = manager_id;
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 
-    public String getTime_slot() {
-        return time_slot;
+    public String getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setTime_slot(String time_slot) {
-        this.time_slot = time_slot;
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public Boolean getActive() {
@@ -70,12 +76,12 @@ public class Facility {
         this.active = active;
     }
 
-    public Boolean getApproval_required() {
-        return approval_required;
+    public Boolean getApprovalRequired() {
+        return approvalRequired;
     }
 
-    public void setApproval_required(Boolean approval_required) {
-        this.approval_required = approval_required;
+    public void setApprovalRequired(Boolean approvalRequired) {
+        this.approvalRequired = approvalRequired;
     }
 
 }

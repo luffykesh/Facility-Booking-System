@@ -2,9 +2,14 @@ package com.csci5308.g17.facility;
 
 public class FormFacility {
 
-    int occupancy;
-    String name, description, location, manager_email, time_slot;
-    Boolean active, approval_required;
+    Integer occupancy;
+    String name;
+    String description;
+    String location;
+    String managerEmail;
+    String timeSlot;
+    Boolean active;
+    Boolean approvalRequired;
 
     public int getOccupancy() {
         return occupancy;
@@ -38,20 +43,20 @@ public class FormFacility {
         this.location = location;
     }
 
-    public String getManager_email() {
-        return manager_email;
+    public String getManagerEmail() {
+        return managerEmail;
     }
 
-    public void setManager_email(String manager_email) {
-        this.manager_email = manager_email;
+    public void setManagerEmail(String managerEmail) {
+        this.managerEmail = managerEmail;
     }
 
-    public String getTime_slot() {
-        return time_slot;
+    public String getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setTime_slot(String time_slot) {
-        this.time_slot = time_slot;
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public Boolean getActive() {
@@ -62,12 +67,12 @@ public class FormFacility {
         this.active = active;
     }
 
-    public Boolean getApproval_required() {
-        return approval_required;
+    public Boolean getApprovalRequired() {
+        return approvalRequired;
     }
 
-    public void setApproval_required(Boolean approval_required) {
-        this.approval_required = approval_required;
+    public void setApprovalRequired(Boolean approvalRequired) {
+        this.approvalRequired = approvalRequired;
     }
 
 }

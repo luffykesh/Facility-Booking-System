@@ -14,10 +14,10 @@ public class FacilityRowMapper implements RowMapper<Facility> {
         facility.setDescription(rs.getString("description"));
         facility.setLocation(rs.getString("location"));
         facility.setOccupancy(rs.getInt("occupancy"));
-        facility.setManager_id(rs.getInt("manager_id"));
-        facility.setTime_slot(rs.getString("time_slot"));
+        facility.setManagerId(rs.getInt("manager_id"));
+        facility.setTimeSlot(rs.getString("time_slot"));
         facility.setActive(rs.getBoolean("active"));
-        facility.setApproval_required(rs.getBoolean("approval_required"));
+        facility.setApprovalRequired(rs.getBoolean("approval_required"));
         return facility;
     }
 }

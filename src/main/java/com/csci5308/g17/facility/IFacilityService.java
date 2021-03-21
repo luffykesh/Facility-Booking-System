@@ -5,7 +5,7 @@ import java.util.List;
 public interface IFacilityService {
     Facility getFacilityById(int id);
 
-    void Save(FormFacility formFacility);
+    void save(FormFacility formFacility);
 
     List<Facility> findAll();
 }

@@ -78,31 +78,31 @@ class FacilityTest {
     }
 
     @Test
-    void getManager_idTest() {
+    void getManagerIdTest() {
         int manager = 2;
-        facility.setManager_id(manager);
-        Assertions.assertEquals(manager, facility.getManager_id());
+        facility.setManagerId(manager);
+        Assertions.assertEquals(manager, facility.getManagerId());
     }
 
     @Test
-    void setManager_idTest() {
+    void setManagerIdTest() {
         int manager = 1;
-        facility.setManager_id(manager);
-        Assertions.assertEquals(manager, facility.getManager_id());
+        facility.setManagerId(manager);
+        Assertions.assertEquals(manager, facility.getManagerId());
     }
 
     @Test
-    void getTime_slotTest() {
+    void getTimeSlotTest() {
         String time_slot = "09:00:00";
-        facility.setTime_slot(time_slot);
-        Assertions.assertEquals(time_slot, facility.getTime_slot());
+        facility.setTimeSlot(time_slot);
+        Assertions.assertEquals(time_slot, facility.getTimeSlot());
     }
 
     @Test
-    void setTime_slotTest() {
+    void setTimeSlotTest() {
         String time_slot = "09:00:00";
-        facility.setTime_slot(time_slot);
-        Assertions.assertEquals(time_slot, facility.getTime_slot());
+        facility.setTimeSlot(time_slot);
+        Assertions.assertEquals(time_slot, facility.getTimeSlot());
     }
 
     @Test
@@ -121,16 +121,16 @@ class FacilityTest {
     }
 
     @Test
-    void getApproval_requiredTest() {
+    void getApprovalRequiredTest() {
         Boolean Approval_required = true;
-        facility.setApproval_required(Approval_required);
-        Assertions.assertTrue(facility.getApproval_required());
+        facility.setApprovalRequired(Approval_required);
+        Assertions.assertTrue(facility.getApprovalRequired());
     }
 
     @Test
-    void setApproval_requiredTest() {
+    void setApprovalRequiredTest() {
         Boolean approval_required = true;
-        facility.setApproval_required(approval_required);
-        Assertions.assertTrue(facility.getApproval_required());
+        facility.setApprovalRequired(approval_required);
+        Assertions.assertTrue(facility.getApprovalRequired());
     }
 }

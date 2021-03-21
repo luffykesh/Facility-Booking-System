@@ -2,7 +2,6 @@ package com.csci5308.g17.facility;
 
 
 import com.csci5308.g17.user.IUserRepository;
-import com.csci5308.g17.user.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,36 +10,31 @@ import java.util.List;
 @Component
 public class FacilityRepository implements IFacilityRepository {
 
-    private JdbcTemplate db;
-    private IUserRepository userRepo;
+    private final JdbcTemplate db;
+    private final IUserRepository userRepo;
+    private final String QUERY_BY_ID = "SELECT * from facility where id = ?";
+    private final String QUERY_FINDALL = "Select * from facility;";
+    private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
 
     public FacilityRepository(JdbcTemplate db, IUserRepository userRepo) {
         this.db = db;
         this.userRepo = userRepo;
     }
 
-
-    private String QUERY_BY_ID = "SELECT * from facility where id = ?";
-    private String QUERY_FINDALL = "Select * from facility;";
-    private String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
-
     @Override
     public Facility getFacilityById(int id) {
 
-        Facility facility = new Facility();
-        facility = (Facility) this.db.queryForObject(QUERY_BY_ID, new Object[]{id}, new FacilityRowMapper());
-        return facility;
+        List<Facility> facilityList = this.db.query(QUERY_BY_ID, new FacilityRowMapper(), id);
+        if (facilityList.isEmpty()) {
+            return null;
+        }
+        return facilityList.get(0);
     }
-    //private String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_email, time_slot, active, approval_required) VALUES (':name', ':description',':location',:occupancy,':manager_email',':time_slot', :active, :approval_required);";
 
     @Override
-    public void Save(FormFacility formFacility) {
+    public void save(Facility facility) {
 
-        System.out.println(formFacility.manager_email);
-        User u = userRepo.getUserByEmail(formFacility.manager_email);
-        System.out.println(u.getId());
-        this.db.update(QUERY_SAVE, formFacility.name, formFacility.description, formFacility.location, formFacility.occupancy, u.getId(), formFacility.time_slot, formFacility.active, formFacility.approval_required);
-
+        this.db.update(QUERY_SAVE, facility.name, facility.description, facility.location, facility.occupancy, facility.managerId, facility.timeSlot, facility.active, facility.approvalRequired);
     }
 
     @Override
