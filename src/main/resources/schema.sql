@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS user (
   role varchar(255) DEFAULT NULL,
   bannerId varchar(255) DEFAULT NULL,
 
+
   PRIMARY KEY (id)
 );
