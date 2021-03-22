@@ -20,26 +20,19 @@ public class CSVcontroller {
 
     }
 
-    CSVread read;
+    CSVservice read;
 
-    public CSVcontroller(CSVread read) {
+    public CSVcontroller(CSVservice read) {
         this.read = read;
        
 
     }
     @PostMapping("/upload")
     public String checkread(@RequestParam(name="file") MultipartFile file) throws IOException {
-        if(CSVread.hasCSVFormat(file)) {
-            ArrayList<User> l = (ArrayList) CSVread.readCSV(file.getInputStream());
-            for (int i = 0; i < l.size(); i++) {
-              System.out.printf(String.valueOf(l.get(i).getId()) +" "+ l.get(i).getName()+" "+ l.get(i).getEmail()+" "+ l.get(i).getPassword()+" "+ l.get(i).getRole(),l.get(i).getBannerId());
-
-            }
+        if(CSVservice.hasCSVFormat(file)) {
+            ArrayList<User> l = (ArrayList) CSVservice.readCSV(file.getInputStream());
             read.savetoDB(l);
 
-        }
-        else {
-            System.out.println("No");
         }
         return "/upload";
     }

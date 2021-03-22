@@ -16,7 +16,7 @@ public class UserRepository implements IUserRepository {
 	private String QCOUNT_USERS = "SELECT count(*) FROM user";
 	private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
 	private String QUSER_BY_ID = "SELECT * from user where id = ?";
-	public static String saveUser="INSERT INTO user( name, email, role, bannerId) VALUES (?,?,?,?)";
+	public static String saveUser="INSERT INTO user( name, email, password,role, bannerId) VALUES (?,?,?,?,?)";
 	public static String find_token="  SELECT * FROM user where token=?";
 	public static String set_token="UPDATE user SET token =? WHERE Email=?";
 	public static String update_password="UPDATE user SET password =? WHERE token=? ";
@@ -60,9 +60,10 @@ public class UserRepository implements IUserRepository {
 			for (int i = 0; i < user.size(); i++) {
 				String name = user.get(i).getName();
 				String email = user.get(i).getEmail();
+				String password=user.get(i).getPassword();
 				String role = user.get(i).getRole();
 				String bid = user.get(i).getBannerId();
-				this.db.update(this.saveUser, name, email, role, bid);
+				this.db.update(this.saveUser, name, email,password, role, bid);
 			}
 
 		}
