@@ -7,5 +7,8 @@ public interface IUserRepository {
     User getUserById(Integer Id);
     User getUserByEmail(String email);
     Integer count();
-    void saveALL(List<User>u);
+    List<User> saveALL(List<User> user);
+    Integer setTocken(String email, int token);
+    Integer updatePassword(int token, String password);
+    User getUserByToken(Integer token);
 };
