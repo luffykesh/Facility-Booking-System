@@ -18,22 +18,22 @@ class FacilityServiceTest {
 
         final int ID=10;
 
-        Facility dbUser = new Facility();
+        Facility facility = new Facility();
 
-        dbUser.setId(ID);
-        dbUser.setName("name");
-        dbUser.setDescription("Description");
-        dbUser.setLocation("Location");
-        dbUser.setActive(true);
-        dbUser.setApprovalRequired(true);
-        dbUser.setTimeSlot("09:00:00");
-        dbUser.setOccupancy(20);
+        facility.setId(ID);
+        facility.setName("name");
+        facility.setDescription("Description");
+        facility.setLocation("Location");
+        facility.setActive(true);
+        facility.setApprovalRequired(true);
+        facility.setTimeSlot("09:00:00");
+        facility.setOccupancy(20);
 
-        Mockito.when(facilityRepository.getFacilityById(ID)).thenReturn(dbUser);
+        Mockito.when(facilityRepository.getFacilityById(ID)).thenReturn(facility);
 
         Facility returnedFacility = facilityService.getFacilityById(ID);
         Assertions.assertNotNull(returnedFacility);
-        Assertions.assertTrue(returnedFacility.equals(dbUser));
+        Assertions.assertTrue(returnedFacility.equals(facility));
     }
 
     @Test
@@ -42,18 +42,18 @@ class FacilityServiceTest {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
 
-        Facility dbUser = new Facility();
+        Facility facility = new Facility();
 
-        dbUser.setName("name");
-        dbUser.setDescription("Description");
-        dbUser.setLocation("Location");
-        dbUser.setActive(true);
-        dbUser.setApprovalRequired(true);
-        dbUser.setTimeSlot("09:00:00");
-        dbUser.setOccupancy(20);
+        facility.setName("name");
+        facility.setDescription("Description");
+        facility.setLocation("Location");
+        facility.setActive(true);
+        facility.setApprovalRequired(true);
+        facility.setTimeSlot("09:00:00");
+        facility.setOccupancy(20);
 
-        facilityRepository.save(dbUser);
-        Assertions.assertNotNull(dbUser);
+        facilityRepository.save(facility);
+        Assertions.assertNotNull(facility);
     }
 
     @Test
@@ -77,17 +77,17 @@ class FacilityServiceTest {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
 
-        Facility dbUser = new Facility();
+        Facility facility = new Facility();
         int id = 1;
-        dbUser.setName("name");
-        dbUser.setDescription("Description");
-        dbUser.setLocation("Location");
-        dbUser.setActive(true);
-        dbUser.setApprovalRequired(true);
-        dbUser.setTimeSlot("09:00:00");
-        dbUser.setOccupancy(20);
+        facility.setName("name");
+        facility.setDescription("Description");
+        facility.setLocation("Location");
+        facility.setActive(true);
+        facility.setApprovalRequired(true);
+        facility.setTimeSlot("09:00:00");
+        facility.setOccupancy(20);
 
-        facilityRepository.updateFacility(id,dbUser);
-        Assertions.assertNotNull(dbUser);
+        facilityRepository.updateFacility(id,facility);
+        Assertions.assertNotNull(facility);
     }
 }
