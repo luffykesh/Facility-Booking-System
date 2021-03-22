@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CSVservice {
+public class CSVservice implements ICSVservice {
     private UserRepository userRepo;
     public CSVservice(UserRepository userRepo) {
         this.userRepo = userRepo;
@@ -59,6 +59,7 @@ public class CSVservice {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }
     }
+    @Override
     public Boolean savetoDB(List<User> user) {
          userRepo.saveALL(user);
          return true;

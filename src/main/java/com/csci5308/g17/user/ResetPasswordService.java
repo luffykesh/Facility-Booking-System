@@ -9,7 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class ResetPasswordService {
+public class ResetPasswordService implements IResetPasswordService {
     private UserRepository userRepo;
     private String email;
     User user;
@@ -26,6 +26,7 @@ public class ResetPasswordService {
 
 
     //https://www.codejava.net/frameworks/spring-boot/spring-security-forgot-password-tutorial
+    @Override
     public User check_email(String mailid, int token) throws UserNotFoundException {
        User l= userRepo.getUserByEmail(mailid);
         if (l != null ) {
@@ -40,11 +41,12 @@ public class ResetPasswordService {
         return l;
     }
 
+    @Override
     public User check_token(int token){
         User u=userRepo.getUserByToken(token);
         return u;
     }
-
+    @Override
     public Integer updatePassword(int token, String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = passwordEncoder.encode(password);
