@@ -10,17 +10,16 @@ import java.util.List;
 public class UserRepository implements IUserRepository {
 
 	private JdbcTemplate db;
-	private NamedParameterJdbcTemplate npdb;
 
 
 	private String QCOUNT_USERS = "SELECT count(*) FROM user";
 	private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
 	private String QUSER_BY_ID = "SELECT * from user where id = ?";
-	private static String saveUser="INSERT INTO user( name, email, password,role, bannerId) VALUES (?,?,?,?,?)";
-	private static String find_token="  SELECT * FROM user where token=?";
-	private static String QUSERID_BY_TOKEN= "SELECT * FROM user where token = ?";
-	private static String set_token="UPDATE user SET token =? WHERE Email=?";
-	private static String update_password="UPDATE user SET password =? WHERE id=? ";
+	private String QSAVE_USER="INSERT INTO user( name, email, password,role, bannerId) VALUES (?,?,?,?,?)";
+	private String QUSER_BY_TOKEN="  SELECT * FROM user where token=?";
+	private String QUSERID_BY_TOKEN= "SELECT * FROM user where token = ?";
+	private String QSET_TOKEN="UPDATE user SET token =? WHERE Email=?";
+	private String QUPDATE_USER_PASSWORD="UPDATE user SET password =? WHERE id=? ";
 
 	public UserRepository(JdbcTemplate db) {
 		this.db = db;
@@ -52,7 +51,7 @@ public class UserRepository implements IUserRepository {
 	}
 	@Override
 	public  User getUserByToken(String token){
-		User user=db.queryForObject(find_token,new UserRowMapper(),new Object[]{token});
+		User user=db.queryForObject(QUSER_BY_ID,new UserRowMapper(),new Object[]{token});
 		return user;
 	}
 	@Override
@@ -64,7 +63,7 @@ public class UserRepository implements IUserRepository {
 				String password=user.get(i).getPassword();
 				String role = user.get(i).getRole();
 				String bid = user.get(i).getBannerId();
-				this.db.update(this.saveUser, name, email,password, role, bid);
+				this.db.update(this.QSAVE_USER, name, email,password, role, bid);
 			}
 
 		}
@@ -73,14 +72,14 @@ public class UserRepository implements IUserRepository {
 
     @Override
 	public Integer setTocken(String email, String token){
-		int utoken=db.update(this.set_token,token,email);
+		int utoken=db.update(this.QSET_TOKEN,token,email);
 		return utoken;
 	}
 
 	@Override
 	public int updatePassword(int id, String password){
 
-		Integer upass=db.update(this.update_password,password,id);
+		Integer upass=db.update(this.QUPDATE_USER_PASSWORD,password,id);
 		return upass;
 	}
 
