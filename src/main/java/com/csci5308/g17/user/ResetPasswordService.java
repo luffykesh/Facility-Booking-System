@@ -27,10 +27,10 @@ public class ResetPasswordService implements IResetPasswordService {
 
     //https://www.codejava.net/frameworks/spring-boot/spring-security-forgot-password-tutorial
     @Override
-    public User check_email(String mailid, int token) throws UserNotFoundException {
+    public User check_email(String mailid, String token) throws UserNotFoundException {
        User l= userRepo.getUserByEmail(mailid);
         if (l != null ) {
-           userRepo.setTocken(mailid,token);
+            userRepo.setTocken(mailid,token);
 
 
         } else {
@@ -42,20 +42,20 @@ public class ResetPasswordService implements IResetPasswordService {
     }
 
     @Override
-    public User check_token(int token){
+    public User check_token(String token){
         User u=userRepo.getUserByToken(token);
         return u;
     }
     @Override
-    public Integer updatePassword(int token, String password) {
+    public Integer updatePassword(String token, String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = passwordEncoder.encode(password);
-        int user=userRepo.updatePassword(token,encryptedPassword);
-        int t=0;
-        userRepo.setTocken(email,t);
+        int id=userRepo.getUserIdByToken(token);
+        int user=userRepo.updatePassword(id,encryptedPassword);
         return user;
 
     }
+
 
     public boolean email(String emailId, String link) throws MessagingException {
 
@@ -63,11 +63,15 @@ public class ResetPasswordService implements IResetPasswordService {
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
         String content ="<p>Hello,</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"" + link + "\">Change my password</a></p>";
+                + "<p><a href=\"" + link + "\">Change password</a></p>";
 
+        try {
+            helper.setTo(emailId);
+            helper.setText(content,true);
 
-        helper.setTo(emailId);
-        helper.setText(content,true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         javaMailSender.send(new_mail);
 
 

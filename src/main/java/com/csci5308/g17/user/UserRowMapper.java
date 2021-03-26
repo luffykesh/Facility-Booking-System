@@ -17,7 +17,7 @@ class UserRowMapper implements RowMapper<User>{
         user.setRole(rs.getString("role"));
         user.setVerified(rs.getBoolean("verified"));
         user.setBannerId(rs.getString("bannerId"));
-        user.setToken(rs.getInt("token"));
+        user.setToken(rs.getString("token"));
         return user;
     }
 }

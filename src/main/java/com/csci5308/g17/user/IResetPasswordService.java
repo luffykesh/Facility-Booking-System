@@ -1,7 +1,7 @@
 package com.csci5308.g17.user;
 
 public interface IResetPasswordService {
-    User check_email(String mailid, int token) throws UserNotFoundException;
-    User check_token(int token);
-    Integer updatePassword(int token, String password);
+    User check_email(String mailId,String token) throws UserNotFoundException;
+    User check_token(String token);
+    Integer updatePassword(String token, String password);
 }

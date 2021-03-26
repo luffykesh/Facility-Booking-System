@@ -9,7 +9,7 @@ public class User {
     String role;
     String bannerId;
     Boolean isVerified;
-    Integer token;
+    String token;
 
 
     public Integer getId() {
@@ -68,11 +68,11 @@ public class User {
         this.bannerId = bannerId;
     }
 
-    public Integer getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(Integer token) {
+    public void setToken(String token) {
         this.token = token;
     }
     @Override
