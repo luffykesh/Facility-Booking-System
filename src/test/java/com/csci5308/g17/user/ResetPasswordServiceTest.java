@@ -14,7 +14,7 @@ class ResetPasswordServiceTest {
         JavaMailSender mailSender = null;
         ResetPasswordService service = new ResetPasswordService(userRepository,mailSender);
 
-        final Integer TOKEN=53;
+        final String TOKEN="53";
 
 
         User dbUser = new User();
@@ -35,7 +35,7 @@ class ResetPasswordServiceTest {
         JavaMailSender mailSender = null;
         ResetPasswordService service = new ResetPasswordService(userRepository,mailSender);
 
-        final Integer TOKEN=53;
+        final String TOKEN="53";
         final String EMAIL="email";
 
 
@@ -57,10 +57,10 @@ class ResetPasswordServiceTest {
         JavaMailSender mailSender = null;
         ResetPasswordService service = new ResetPasswordService(userRepo,mailSender);
 
-        final Integer TOKEN=53;
+        final String TOKEN="token";
         final String PASSWORD="1234";
-        Mockito.when(userRepo.updatePassword(TOKEN,PASSWORD)).thenReturn(0);
-        Assertions.assertEquals(service.updatePassword(TOKEN,PASSWORD),0);
+        Mockito.when(userRepo.updatePassword(TOKEN,PASSWORD)).thenReturn(TOKEN);
+        Assertions.assertEquals(service.updatePassword(TOKEN,PASSWORD),1);
 
     }
 
