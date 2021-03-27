@@ -22,12 +22,12 @@ public class CSVcontroller {
     }
 
     @GetMapping("/upload")
-    public String csvpage(){
+    public String getCSV(){
         return "/upload";
     }
 
     @PostMapping("/upload")
-    public String checkread(@RequestParam(name="file") MultipartFile file) throws IOException {
+    public String uploadCSV(@RequestParam(name="file") MultipartFile file) throws IOException {
         if(readFile.hasCSVFormat(file)) {
             ArrayList<User> userList = (ArrayList) readFile.readCSV(file.getInputStream());
             userService.savetoDB(userList);
