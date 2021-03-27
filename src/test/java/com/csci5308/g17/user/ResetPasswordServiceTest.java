@@ -11,8 +11,7 @@ class ResetPasswordServiceTest {
     @Test
     void getUserByToken() {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
-        JavaMailSender mailSender = null;
-        ResetPasswordService service = new ResetPasswordService(userRepository,mailSender);
+        ResetPasswordService service = new ResetPasswordService(userRepository);
 
         final String TOKEN="53";
 
@@ -27,13 +26,13 @@ class ResetPasswordServiceTest {
         dbUser.setToken(TOKEN);
 
         Mockito.when(userRepository.getUserByToken(TOKEN)).thenReturn(dbUser);
-        assertTrue(service.check_token(TOKEN).equals(dbUser));
+        assertTrue(service.checkToken(TOKEN).equals(dbUser));
     }
     @Test
     void getUserByEmail() throws UserNotFoundException {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         JavaMailSender mailSender = null;
-        ResetPasswordService service = new ResetPasswordService(userRepository,mailSender);
+        ResetPasswordService service = new ResetPasswordService(userRepository);
 
         final String TOKEN="53";
         final String EMAIL="email";
@@ -49,18 +48,18 @@ class ResetPasswordServiceTest {
         dbUser.setToken(TOKEN);
 
         Mockito.when(userRepository.getUserByEmail(EMAIL)).thenReturn(dbUser);
-        assertTrue(service.check_email(EMAIL,TOKEN).equals(dbUser));
+        assertTrue(service.checkEmail(EMAIL,TOKEN).equals(dbUser));
     }
     @Test
     void updatePassword(){
         UserRepository userRepo = Mockito.mock(UserRepository.class);
-        JavaMailSender mailSender = null;
-        ResetPasswordService service = new ResetPasswordService(userRepo,mailSender);
-
-        final String TOKEN="token";
+        ResetPasswordService service = new ResetPasswordService(userRepo);
+        final int rows_updated=1;
+        final String TOKEN="abs";
+        final int ID=0;
         final String PASSWORD="1234";
-        Mockito.when(userRepo.updatePassword(TOKEN,PASSWORD)).thenReturn(TOKEN);
-        Assertions.assertEquals(service.updatePassword(TOKEN,PASSWORD),1);
+        Mockito.when(userRepo.updatePassword(ID,PASSWORD)).thenReturn(rows_updated);
+        Assertions.assertEquals(service.updatePassword(TOKEN,PASSWORD),0);
 
     }
 
