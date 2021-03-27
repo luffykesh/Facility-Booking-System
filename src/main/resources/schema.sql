@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
   password varchar(255) NOT NULL,
   role varchar(255) DEFAULT NULL,
   bannerId varchar(255) DEFAULT NULL,
-  token int DEFAULT '0',
   PRIMARY KEY (id)
 );
+
+ALTER TABLE user ADD COLUMN  token varchar(255) DEFAULT NULL;
