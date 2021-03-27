@@ -14,13 +14,14 @@ public class SendEmailService {
         this.javaMailSender=javaMailSender;
     }
 
-    public void sendEmail(String emailId, String link) throws MessagingException {
+    public void sendEmail(String emailId, String token) throws MessagingException {
 
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
+        String resetpassword="http://localhost:8080/Reset_Password_Form/"+token;
         String content ="<p>Hello,</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"" + link + "\">Change password</a></p>";
+                + "<p><a href=\"" + resetpassword + "\">Change password</a></p>";
         try {
             helper.setTo(emailId);
             helper.setText(content,true);

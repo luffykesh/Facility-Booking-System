@@ -4,7 +4,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.mail.MessagingException;
@@ -15,24 +14,21 @@ public class ResetPasswordController {
     private ResetPasswordService service;
     private SendEmailService emailService;
 
-    @GetMapping("/Forgot_Password_Form")
-    public String forgetPassword() {
-        return "Forgot_Password_Form";
-    }
-
     public ResetPasswordController(ResetPasswordService service,SendEmailService emailService) {
         this.service = service;
         this.emailService=emailService;
     }
 
-    @PostMapping("/Forgot_Password")
-    public String processpassword(@RequestParam(name="email") String email,Model model) throws UserNotFoundException, MessagingException {
+    @GetMapping("/Forgot_Password_Form")
+    public String getForgetPasswordForm() {
+        return "Forgot_Password_Form";
+    }
 
-        String token = RandomString.make(10);
+    @PostMapping("/Forgot_Password")
+    public String processPassword(@RequestParam(name="email") String email,Model model)  {
         try {
-            service.checkEmail(email,token);
-            String resetpassword="http://localhost:8080/Reset_Password_Form/"+token;
-            emailService.sendEmail(email,resetpassword);
+            String getToken=service.setUserToken(email);
+            emailService.sendEmail(email,getToken);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
@@ -43,7 +39,7 @@ public class ResetPasswordController {
     }
 
     @GetMapping("/Reset_Password_Form/{token}")
-    public String getForm(@PathVariable("token") String token, Model model) {
+    public String getResetPasswordForm(@PathVariable("token") String token, Model model) {
         User user=service.checkToken(token);
         if (user == null) {
             model.addAttribute("message", "Invalid Token");
@@ -52,7 +48,7 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/Reset_Password_Form")
-    public String resetpassword(@RequestParam(value="token") String token, @RequestParam(value = "password") String password, Model model) {
+    public String processResetPassword(@RequestParam(value="token") String token, @RequestParam(value = "password") String password, Model model) {
         User user=service.checkToken(token);
 
         if (user == null) {

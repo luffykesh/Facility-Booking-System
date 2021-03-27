@@ -1,12 +1,11 @@
 package com.csci5308.g17.user;
 
 
-import org.springframework.mail.javamail.MimeMessageHelper;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 
 @Service
 public class ResetPasswordService implements IResetPasswordService {
@@ -21,14 +20,15 @@ public class ResetPasswordService implements IResetPasswordService {
 
     //https://www.codejava.net/frameworks/spring-boot/spring-security-forgot-password-tutorial
     @Override
-    public User checkEmail(String mailid, String token) throws UserNotFoundException {
+    public String setUserToken(String mailid) throws UserNotFoundException {
         User l = userRepo.getUserByEmail(mailid);
+        String token = RandomString.make(10);
         if (l != null) {
             userRepo.setToken(mailid, token);
         } else {
             throw new UserNotFoundException("No user found with the email " + mailid);
         }
-        return l;
+        return token;
     }
 
     @Override
