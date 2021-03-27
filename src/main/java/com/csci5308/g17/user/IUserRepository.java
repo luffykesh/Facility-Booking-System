@@ -9,6 +9,7 @@ public interface IUserRepository {
     Integer count();
     User getUserByToken(String token);
     List<User> saveALL(List<User>u);
-    Integer setTocken(String email, String token);
-    int updatePassword(String id, String password);
+    Integer setToken(String email, String token);
+    int updatePassword(int id, String password);
+    Integer getUserIdByToken(String token);
 };

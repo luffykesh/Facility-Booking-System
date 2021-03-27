@@ -17,17 +17,13 @@ public class UserRepository implements IUserRepository {
 	private String QUSER_BY_ID = "SELECT * from user where id = ?";
 	private String QSAVE_USER="INSERT INTO user( name, email, password,role, bannerId) VALUES (?,?,?,?,?)";
 	private String QUSER_BY_TOKEN="  SELECT * FROM user where token=?";
-	private String QUSERID_BY_TOKEN= "SELECT * FROM user where token = ?";
 	private String QSET_TOKEN="UPDATE user SET token =? WHERE Email=?";
 	private String QUPDATE_USER_PASSWORD="UPDATE user SET password =? WHERE id=? ";
 
 	public UserRepository(JdbcTemplate db) {
 		this.db = db;
-
-
-
-
 	}
+
 	@Override
 	public Integer count() {
 		Integer count = db.queryForObject(QCOUNT_USERS, Integer.class);
@@ -49,11 +45,13 @@ public class UserRepository implements IUserRepository {
 				new Object[]{Id});
 		return user;
 	}
+
 	@Override
 	public  User getUserByToken(String token){
-		User user=db.queryForObject(QUSER_BY_ID,new UserRowMapper(),new Object[]{token});
+		User user=db.queryForObject(QUSER_BY_TOKEN,new UserRowMapper(),new Object[]{token});
 		return user;
 	}
+
 	@Override
 	public List<User> saveALL(List<User> user) {
 		if (user.size() != 0) {
@@ -65,27 +63,26 @@ public class UserRepository implements IUserRepository {
 				String bid = user.get(i).getBannerId();
 				this.db.update(this.QSAVE_USER, name, email,password, role, bid);
 			}
-
 		}
 		return user;
 	}
 
     @Override
-	public Integer setTocken(String email, String token){
-		int utoken=db.update(this.QSET_TOKEN,token,email);
-		return utoken;
+	public Integer setToken(String email, String token){
+		int userToken=db.update(this.QSET_TOKEN,token,email);
+		return userToken;
 	}
 
 	@Override
 	public int updatePassword(int id, String password){
 
-		Integer upass=db.update(this.QUPDATE_USER_PASSWORD,password,id);
-		return upass;
+		Integer userPassword=db.update(this.QUPDATE_USER_PASSWORD,password,id);
+		return userPassword;
 	}
 
+	@Override
 	public Integer getUserIdByToken(String token){
-		 User u = db.queryForObject(QUSERID_BY_TOKEN, new UserRowMapper(), new Object[]{token});
-		 return u.getId();
-
+		 User user = db.queryForObject(QUSER_BY_TOKEN, new UserRowMapper(), new Object[]{token});
+		 return user.getId();
 	}
 }

@@ -13,32 +13,30 @@ import java.util.ArrayList;
 @Controller
 
 public class CSVcontroller {
-    @GetMapping("/upload")
+    private CSVservice readFile;
+    private UserService userService;
 
+    public CSVcontroller(CSVservice read,UserService userService) {
+        this.readFile = read;
+        this.userService=userService;
+    }
+
+    @GetMapping("/upload")
     public String csvpage(){
         return "/upload";
-
     }
 
-    CSVservice read;
-
-    public CSVcontroller(CSVservice read) {
-        this.read = read;
-       
-
-    }
     @PostMapping("/upload")
     public String checkread(@RequestParam(name="file") MultipartFile file) throws IOException {
-        if(CSVservice.hasCSVFormat(file)) {
-            ArrayList<User> l = (ArrayList) CSVservice.readCSV(file.getInputStream());
-            read.savetoDB(l);
-
+        if(readFile.hasCSVFormat(file)) {
+            ArrayList<User> userList = (ArrayList) readFile.readCSV(file.getInputStream());
+            userService.savetoDB(userList);
+        }
+        else {
+            throw new IOException("Format is incorrect");
         }
         return "/upload";
     }
-
-
-
 }
 
 
