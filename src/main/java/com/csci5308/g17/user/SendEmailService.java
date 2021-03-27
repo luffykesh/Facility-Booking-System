@@ -14,7 +14,7 @@ public class SendEmailService {
         this.javaMailSender=javaMailSender;
     }
 
-    public void sendEmail(String emailId, String token) throws MessagingException {
+    public void sendResetPasswordEmail(String emailId, String token) throws MessagingException {
 
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
@@ -22,14 +22,8 @@ public class SendEmailService {
         String content ="<p>Hello,</p>"
                 + "<p>Click the link below to change your password:</p>"
                 + "<p><a href=\"" + resetpassword + "\">Change password</a></p>";
-        try {
-            helper.setTo(emailId);
-            helper.setText(content,true);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        helper.setTo(emailId);
+        helper.setText(content,true);
         javaMailSender.send(new_mail);
-
     }
 }

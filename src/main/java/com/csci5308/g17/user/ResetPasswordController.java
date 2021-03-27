@@ -28,7 +28,7 @@ public class ResetPasswordController {
     public String processPassword(@RequestParam(name="email") String email,Model model)  {
         try {
             String getToken=service.setUserToken(email);
-            emailService.sendEmail(email,getToken);
+            emailService.sendResetPasswordEmail(email,getToken);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
