@@ -29,7 +29,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/css/**").permitAll()
+                .antMatchers(
+                    "/css/**",
+                    "/js/**",
+                    "/forgot_password",
+                    "/reset_password/**"
+                ).permitAll()
                 .antMatchers("/upload", "/admin/**").hasAuthority(UserConstants.USER_ROLE_ADMIN)
                 .anyRequest().authenticated()
                 .and()
