@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
 
@@ -37,6 +39,12 @@ public class UserService implements IUserService {
     @Override
     public User getUserById(Integer Id) {
         return userRepo.getUserById(Id);
+    }
+    @Override
+    public List<User> savetoDB(List<User> user) {
+        List saveUser=userRepo.saveALL(user);
+        return saveUser;
+
     }
 
     @Override

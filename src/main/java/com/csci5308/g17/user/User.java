@@ -9,6 +9,7 @@ public class User {
     String role;
     String bannerId;
     Boolean isVerified;
+    String token;
 
 
     public Integer getId() {
@@ -67,6 +68,13 @@ public class User {
         this.bannerId = bannerId;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
     @Override
     public boolean equals(Object other) {
 

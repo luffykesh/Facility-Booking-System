@@ -1,5 +1,6 @@
 package com.csci5308.g17.user;
 
+import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUserService extends UserDetailsService {
@@ -8,4 +9,6 @@ public interface IUserService extends UserDetailsService {
     User getUserByEmail(String email);
 
     User getUserById(Integer Id);
+
+    List<User> savetoDB(List<User> user);
 }
