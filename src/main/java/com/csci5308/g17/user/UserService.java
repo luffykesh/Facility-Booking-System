@@ -76,6 +76,10 @@ public class UserService implements IUserService {
             throw new UsernameNotFoundException(
                 String.format("User: %s not found", username));
         }
+        if(dbUser.getVerified() == false) {
+            throw new UsernameNotFoundException(
+                String.format("User: %s not verified", username));
+        }
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(dbUser.getRole());
         UserDetails user = new org.springframework.security.core.userdetails.User(
             dbUser.getEmail(),
