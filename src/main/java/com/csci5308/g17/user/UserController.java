@@ -27,12 +27,12 @@ public class UserController {
         this.emailService = emailService;
     }
 
-    @GetMapping("/admin/user/upload")
+    @GetMapping("/admin/user_upload")
     public String userCSVUploadForm(){
         return "upload";
     }
 
-    @PostMapping("/admin/user/upload")
+    @PostMapping("/admin/user_upload")
     public String userCSVData(@RequestParam(name="file") MultipartFile file) throws IOException {
         if(csvService.isCSVFormat(file)) {
             List<User> userList = csvService.readCSV(file.getInputStream());
@@ -41,18 +41,19 @@ public class UserController {
         return "redirect:/admin/home";
     }
 
-    @GetMapping("/Forgot_Password_Form")
+    @GetMapping("/forgot_password")
     public String getForgetPasswordForm() {
         return "Forgot_Password_Form";
     }
 
-    @PostMapping("/Forgot_Password")
+    @PostMapping("/forgot_password")
     public String processPassword(@RequestParam(name="email") String email, Model model, HttpServletRequest request) {
         String resetPasswordLink = String.format(
             "%s://%s:%d/%s",
             request.getScheme(), request.getServerName(), request.getServerPort(), "Reset_Password_Form");
         try {
             String token = userService.setUserToken(email);
+            resetPasswordLink = String.format("%s/reset_password/%s", serverUrl, token);
             emailService.sendResetPasswordEmail(email, token, resetPasswordLink);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ public class UserController {
         return "Forgot_Password_Form";
     }
 
-    @GetMapping("/Reset_Password_Form/{token}")
+    @GetMapping("/reset_password/{token}")
     public String getResetPasswordForm(@PathVariable("token") String token, Model model) {
         User user=userService.getUserByToken(token);
         if (user == null) {
@@ -72,7 +73,7 @@ public class UserController {
         return "Reset_Password_Form";
     }
 
-    @PostMapping("/Reset_Password_Form")
+    @PostMapping("/reset_password")
     public String processResetPassword(@RequestParam(value="token") String token, @RequestParam(value = "password") String password, Model model) {
         User user=userService.getUserByToken(token);
 
