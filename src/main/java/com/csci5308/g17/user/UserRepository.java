@@ -22,6 +22,7 @@ public class UserRepository implements IUserRepository {
     private String QUSER_BY_TOKEN = "SELECT * FROM user where token= ?";
     private String QSET_TOKEN = "UPDATE user SET token = ? WHERE Email= ?";
     private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
+    private String QCLEAR_USER_TOKEN = "UPDATE user SET token=null where id = ?";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -80,5 +81,10 @@ public class UserRepository implements IUserRepository {
     @Override
     public void updatePassword(Integer id, String password) {
         db.update(this.QUPDATE_USER_PASSWORD, password, id);
+    }
+
+    @Override
+    public void clearUserToken(Integer userId) {
+        db.update(QCLEAR_USER_TOKEN, userId);
     }
 }

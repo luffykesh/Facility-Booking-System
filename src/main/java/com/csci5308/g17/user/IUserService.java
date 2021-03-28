@@ -19,4 +19,6 @@ public interface IUserService extends UserDetailsService {
     User getUserByToken(String token);
 
     void updatePassword(Integer userId, String rawPassword);
+
+    void clearUserToken(Integer userId);
 }

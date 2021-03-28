@@ -8,4 +8,5 @@ public interface IUserRepository {
     void save(User u);
     void setUserToken(String email, String token);
     void updatePassword(Integer id, String password);
+    void clearUserToken(Integer userId);
 };

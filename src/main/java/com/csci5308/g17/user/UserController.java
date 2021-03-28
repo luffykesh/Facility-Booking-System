@@ -84,6 +84,7 @@ public class UserController {
         }
         else {
             userService.updatePassword(user.getId(), password);
+            userService.clearUserToken(user.getId());
             model.addAttribute("message", "Password Reset Successful");
         }
         return "Reset_Password_Form";

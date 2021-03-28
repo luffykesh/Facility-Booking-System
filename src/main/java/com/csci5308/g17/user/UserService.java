@@ -114,4 +114,9 @@ public class UserService implements IUserService {
         String encodedPassword = encodePassword(rawPassword);
         userRepo.updatePassword(userId, encodedPassword);
     }
+
+    @Override
+    public void clearUserToken(Integer userId) {
+        userRepo.clearUserToken(userId);
+    }
 }

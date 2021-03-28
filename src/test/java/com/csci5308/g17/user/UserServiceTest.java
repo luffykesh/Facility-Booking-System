@@ -123,4 +123,17 @@ public class UserServiceTest {
         service.updatePassword(ID,PASSWORD);
         Mockito.verify(userRepo, Mockito.times(1)).updatePassword(Mockito.anyInt(), Mockito.anyString());
     }
+
+    @Test
+    void clearUserTokenTest() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+        final Integer ID = 100;
+
+        Mockito.doNothing().when(userRepository).clearUserToken(ID);
+        userService.clearUserToken(ID);
+        Mockito.verify(userRepository, Mockito.times(1)).clearUserToken(ID);
+
+
+    }
 }
