@@ -2,15 +2,15 @@ package com.csci5308.g17.facility;
 
 public class Facility {
 
-    Integer id;
-    Integer occupancy;
-    Integer managerId;
-    String name;
-    String description;
-    String location;
-    String timeSlot;
-    Boolean active;
-    Boolean approvalRequired;
+    private Integer id;
+    private Integer occupancy;
+    private Integer managerId;
+    private String name;
+    private String description;
+    private String location;
+    private String timeSlot;
+    private Boolean active;
+    private Boolean approvalRequired;
 
     public int getId() {
         return id;

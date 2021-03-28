@@ -35,7 +35,7 @@ public class FacilityRepository implements IFacilityRepository {
     @Override
     public void save(Facility facility) {
 
-        this.db.update(QUERY_SAVE, facility.name, facility.description, facility.location, facility.occupancy, facility.managerId, facility.timeSlot, facility.active, facility.approvalRequired);
+        this.db.update(QUERY_SAVE, facility.getName(), facility.getDescription(), facility.getLocation(), facility.getOccupancy(), facility.getManagerId(), facility.getTimeSlot(), facility.getActive(), facility.getApprovalRequired());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FacilityRepository implements IFacilityRepository {
 
     @Override
     public void updateFacility(int id, Facility facility){
-        this.db.update(QUERY_UPDATE,facility.name, facility.description, facility.location, facility.occupancy, facility.managerId, facility.timeSlot, facility.active, facility.approvalRequired,id);
+        this.db.update(QUERY_UPDATE,facility.getName(), facility.getDescription(), facility.getLocation(), facility.getOccupancy(), facility.getManagerId(), facility.getTimeSlot(), facility.getActive(), facility.getApprovalRequired(),id);
     }
 
 }

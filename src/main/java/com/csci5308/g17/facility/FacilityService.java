@@ -24,8 +24,7 @@ public class FacilityService implements IFacilityService {
 
     @Override
     public void save(FormFacility formFacility) {
-        System.out.println(formFacility.managerEmail);
-        User u = userRepo.getUserByEmail(formFacility.managerEmail);
+        User u = userRepo.getUserByEmail(formFacility.getManagerEmail());
         System.out.println(u.getId());
 
         Facility facility = new Facility();
@@ -49,7 +48,7 @@ public class FacilityService implements IFacilityService {
     @Override
     public void updateFacility(int id, FormFacility formFacility){
 
-        User u = userRepo.getUserByEmail(formFacility.managerEmail);
+        User u = userRepo.getUserByEmail(formFacility.getManagerEmail());
         Facility facility = new Facility();
         facility.setApprovalRequired(formFacility.getApprovalRequired());
         facility.setManagerId(u.getId());

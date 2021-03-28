@@ -2,14 +2,14 @@ package com.csci5308.g17.facility;
 
 public class FormFacility {
 
-    Integer occupancy;
-    String name;
-    String description;
-    String location;
-    String managerEmail;
-    String timeSlot;
-    Boolean active;
-    Boolean approvalRequired;
+    private Integer occupancy;
+    private String name;
+    private String description;
+    private String location;
+    private String managerEmail;
+    private String timeSlot;
+    private Boolean active;
+    private Boolean approvalRequired;
 
     public int getOccupancy() {
         return occupancy;
