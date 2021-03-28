@@ -2,14 +2,14 @@ package com.csci5308.g17.user;
 
 public class User {
 
-    Integer id;
-    String name;
-    String email;
-    String password;
-    String role;
-    String bannerId;
-    Boolean isVerified;
-    String token;
+    private Integer id;
+    private String name;
+    private String email;
+    private String password;
+    private String role;
+    private String bannerId;
+    private Boolean isVerified;
+    private String token;
 
 
     public Integer getId() {
