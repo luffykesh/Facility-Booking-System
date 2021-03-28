@@ -1,13 +1,16 @@
 package com.csci5308.g17.user;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class UserService implements IUserService {
@@ -26,6 +29,17 @@ public class UserService implements IUserService {
         return instance;
     }
 
+    private String encodePassword(String rawPassword) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword;
+
+        if(rawPassword == null) {
+            return null;
+        }
+        encodedPassword = encoder.encode(rawPassword);
+        return encodedPassword;
+    }
+
     @Override
     public long getUserCount() {
         return this.userRepo.count();
@@ -42,11 +56,19 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> savetoDB(List<User> user) {
-        List saveUser=userRepo.saveALL(user);
-        return saveUser;
+    public void addUser(User user) {
+        user.setPassword(encodePassword(user.getPassword()));
+        userRepo.save(user);
     }
 
+    @Override
+    public void addAll(List<User> users) {
+        for(User u : users) {
+            addUser(u);
+        }
+    }
+
+    // from spring's IUserService interface
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User dbUser = userRepo.getUserByEmail(username);
@@ -61,5 +83,31 @@ public class UserService implements IUserService {
             Collections.singletonList(authority)
         );
         return user;
+    }
+
+    @Override
+    public String setUserToken(String mailId) throws UserNotFoundException {
+        User user = getUserByEmail(mailId);
+        String token = RandomString.make(10);
+        if (user == null) {
+            throw new UserNotFoundException("No user found with the email " + mailId);
+        }
+        userRepo.setUserToken(mailId, token);
+        return token;
+    }
+
+    @Override
+    public User getUserByToken(String token) {
+        User user = userRepo.getUserByToken(token);
+        return user;
+    }
+
+    @Override
+    public void updatePassword(Integer userId, String rawPassword) {
+        if(rawPassword == null || rawPassword.length() == 0 ) {
+            return;
+        }
+        String encodedPassword = encodePassword(rawPassword);
+        userRepo.updatePassword(userId, encodedPassword);
     }
 }
