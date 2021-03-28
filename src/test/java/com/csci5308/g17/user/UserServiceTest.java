@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserServiceTest {
 
     @Test
@@ -55,5 +58,23 @@ public class UserServiceTest {
         User returnedUser = userService.getUserById(userId);
         Assertions.assertNotNull(returnedUser);
         Assertions.assertTrue(returnedUser.equals(dbUser));
+    }
+    @Test
+    public void savetoDB(){
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService service=new UserService(userRepository);
+        User dbUser = new User();
+        dbUser.email="email";
+        dbUser.name="user1";
+        dbUser.password="password";
+        dbUser.role="user";
+        dbUser.bannerId="B00868907";
+        List<User> user=new ArrayList<>();
+        user.add(dbUser);
+        Boolean check=true;
+        Mockito.when(userRepository.saveALL(user)).thenReturn(user);
+        List returnedUser = service.savetoDB(user);
+        Assertions.assertTrue(returnedUser.equals(user));
+
     }
 }

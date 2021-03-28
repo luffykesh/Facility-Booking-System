@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "net.bytebuddy.byte-buddy-gradle-plugin" version "1.10.22"
 }
 
 group = 'com.csci5408.g17'
@@ -24,7 +25,10 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	compile('org.springframework.boot:spring-boot-starter-mail')
 	compile 'org.apache.commons:commons-csv:1.8'
+	compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.10.20'
+
 }
+apply plugin: "net.bytebuddy.byte-buddy-gradle-plugin"
 
 test {
 	useJUnitPlatform()
