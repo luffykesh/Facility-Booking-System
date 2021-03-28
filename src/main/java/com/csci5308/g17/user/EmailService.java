@@ -20,8 +20,8 @@ public class EmailService implements IEmailService {
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
         String content = String.format("<p>Hello,</p>"
-                + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"%s\">Change password</a></p>", formLink);
+            + "<p>Click the link below to change your password:</p>"
+            + "<p><a href=\"%s\">Change password</a></p>", formLink);
         helper.setTo(emailId);
         helper.setText(content,true);
         javaMailSender.send(new_mail);

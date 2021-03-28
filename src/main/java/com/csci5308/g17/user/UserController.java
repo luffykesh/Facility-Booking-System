@@ -48,9 +48,10 @@ public class UserController {
 
     @PostMapping("/forgot_password")
     public String processPassword(@RequestParam(name="email") String email, Model model, HttpServletRequest request) {
-        String resetPasswordLink = String.format(
-            "%s://%s:%d/%s",
-            request.getScheme(), request.getServerName(), request.getServerPort(), "Reset_Password_Form");
+        String serverUrl = String.format(
+            "%s://%s:%d",
+            request.getScheme(), request.getServerName(), request.getServerPort());
+        String resetPasswordLink;
         try {
             String token = userService.setUserToken(email);
             resetPasswordLink = String.format("%s/reset_password/%s", serverUrl, token);
