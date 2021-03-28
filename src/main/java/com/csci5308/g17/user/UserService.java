@@ -40,11 +40,11 @@ public class UserService implements IUserService {
     public User getUserById(Integer Id) {
         return userRepo.getUserById(Id);
     }
+
     @Override
     public List<User> savetoDB(List<User> user) {
         List saveUser=userRepo.saveALL(user);
         return saveUser;
-
     }
 
     @Override

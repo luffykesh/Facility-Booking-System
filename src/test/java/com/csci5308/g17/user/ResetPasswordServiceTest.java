@@ -15,7 +15,6 @@ class ResetPasswordServiceTest {
 
         final String TOKEN="53";
 
-
         User dbUser = new User();
         dbUser.setEmail("email");
         dbUser.setId(100);
@@ -39,7 +38,6 @@ class ResetPasswordServiceTest {
         final String PASSWORD="1234";
         Mockito.when(userRepo.updatePassword(ID,PASSWORD)).thenReturn(rows_updated);
         Assertions.assertEquals(service.updatePassword(TOKEN,PASSWORD),0);
-
     }
 
 }

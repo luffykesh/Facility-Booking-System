@@ -1,6 +1,4 @@
-
 package com.csci5308.g17.user;
-
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -58,4 +56,3 @@ public class CSVservice implements  ICSVservice {
         }
     }
 }
-

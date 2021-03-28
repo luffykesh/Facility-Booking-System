@@ -19,11 +19,11 @@ public class UserRepository implements IUserRepository {
     private String QCOUNT_USERS = "SELECT count(*) FROM user";
     private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
     private String QUSER_BY_ID = "SELECT * from user where id = ?";
-    public static String saveUser="INSERT INTO user(name, email, password, role, bannerId) VALUES (,?,?,?,?,?,?)";
-    private String QSAVE_USER="INSERT INTO user( name, email, password,role, bannerId) VALUES (?,?,?,?,?)";
-    private String QUSER_BY_TOKEN="  SELECT * FROM user where token=?";
-    private String QSET_TOKEN="UPDATE user SET token =? WHERE Email=?";
-    private String QUPDATE_USER_PASSWORD="UPDATE user SET password =? WHERE id=? ";
+    public static String saveUser = "INSERT INTO user(name, email, password, role, bannerId) VALUES (?,?,?,?,?,?)";
+    private String QSAVE_USER = "INSERT INTO user(name, email, password, role, bannerId) VALUES (?,?,?,?,?)";
+    private String QUSER_BY_TOKEN = "SELECT * FROM user where token= ?";
+    private String QSET_TOKEN = "UPDATE user SET token = ? WHERE Email= ?";
+    private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -62,7 +62,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public  User getUserByToken(String token){
+    public  User getUserByToken(String token) {
         User user=db.queryForObject(QUSER_BY_TOKEN,new UserRowMapper(),new Object[]{token});
         return user;
     }
@@ -90,7 +90,6 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public int updatePassword(int id, String password){
-
         Integer userPassword=db.update(this.QUPDATE_USER_PASSWORD,password,id);
         return userPassword;
     }

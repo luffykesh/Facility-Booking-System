@@ -5,27 +5,24 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class ResetPasswordService implements IResetPasswordService {
     private UserRepository userRepo;
     private User user;
 
-
     public ResetPasswordService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
-
     //https://www.codejava.net/frameworks/spring-boot/spring-security-forgot-password-tutorial
     @Override
     public String setUserToken(String mailid) throws UserNotFoundException {
-        User l = userRepo.getUserByEmail(mailid);
+        User user = userRepo.getUserByEmail(mailid);
         String token = RandomString.make(10);
-        if (l != null) {
+        if (user != null) {
             userRepo.setToken(mailid, token);
-        } else {
+        }
+        else {
             throw new UserNotFoundException("No user found with the email " + mailid);
         }
         return token;

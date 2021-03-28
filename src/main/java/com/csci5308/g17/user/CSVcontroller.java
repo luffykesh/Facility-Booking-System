@@ -9,9 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 @Controller
-
 public class CSVcontroller {
     private CSVservice readFile;
     private UserService userService;
@@ -38,6 +36,3 @@ public class CSVcontroller {
         return "/upload";
     }
 }
-
-
-

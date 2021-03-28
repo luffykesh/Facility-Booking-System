@@ -8,15 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.mail.MessagingException;
 
-
 @Controller
 public class ResetPasswordController {
     private ResetPasswordService service;
     private SendEmailService emailService;
 
-    public ResetPasswordController(ResetPasswordService service,SendEmailService emailService) {
+    public ResetPasswordController(ResetPasswordService service, SendEmailService emailService) {
         this.service = service;
-        this.emailService=emailService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/Forgot_Password_Form")
@@ -25,7 +24,7 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/Forgot_Password")
-    public String processPassword(@RequestParam(name="email") String email,Model model)  {
+    public String processPassword(@RequestParam(name="email") String email,Model model) {
         try {
             String getToken=service.setUserToken(email);
             emailService.sendResetPasswordEmail(email,getToken);
@@ -34,7 +33,7 @@ public class ResetPasswordController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        model.addAttribute("message","Password reset link has been sent to your email");
+        model.addAttribute("message", "Password reset link has been sent to your email");
         return "Forgot_Password_Form";
     }
 
