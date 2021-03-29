@@ -2,14 +2,14 @@ package com.csci5308.g17.user;
 
 public class User {
 
-    Integer id;
-    String name;
-    String email;
-    String password;
-    String role;
-    String bannerId;
-    Boolean isVerified;
-    String token;
+    private Integer id;
+    private String name;
+    private String email;
+    private String password;
+    private String role;
+    private String bannerId;
+    private Boolean isVerified;
+    private String token;
 
 
     public Integer getId() {
@@ -75,6 +75,7 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
     @Override
     public boolean equals(Object other) {
 
@@ -88,14 +89,30 @@ public class User {
 
         User u2 = (User)other;
 
+        boolean isPasswordEqual = (
+            (this.password == u2.password) || (this.password.equals(u2.password)) );
+
         return (
             this.email.equals(u2.email)
             && this.name.equals(u2.name)
-            && this.password.equals(u2.password)
+            && isPasswordEqual
             && this.role.equals(u2.role)
             && this.bannerId.equals(u2.bannerId)
             && this.isVerified.equals(u2.isVerified)
         );
     }
 
+    @Override
+    public String toString() {
+        String userStr = String.format(
+            "User(id=%d, email=%s, name=%s, role=%s, bannerId=%s, verified=%s)",
+            id,
+            email,
+            name,
+            role,
+            bannerId,
+            isVerified
+        );
+        return userStr;
+    }
 }

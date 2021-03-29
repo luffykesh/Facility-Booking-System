@@ -3,9 +3,8 @@ package com.csci5308.g17.user;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserServiceTest {
 
@@ -59,22 +58,82 @@ public class UserServiceTest {
         Assertions.assertNotNull(returnedUser);
         Assertions.assertTrue(returnedUser.equals(dbUser));
     }
+
     @Test
-    public void savetoDB(){
+    void loadUserByUsernameTest() {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
-        UserService service=new UserService(userRepository);
+        UserService userService = new UserService(userRepository);
+
+        final String EMAIL="user@host.com";
+
         User dbUser = new User();
-        dbUser.email="email";
-        dbUser.name="user1";
-        dbUser.password="password";
-        dbUser.role="user";
-        dbUser.bannerId="B00868907";
-        List<User> user=new ArrayList<>();
-        user.add(dbUser);
-        Boolean check=true;
-        Mockito.when(userRepository.saveALL(user)).thenReturn(user);
-        List returnedUser = service.savetoDB(user);
-        Assertions.assertTrue(returnedUser.equals(user));
+        dbUser.setEmail(EMAIL);
+        dbUser.setId(100);
+        dbUser.setName("name");
+        dbUser.setPassword("password");
+        dbUser.setRole(UserConstants.USER_ROLE_ADMIN);
+        dbUser.setVerified(true);
+
+        Mockito.when(userRepository.getUserByEmail(EMAIL)).thenReturn(dbUser);
+        Assertions.assertNotNull(userService.loadUserByUsername(EMAIL));
+    }
+
+    @Test
+    void loadUserByUsername_UsernameNotFoundException_Test() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+        final String JANE_DOE_EMAIL = "jane.doe@host.com";
+
+        Mockito.when(userRepository.getUserByEmail(JANE_DOE_EMAIL)).thenThrow(UsernameNotFoundException.class);
+
+        Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+            userService.loadUserByUsername(JANE_DOE_EMAIL);
+        });
+    }
+
+    @Test
+    void getUserByToken() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService service = new UserService(userRepository);
+
+        final String TOKEN="53";
+
+        User dbUser = new User();
+        dbUser.setEmail("email");
+        dbUser.setId(100);
+        dbUser.setName("name");
+        dbUser.setPassword("password");
+        dbUser.setRole("role");
+        dbUser.setVerified(true);
+        dbUser.setToken(TOKEN);
+
+        Mockito.when(userRepository.getUserByToken(TOKEN)).thenReturn(dbUser);
+        Assertions.assertTrue(service.getUserByToken(TOKEN).equals(dbUser));
+    }
+
+    @Test
+    void updatePasswordTest(){
+        UserRepository userRepo = Mockito.mock(UserRepository.class);
+        UserService service = new UserService(userRepo);
+        final Integer ID=0;
+        final String PASSWORD="1234";
+
+        Mockito.doNothing().when(userRepo).updatePassword(ID, PASSWORD);
+        service.updatePassword(ID,PASSWORD);
+        Mockito.verify(userRepo, Mockito.times(1)).updatePassword(Mockito.anyInt(), Mockito.anyString());
+    }
+
+    @Test
+    void clearUserTokenTest() {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+        final Integer ID = 100;
+
+        Mockito.doNothing().when(userRepository).clearUserToken(ID);
+        userService.clearUserToken(ID);
+        Mockito.verify(userRepository, Mockito.times(1)).clearUserToken(ID);
+
 
     }
 }

@@ -7,3 +7,6 @@ test:
 	./gradlew test
 run:
 	./gradlew bootRun
+
+clean:
+	./gradlew clean
