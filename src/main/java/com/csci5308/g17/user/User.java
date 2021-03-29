@@ -88,14 +88,16 @@ public class User {
 
         User u2 = (User)other;
 
+        boolean isPasswordEqual = (
+            (this.password == u2.password) || (this.password.equals(u2.password)) );
+
         return (
             this.email.equals(u2.email)
             && this.name.equals(u2.name)
-            && this.password.equals(u2.password)
+            && isPasswordEqual
             && this.role.equals(u2.role)
             && this.bannerId.equals(u2.bannerId)
             && this.isVerified.equals(u2.isVerified)
         );
     }
-
 }
