@@ -6,13 +6,14 @@
         <link rel="stylesheet", type="text/css" href="css/logincss.css">
     </head>
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
         <div class="log-form">
+        <!-- <div> -->
+            <div th:if="${param.error}" style="color:red;">
+                Invalid credentials or user not verified.
+            </div>
+            <div th:if="${param.logout}" style="color:green;">
+                You have been logged out.
+            </div>
             <h2>Login to your account</h2>
             <form modelAttribute="loginData" method="POST" action="login">
                 <input type="text" name="username" placeholder="email"/>
