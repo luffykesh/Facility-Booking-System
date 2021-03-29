@@ -75,6 +75,7 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
     @Override
     public boolean equals(Object other) {
 
@@ -99,5 +100,19 @@ public class User {
             && this.bannerId.equals(u2.bannerId)
             && this.isVerified.equals(u2.isVerified)
         );
+    }
+
+    @Override
+    public String toString() {
+        String userStr = String.format(
+            "User(id=%d, email=%s, name=%s, role=%s, bannerId=%s, verified=%s)",
+            id,
+            email,
+            name,
+            role,
+            bannerId,
+            isVerified
+        );
+        return userStr;
     }
 }
