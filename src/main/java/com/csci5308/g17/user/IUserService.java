@@ -21,4 +21,5 @@ public interface IUserService extends UserDetailsService {
     void updatePassword(Integer userId, String rawPassword);
 
     void clearUserToken(Integer userId);
+    void setVerification(int id, int verification);
 }
