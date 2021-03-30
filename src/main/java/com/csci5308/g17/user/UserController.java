@@ -21,9 +21,9 @@ public class UserController {
     private IUserCSVParser csvService;
     private IEmailService emailService;
 
-    public UserController(UserCSVParser csvService, EmailService emailService) {
+    public UserController(EmailService emailService) {
         userService = UserService.getInstance();
-        this.csvService = csvService;
+        csvService = UserCSVParser.getInstance();
         this.emailService = emailService;
     }
 
