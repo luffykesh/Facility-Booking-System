@@ -3,6 +3,8 @@ package com.csci5308.g17.user;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import com.csci5308.g17.config.ApplicationContextProvider;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -10,9 +12,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements IEmailService {
     JavaMailSender javaMailSender;
+    private static EmailService instance;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender=javaMailSender;
+    }
+
+    public static EmailService getInstance(){
+        ApplicationContext context = ApplicationContextProvider.getContext();
+        if(instance == null) {
+            instance = new EmailService(context.getBean(JavaMailSender.class));
+        }
+        return instance;
     }
 
     public void sendResetPasswordEmail(String emailId, String token, String formLink) throws MessagingException {
