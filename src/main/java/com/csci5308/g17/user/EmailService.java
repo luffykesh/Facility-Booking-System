@@ -8,14 +8,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService implements IEmailService {
+public class ResetPasswordEmailService implements IEmailService {
     JavaMailSender javaMailSender;
 
-    public EmailService(JavaMailSender javaMailSender) {
+    public ResetPasswordEmailService(JavaMailSender javaMailSender) {
         this.javaMailSender=javaMailSender;
     }
 
-    public void sendResetPasswordEmail(String emailId, String token, String formLink) throws MessagingException {
+    public void sendEmail(String emailId, String token, String formLink) throws MessagingException {
 
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
