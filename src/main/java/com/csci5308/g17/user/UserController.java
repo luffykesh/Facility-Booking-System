@@ -21,10 +21,10 @@ public class UserController {
     private IUserCSVParser csvService;
     private IEmailService emailService;
 
-    public UserController(EmailService emailService) {
+    public UserController() {
         userService = UserService.getInstance();
         csvService = UserCSVParser.getInstance();
-        this.emailService = emailService;
+        emailService = EmailService.getInstance();
     }
 
     @GetMapping("/admin/user_upload")
