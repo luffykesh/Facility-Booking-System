@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class VarifyUser implements IVarifyUser {
+public class VerifyUser implements IVerifyUser {
     @Override
     public List getUserList(List<User> user) {
         List<String> userEmailList= new ArrayList<>();
