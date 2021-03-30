@@ -119,4 +119,8 @@ public class UserService implements IUserService {
     public void clearUserToken(Integer userId) {
         userRepo.clearUserToken(userId);
     }
+    @Override
+    public void setVerification(int id, int verification){
+        userRepo.verifyUser(id,verification);
+    }
 }
