@@ -16,5 +16,6 @@ public interface IUserRepository {
     void updatePassword(Integer id, String password);
 
     void clearUserToken(Integer userId);
+    void verifyUser(int id,int verify);
 
 };
