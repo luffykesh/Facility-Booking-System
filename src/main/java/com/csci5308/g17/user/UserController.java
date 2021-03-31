@@ -1,6 +1,7 @@
 package com.csci5308.g17.user;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -8,10 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -23,7 +21,8 @@ public class UserController {
     private IVerifyUser verifyUser;
     private List<String> emailList;
     private IGenerateServerURL url;
-    private IEmailService verifiactionEmail;
+
+
 
     public UserController(UserCSVParser csvService, EmailService emailService, VerifyUser varifyUser, List emailList, GenerateServerURL url) {
         userService = UserService.getInstance();
@@ -33,6 +32,20 @@ public class UserController {
         this.emailList=emailList;
         this.url=url;
 
+
+    }
+
+    public void sendEmail(String email,HttpServletRequest request,String content,String link){
+        String serverUrl=url.getURL(request);
+        try {
+            String token = userService.setUserToken(email);
+            String resetPasswordLink = String.format("%s/"+link+"/%s", serverUrl, token);
+            emailService.sendEmail(email, token, resetPasswordLink,content);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/admin/user_upload")
@@ -45,23 +58,14 @@ public class UserController {
         if(csvService.isCSVFormat(file)) {
             List<User> userList = csvService.readCSV(file.getInputStream());
             userService.addAll(userList);
+            String link="Varification_Form";
             String content="<p>Hello,</p>"
                     + "<p>Click the link below to verify your account:</p>"
                     + "<p><a href=\"%s\">Account Verification</a></p>";
-            String serverUrl=url.getURL(request);
+
             emailList=verifyUser.getUserList(userList);
             for(int i=0;i<emailList.size();i++) {
-                try{
-                    String token = userService.setUserToken(emailList.get(i));
-                    String verifyAccountLink = String.format("%s/Varification_Form/%s", serverUrl, token);
-                    emailService.sendEmail(emailList.get(i),token,verifyAccountLink,content);
-                } catch (UserNotFoundException e) {
-                    e.printStackTrace();
-                }
-                catch (MessagingException e) {
-                    e.printStackTrace();
-                }
-
+                sendEmail(emailList.get(i),request,content,link);
             }
 
         }
@@ -105,19 +109,12 @@ public class UserController {
     @PostMapping("/forgot_password")
     public String processPassword(@RequestParam(name="email") String email, Model model,HttpServletRequest request) {
         String serverUrl=url.getURL(request);
-        String resetPasswordLink;
-        String content = "<p>Hello,</p>"
-                + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"%s\">Change password</a></p>";
-        try {
-            String token = userService.setUserToken(email);
-            resetPasswordLink = String.format("%s/reset_password/%s", serverUrl, token);
-            emailService.sendEmail(email, token, resetPasswordLink,content);
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        String link="reset_password";
+        String content="<p>Hello,</p>"
+                + "<p>Click the link below to reset your password:</p>"
+                + "<p><a href=\"%s\">Reset Passworf</a></p>";
+        sendEmail(email,request,content,link);
+
         model.addAttribute("message", "Password reset link has been sent to your email");
         return "Forgot_Password_Form";
     }
@@ -145,6 +142,30 @@ public class UserController {
             model.addAttribute("message", "Password Reset Successful");
         }
         return "Reset_Password_Form";
+    }
+
+    @GetMapping("/User_Regestration")
+    public String getRegestrationForm(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+
+        List<String> listRoles = Arrays.asList("Manager", "User");
+        model.addAttribute("listRoles", listRoles);
+
+        return "/User_Regestration";
+    }
+
+    @PostMapping("/User_Regestration")
+    public String processForm(@ModelAttribute("user") User user,Model model,HttpServletRequest request) {
+        userService.save(user);
+        String link="Varification_Form";
+        String content="<p>Hello,</p>"
+                + "<p>Click the link below to verify your account:</p>"
+                + "<p><a href=\"%s\">Varify Account</a></p>";
+        sendEmail(user.getEmail(),request,content,link);
+        model.addAttribute("message", "User added successfully");
+        return "/User_Regestration";
+
     }
 
 }

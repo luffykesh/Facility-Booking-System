@@ -3,6 +3,8 @@ package com.csci5308.g17.user;
 import java.util.Collections;
 import java.util.List;
 
+import com.csci5308.g17.facility.Facility;
+import com.csci5308.g17.facility.FormFacility;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -122,5 +124,16 @@ public class UserService implements IUserService {
     @Override
     public void setVerification(int id, int verification){
         userRepo.verifyUser(id,verification);
+    }
+
+    @Override
+    public void save(User userForm) {
+        User user=new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setRole(userForm.getRole());
+        user.setBannerId(userForm.getBannerId());
+
+        this.userRepo.save(user);
     }
 }
