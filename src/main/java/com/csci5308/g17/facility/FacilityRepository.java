@@ -1,7 +1,7 @@
 package com.csci5308.g17.facility;
 
 
-import com.csci5308.g17.user.IUserRepository;
+import com.csci5308.g17.config.DatabaseConfig;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -10,16 +10,22 @@ import java.util.List;
 @Component
 public class FacilityRepository implements IFacilityRepository {
 
-    private final JdbcTemplate db;
-    private final IUserRepository userRepo;
+    private static FacilityRepository instance;
     private final String QUERY_BY_ID = "SELECT * from facility where id = ?";
     private final String QUERY_FINDALL = "Select * from facility;";
     private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
     private final String QUERY_UPDATE = "update facility set name = ?,description = ?, location = ?, occupancy = ?, manager_id = ?, time_slot = ?, active = ?, approval_required =? where id = ?";
+    private final JdbcTemplate db;
 
-    public FacilityRepository(JdbcTemplate db, IUserRepository userRepo) {
+    public FacilityRepository(JdbcTemplate db) {
         this.db = db;
-        this.userRepo = userRepo;
+    }
+
+    public static FacilityRepository getInstance() {
+        if (instance == null) {
+            instance = new FacilityRepository(DatabaseConfig.getJdbcTemplate());
+        }
+        return instance;
     }
 
     @Override
@@ -46,8 +52,8 @@ public class FacilityRepository implements IFacilityRepository {
     }
 
     @Override
-    public void updateFacility(int id, Facility facility){
-        this.db.update(QUERY_UPDATE,facility.getName(), facility.getDescription(), facility.getLocation(), facility.getOccupancy(), facility.getManagerId(), facility.getTimeSlot(), facility.getActive(), facility.getApprovalRequired(),id);
+    public void updateFacility(int id, Facility facility) {
+        this.db.update(QUERY_UPDATE, facility.getName(), facility.getDescription(), facility.getLocation(), facility.getOccupancy(), facility.getManagerId(), facility.getTimeSlot(), facility.getActive(), facility.getApprovalRequired(), id);
     }
 
 }
