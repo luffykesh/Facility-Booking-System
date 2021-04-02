@@ -27,3 +27,15 @@ CREATE TABLE IF NOT EXISTS facility (
 
 ALTER TABLE user
 MODIFY password varchar(255);
+
+
+CREATE TABLE IF NOT EXISTS timing (
+  id int NOT NULL AUTO_INCREMENT,
+  facility_id int NOT NULL,
+  day int NOT NULL,
+  start_time TIME NOT NULL,
+  end_time time NOT NULL,
+  is_blocking tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY(id),
+  CONSTRAINT timing_fk_1 FOREIGN KEY (facility_id) REFERENCES facility (id)
+);
