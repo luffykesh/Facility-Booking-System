@@ -34,7 +34,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/js/**",
                     "/forgot_password",
                     "/reset_password/**",
-                        "/User_Regestration"
+                        "/user_regestration_form"
                 ).permitAll()
                 .antMatchers("/upload", "/admin/**").hasAuthority(UserConstants.USER_ROLE_ADMIN)
                 .anyRequest().authenticated()
