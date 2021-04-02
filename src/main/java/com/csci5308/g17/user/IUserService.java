@@ -13,6 +13,7 @@ public interface IUserService extends UserDetailsService {
     void addUser(User user);
 
     void addAll(List<User> users);
+    
     void save(User user);
 
     String setUserToken(String mailId) throws UserNotFoundException;
@@ -22,5 +23,6 @@ public interface IUserService extends UserDetailsService {
     void updatePassword(Integer userId, String rawPassword);
 
     void clearUserToken(Integer userId);
-    void setVerification(int id, int verification);
+
+    void verifyUser(int id);
 }
