@@ -1,10 +1,12 @@
 package com.csci5308.g17.facility;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/facility")
 public class FacilityController {
 
@@ -20,9 +22,16 @@ public class FacilityController {
         return this.facilityService.getFacilityById(id);
     }
 
+    @GetMapping(value = "/addFacility")
+    public String addFacility() {
+        return "addFacility";
+    }
+
     @PostMapping()
-    public void save(@ModelAttribute("facility") FormFacility formFacility) {
+    public String save(@ModelAttribute("facility") FormFacility formFacility, Model model) {
         this.facilityService.save(formFacility);
+        model.addAttribute("message","Facility added Successfully.");
+        return "addFacility";
     }
 
     @GetMapping()
