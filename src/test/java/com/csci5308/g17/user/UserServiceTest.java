@@ -113,6 +113,18 @@ public class UserServiceTest {
     }
 
     @Test
+    void verifyUser() {
+        UserRepository userRepo = Mockito.mock(UserRepository.class);
+        UserService service = new UserService(userRepo);
+        final Integer ID=0;
+        final Integer VERIFICATION=1;
+
+        Mockito.doNothing().when(userRepo).verifyUser(ID, VERIFICATION);
+        service.verifyUser(ID);
+        Mockito.verify(userRepo, Mockito.times(1)).verifyUser(Mockito.anyInt(), Mockito.anyInt());
+    }
+
+    @Test
     void updatePasswordTest(){
         UserRepository userRepo = Mockito.mock(UserRepository.class);
         UserService service = new UserService(userRepo);
