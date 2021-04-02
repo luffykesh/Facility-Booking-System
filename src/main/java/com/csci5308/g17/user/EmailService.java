@@ -15,13 +15,12 @@ public class EmailService implements IEmailService {
         this.javaMailSender=javaMailSender;
     }
 
-    public void sendEmail(String emailId, String token, String formLink,String emailContent) throws MessagingException {
+    public void sendEmail(String emailId,String emailContent) throws MessagingException {
 
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
-        String content = String.format(emailContent, formLink);
         helper.setTo(emailId);
-        helper.setText(content,true);
+        helper.setText(emailContent,true);
         javaMailSender.send(new_mail);
     }
 }
