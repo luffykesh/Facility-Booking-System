@@ -34,8 +34,13 @@ public class FacilityService implements IFacilityService {
     @Override
     public void save(FormFacility formFacility) {
         User u = userRepo.getUserByEmail(formFacility.getManagerEmail());
-        System.out.println(u.getId());
 
+        if (formFacility.getActive() == null) {
+            formFacility.setActive(false);
+        }
+        if (formFacility.getApprovalRequired() == null) {
+            formFacility.setApprovalRequired(false);
+        }
         Facility facility = new Facility();
         facility.setApprovalRequired(formFacility.getApprovalRequired());
         facility.setManagerId(u.getId());
