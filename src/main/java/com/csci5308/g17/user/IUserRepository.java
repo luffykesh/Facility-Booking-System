@@ -17,4 +17,5 @@ public interface IUserRepository {
 
     void clearUserToken(Integer userId);
 
+    void setVerifiedFlag(Integer userId, Boolean flag);
 };
