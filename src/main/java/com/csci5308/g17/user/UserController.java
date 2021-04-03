@@ -26,7 +26,7 @@ public class UserController {
         this.emailService = emailService;
     }
 
-    private void addAndEmailUser(String email,HttpServletRequest request,String content,String link){
+    private void addAndEmailUserToken(String email,HttpServletRequest request,String content,String link){
         String serverUrl=getURL(request);
         try {
             String token = userService.setUserToken(email);
@@ -63,7 +63,7 @@ public class UserController {
                     + "<p><a href=\"%s\">Account Verification</a></p>";
             List<String> userEmails = userList.stream().map((user) -> user.getEmail()).collect(Collectors.toList());
             for(int i=0;i<userEmails.size();i++) {
-                addAndEmailUser(userEmails.get(i),request,content,link);
+                addAndEmailUserToken(userEmails.get(i),request,content,link);
             }
         }
         return "redirect:/admin/home";
@@ -107,7 +107,7 @@ public class UserController {
         String content="<p>Hello,</p>"
                 + "<p>Click the link below to reset your password:</p>"
                 + "<p><a href=\"%s\">Reset Password</a></p>";
-        addAndEmailUser(email,request,content,link);
+        addAndEmailUserToken(email,request,content,link);
 
         model.addAttribute("message", "Password reset link has been sent to your email");
         return "Forgot_Password_Form";
@@ -156,7 +156,7 @@ public class UserController {
         String content="<p>Hello,</p>"
                 + "<p>Click the link below to verify your account:</p>"
                 + "<p><a href=\"%s\">Verify Account</a></p>";
-        addAndEmailUser(user.getEmail(),request,content,link);
+        addAndEmailUserToken(user.getEmail(),request,content,link);
         model.addAttribute("message", "User added successfully");
         return "user_registration_form";
     }
