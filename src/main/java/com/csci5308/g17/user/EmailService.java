@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EmailService implements IEmailService {
     private static EmailService instance;
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
