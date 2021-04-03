@@ -113,15 +113,15 @@ public class UserServiceTest {
     }
 
     @Test
-    void verifyUser() {
+    void verifyUserTest() {
         UserRepository userRepo = Mockito.mock(UserRepository.class);
         UserService service = new UserService(userRepo);
-        final Integer ID=0;
-        final Integer VERIFICATION=1;
+        final Integer USER_ID=0;
+        final Boolean VERIFICATION=true;
 
-        Mockito.doNothing().when(userRepo).verifyUser(ID, VERIFICATION);
-        service.verifyUser(ID);
-        Mockito.verify(userRepo, Mockito.times(1)).verifyUser(Mockito.anyInt(), Mockito.anyInt());
+        Mockito.doNothing().when(userRepo).setVerifiedFlag(USER_ID, VERIFICATION);
+        service.verifyUser(USER_ID);
+        Mockito.verify(userRepo, Mockito.times(1)).setVerifiedFlag(USER_ID, VERIFICATION);
     }
 
     @Test

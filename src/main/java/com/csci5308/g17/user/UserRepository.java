@@ -23,7 +23,7 @@ public class UserRepository implements IUserRepository {
     private String QSET_TOKEN = "UPDATE user SET token = ? WHERE Email= ?";
     private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
     private String QCLEAR_USER_TOKEN = "UPDATE user SET token=null where id = ?";
-    private String QVERIFY_USER="UPDATE user SET verified=? where id = ?";
+    private String QSET_VERIFY_FLAG="UPDATE user SET verified=? where id = ?";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -36,8 +36,8 @@ public class UserRepository implements IUserRepository {
         return instance;
     }
     @Override
-    public void verifyUser(int id,int verify){
-        db.update(this.QVERIFY_USER, verify,id);
+    public void setVerifiedFlag(Integer userId, Boolean flag){
+        db.update(this.QSET_VERIFY_FLAG, flag, userId);
     }
 
     @Override

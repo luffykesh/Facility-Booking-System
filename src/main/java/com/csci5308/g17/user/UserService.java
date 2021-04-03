@@ -121,10 +121,10 @@ public class UserService implements IUserService {
     public void clearUserToken(Integer userId) {
         userRepo.clearUserToken(userId);
     }
+
     @Override
-    public void verifyUser(int id){
-        int veification=1;
-        userRepo.verifyUser(id,veification);
+    public void verifyUser(Integer userId){
+        userRepo.setVerifiedFlag(userId, true);
     }
 
     @Override
