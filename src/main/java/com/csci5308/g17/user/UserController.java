@@ -103,7 +103,6 @@ public class UserController {
 
     @PostMapping("/forgot_password")
     public String processPassword(@RequestParam(name="email") String email, Model model,HttpServletRequest request) {
-        String serverUrl=getURL(request);
         String link="reset_password";
         String content="<p>Hello,</p>"
                 + "<p>Click the link below to reset your password:</p>"
