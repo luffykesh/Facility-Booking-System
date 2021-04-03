@@ -142,4 +142,70 @@ public class TimingServiceTest {
         timingService.deleteTiming(TIMING_ID);
         Mockito.verify(timingRepo, Mockito.times(1)).deleteTimingById(TIMING_ID);
     }
+
+    @Test
+    public void addTimingTest() {
+        TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
+        TimingService timingService = new TimingService(timingRepo);
+
+        Integer FACILITY_ID = 100;
+
+        Timing existingTiming = new Timing();
+        existingTiming.setDay(DayOfWeek.MONDAY);
+        existingTiming.setStartTime(LocalTime.of(10,0));
+        existingTiming.setEndTime(LocalTime.of(20,0));
+        existingTiming.setFacilityId(FACILITY_ID);
+        existingTiming.setIsBlocking(false);
+        List<Timing> existingTimings = Collections.singletonList(existingTiming);
+
+        Timing newTiming = new Timing();
+        newTiming.setDay(DayOfWeek.MONDAY);
+        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setStartTime(LocalTime.of(9,0));
+        newTiming.setEndTime(LocalTime.of(10,0));
+        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setIsBlocking(false);
+
+        Mockito.when(timingRepo.getTimingsbyFacilityId(FACILITY_ID)).thenReturn(existingTimings);
+        Mockito.when(timingRepo.insertTiming(newTiming)).thenReturn(newTiming);
+
+        try{
+            Assertions.assertTrue(timingService.addTiming(newTiming) == newTiming);
+        }
+        catch(TimingConflictException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    public void addTimingTest_TimingConflictException_Test() {
+        TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
+        TimingService timingService = new TimingService(timingRepo);
+
+        Integer FACILITY_ID = 100;
+
+        Timing existingTiming = new Timing();
+        existingTiming.setDay(DayOfWeek.MONDAY);
+        existingTiming.setStartTime(LocalTime.of(10,0));
+        existingTiming.setEndTime(LocalTime.of(20,0));
+        existingTiming.setFacilityId(FACILITY_ID);
+        existingTiming.setIsBlocking(false);
+        List<Timing> existingTimings = Collections.singletonList(existingTiming);
+
+        Timing newTiming = new Timing();
+        newTiming.setDay(DayOfWeek.MONDAY);
+        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setStartTime(LocalTime.of(11,0));
+        newTiming.setEndTime(LocalTime.of(12,0));
+        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setIsBlocking(false);
+
+        Mockito.when(timingRepo.getTimingsbyFacilityId(FACILITY_ID)).thenReturn(existingTimings);
+        Mockito.when(timingRepo.insertTiming(newTiming)).thenReturn(newTiming);
+
+        Assertions.assertThrows(TimingConflictException.class, () -> {
+            timingService.addTiming(newTiming);
+        });
+    }
+
 }
