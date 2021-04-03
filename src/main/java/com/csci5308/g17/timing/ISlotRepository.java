@@ -12,4 +12,6 @@ public interface ISlotRepository {
     public List<Slot> getSlotsOfTiming(Integer timingId);
 
     public void deleteSlot(Integer id);
+
+    public void deleteTimingSlots(Integer timingId);
 }
