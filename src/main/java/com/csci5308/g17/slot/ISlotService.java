@@ -1,6 +1,8 @@
-package com.csci5308.g17.timing;
+package com.csci5308.g17.slot;
 
 import java.util.List;
+
+import com.csci5308.g17.timing.Timing;
 
 public interface ISlotService {
 

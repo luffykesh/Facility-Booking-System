@@ -1,4 +1,4 @@
-package com.csci5308.g17.timing;
+package com.csci5308.g17.slot;
 
 import java.time.LocalDateTime;
 
