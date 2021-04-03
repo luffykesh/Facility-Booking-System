@@ -67,4 +67,12 @@ public class Slot {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Slot(id=%d, facilityId=%d, timingId=%d, totalSeats=%d, availableSeats=%d, startTime%s, endTime=%s)",
+            getId(), getFacilityId(), getTimingId(), getAvailableSeats(), getStartTime(), getEndTime()
+        );
+    }
 }
