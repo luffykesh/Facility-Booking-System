@@ -139,18 +139,18 @@ public class UserController {
         return "Reset_Password_Form";
     }
 
-    @GetMapping("/user_regestration_form")
-    public String getRegestrationForm(Model model) {
+    @GetMapping("/user_registration_form")
+    public String getRegistrationForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
 
         List<String> listRoles = Arrays.asList(UserConstants.USER_ROLE_MANAGER, UserConstants.USER_ROLE_USER);
         model.addAttribute("listRoles", listRoles);
 
-        return "user_regestration_form";
+        return "user_registration_form";
     }
 
-    @PostMapping("/user_regestration_form")
+    @PostMapping("/user_registration_form")
     public String processForm(@ModelAttribute("user") User user,Model model,HttpServletRequest request) {
         userService.save(user);
         String link="verification_form";
@@ -159,7 +159,7 @@ public class UserController {
                 + "<p><a href=\"%s\">Verify Account</a></p>";
         addAndEmailUser(user.getEmail(),request,content,link);
         model.addAttribute("message", "User added successfully");
-        return "user_regestration_form";
+        return "user_registration_form";
     }
 
 }
