@@ -19,13 +19,11 @@ public class UserController {
     private IUserService userService;
     private IUserCSVParser csvService;
     private IEmailService emailService;
-    private UserConstants userConstants;
 
-    public UserController(UserCSVParser csvService, EmailService emailService, List emailList,UserConstants userConstants) {
+    public UserController(UserCSVParser csvService, EmailService emailService) {
         userService = UserService.getInstance();
         this.csvService = csvService;
         this.emailService = emailService;
-        this.userConstants=userConstants;
     }
 
     private void addAndEmailUser(String email,HttpServletRequest request,String content,String link){
@@ -146,7 +144,7 @@ public class UserController {
         User user = new User();
         model.addAttribute("user", user);
 
-        List<String> listRoles = Arrays.asList(userConstants.USER_ROLE_MANAGER, userConstants.USER_ROLE_USER);
+        List<String> listRoles = Arrays.asList(UserConstants.USER_ROLE_MANAGER, UserConstants.USER_ROLE_USER);
         model.addAttribute("listRoles", listRoles);
 
         return "user_regestration_form";
