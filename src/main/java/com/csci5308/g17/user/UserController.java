@@ -20,10 +20,10 @@ public class UserController {
     private IUserCSVParser csvService;
     private IEmailService emailService;
 
-    public UserController(UserCSVParser csvService, EmailService emailService) {
+    public UserController() {
         userService = UserService.getInstance();
-        this.csvService = csvService;
-        this.emailService = emailService;
+        csvService = UserCSVParser.getInstance();
+        emailService = EmailService.getInstance();
     }
 
     private void addAndEmailUserToken(String email,HttpServletRequest request,String content,String link){
