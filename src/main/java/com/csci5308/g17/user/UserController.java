@@ -19,14 +19,12 @@ public class UserController {
     private IUserService userService;
     private IUserCSVParser csvService;
     private IEmailService emailService;
-    private IVerifyUser verifyUser;
     private UserConstants userConstants;
 
-    public UserController(UserCSVParser csvService, EmailService emailService, VerifyUser varifyUser, List emailList,UserConstants userConstants) {
+    public UserController(UserCSVParser csvService, EmailService emailService, List emailList,UserConstants userConstants) {
         userService = UserService.getInstance();
         this.csvService = csvService;
         this.emailService = emailService;
-        this.verifyUser=varifyUser;
         this.userConstants=userConstants;
     }
 
