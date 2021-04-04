@@ -1,6 +1,13 @@
 package com.csci5308.g17.timing;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import com.csci5308.g17.facility.Facility;
+import com.csci5308.g17.facility.FacilityService;
+import com.csci5308.g17.facility.IFacilityService;
+import com.csci5308.g17.slot.ISlotService;
+import com.csci5308.g17.slot.SlotService;
 
 import org.springframework.stereotype.Service;
 
@@ -8,15 +15,19 @@ import org.springframework.stereotype.Service;
 public class TimingService implements ITimingService{
 
     private ITimingRepository timingRepository;
+    private ISlotService slotService;
+    private IFacilityService facilityService;
     private static TimingService instance;
 
-    public TimingService(ITimingRepository timingRepository) {
+    public TimingService(ITimingRepository timingRepository, ISlotService slotService, IFacilityService facilityService) {
         this.timingRepository = timingRepository;
+        this.slotService = slotService;
+        this.facilityService = facilityService;
     }
 
     public static TimingService getInstance() {
         if(instance == null) {
-            instance = new TimingService(TimingRepository.getInstance());
+            instance = new TimingService(TimingRepository.getInstance(), SlotService.getInstance(), FacilityService.getInstance());
         }
         return instance;
     }
@@ -35,10 +46,13 @@ public class TimingService implements ITimingService{
                 throw new TimingConflictException(t, timing);
             }
         }
-        if(timing.getIsBlocking() == null){
+        if(timing.getIsBlocking() == null) {
             timing.setIsBlocking(false);
         }
-        return timingRepository.insertTiming(timing);
+        Facility facility = facilityService.getFacilityById(timing.getFacilityId());
+        timing = timingRepository.insertTiming(timing);
+        slotService.createSlotsForTiming(timing, facility.getTimeSlot(), facility.getOccupancy(), LocalDateTime.now().toLocalDate());
+        return timing;
     }
 
     @Override

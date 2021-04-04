@@ -1,9 +1,14 @@
 package com.csci5308.g17.timing;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
+
+import com.csci5308.g17.facility.Facility;
+import com.csci5308.g17.facility.FacilityService;
+import com.csci5308.g17.slot.SlotService;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +19,9 @@ public class TimingServiceTest {
     @Test
     public void isOverlappingTest() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
 
         Timing TIMING1 = new Timing();
         Timing timing2 = new Timing();
@@ -89,7 +96,9 @@ public class TimingServiceTest {
     @Test
     public void getTimingTest() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
 
         Integer TIMING_ID = 100;
 
@@ -107,7 +116,9 @@ public class TimingServiceTest {
     @Test
     public void getFacilityTimingsTest() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
 
         Integer FACILITY_ID = 100;
 
@@ -127,7 +138,9 @@ public class TimingServiceTest {
     @Test
     public void deleteTimingTest() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
         Integer TIMING_ID = 100;
 
         Timing timing = new Timing();
@@ -146,27 +159,44 @@ public class TimingServiceTest {
     @Test
     public void addTimingTest() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
 
         Integer FACILITY_ID = 100;
+        Facility facility = new Facility();
+        facility.setId(FACILITY_ID);
+        facility.setApprovalRequired(false);
+        facility.setDescription("description");
+        facility.setLocation("location");
+        facility.setManagerId(123);
+        facility.setName("name");
+        facility.setOccupancy(100);
+        facility.setTimeSlot(60);
 
         Timing existingTiming = new Timing();
         existingTiming.setDay(DayOfWeek.MONDAY);
         existingTiming.setStartTime(LocalTime.of(10,0));
         existingTiming.setEndTime(LocalTime.of(20,0));
-        existingTiming.setFacilityId(FACILITY_ID);
+        existingTiming.setFacilityId(facility.getId());
         existingTiming.setIsBlocking(false);
+
         List<Timing> existingTimings = Collections.singletonList(existingTiming);
 
         Timing newTiming = new Timing();
         newTiming.setDay(DayOfWeek.MONDAY);
-        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setFacilityId(facility.getId());
         newTiming.setStartTime(LocalTime.of(9,0));
         newTiming.setEndTime(LocalTime.of(10,0));
-        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setFacilityId(facility.getId());
         newTiming.setIsBlocking(false);
 
-        Mockito.when(timingRepo.getTimingsbyFacilityId(FACILITY_ID)).thenReturn(existingTimings);
+        Mockito.when(facilityService.getFacilityById(FACILITY_ID)).thenReturn(facility);
+        Mockito.when(
+            slotService.createSlotsForTiming(
+                Mockito.any(Timing.class), Mockito.eq(facility.getTimeSlot()), Mockito.eq(facility.getOccupancy()), Mockito.any(LocalDate.class)))
+        .thenReturn(null);
+        Mockito.when(timingRepo.getTimingsbyFacilityId(facility.getId())).thenReturn(existingTimings);
         Mockito.when(timingRepo.insertTiming(newTiming)).thenReturn(newTiming);
 
         try{
@@ -180,27 +210,44 @@ public class TimingServiceTest {
     @Test
     public void addTimingTest_TimingConflictException_Test() {
         TimingRepository timingRepo = Mockito.mock(TimingRepository.class);
-        TimingService timingService = new TimingService(timingRepo);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        FacilityService facilityService = Mockito.mock(FacilityService.class);
+        TimingService timingService = new TimingService(timingRepo, slotService, facilityService);
 
         Integer FACILITY_ID = 100;
+        Facility facility = new Facility();
+        facility.setId(FACILITY_ID);
+        facility.setApprovalRequired(false);
+        facility.setDescription("description");
+        facility.setLocation("location");
+        facility.setManagerId(123);
+        facility.setName("name");
+        facility.setOccupancy(100);
+        facility.setTimeSlot(60);
 
         Timing existingTiming = new Timing();
         existingTiming.setDay(DayOfWeek.MONDAY);
         existingTiming.setStartTime(LocalTime.of(10,0));
         existingTiming.setEndTime(LocalTime.of(20,0));
-        existingTiming.setFacilityId(FACILITY_ID);
+        existingTiming.setFacilityId(facility.getId());
         existingTiming.setIsBlocking(false);
+
         List<Timing> existingTimings = Collections.singletonList(existingTiming);
 
         Timing newTiming = new Timing();
         newTiming.setDay(DayOfWeek.MONDAY);
-        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setFacilityId(facility.getId());
         newTiming.setStartTime(LocalTime.of(11,0));
         newTiming.setEndTime(LocalTime.of(12,0));
-        newTiming.setFacilityId(FACILITY_ID);
+        newTiming.setFacilityId(facility.getId());
         newTiming.setIsBlocking(false);
 
-        Mockito.when(timingRepo.getTimingsbyFacilityId(FACILITY_ID)).thenReturn(existingTimings);
+        Mockito.when(facilityService.getFacilityById(FACILITY_ID)).thenReturn(facility);
+        Mockito.when(
+            slotService.createSlotsForTiming(
+                Mockito.any(Timing.class), Mockito.eq(facility.getTimeSlot()), Mockito.eq(facility.getOccupancy()), Mockito.any(LocalDate.class)))
+        .thenReturn(null);
+        Mockito.when(timingRepo.getTimingsbyFacilityId(facility.getId())).thenReturn(existingTimings);
         Mockito.when(timingRepo.insertTiming(newTiming)).thenReturn(newTiming);
 
         Assertions.assertThrows(TimingConflictException.class, () -> {
