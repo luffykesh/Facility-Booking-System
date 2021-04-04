@@ -119,4 +119,31 @@ public class UserService implements IUserService {
     public void clearUserToken(Integer userId) {
         userRepo.clearUserToken(userId);
     }
+
+    @Override
+    public void verifyUser(Integer userId){
+        userRepo.setVerifiedFlag(userId, true);
+    }
+
+    @Override
+    public void save(User userForm) {
+        User user=new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setRole(userForm.getRole());
+        user.setBannerId(userForm.getBannerId());
+
+        this.userRepo.save(user);
+    }
+
+    @Override
+    public List<User> find(){
+        List<User> user=this.userRepo.findAll();
+        return user;
+
+    }
+    @Override
+    public void deleteUser(int id) {
+        userRepo.deleteUser(id);
+    }
 }

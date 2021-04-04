@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EmailService implements IEmailService {
     private static EmailService instance;
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -26,15 +26,14 @@ public class EmailService implements IEmailService {
         return instance;
     }
 
-    public void sendResetPasswordEmail(String emailId, String token, String formLink) throws MessagingException {
+    public void sendEmail(String emailId,String emailContent) throws MessagingException {
 
         MimeMessage new_mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(new_mail);
-        String content = String.format("<p>Hello,</p>"
-                + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"%s\">Change password</a></p>", formLink);
+
         helper.setTo(emailId);
-        helper.setText(content, true);
+        helper.setText(emailContent,true);
+
         javaMailSender.send(new_mail);
     }
 }

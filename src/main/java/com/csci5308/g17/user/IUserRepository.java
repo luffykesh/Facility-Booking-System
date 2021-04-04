@@ -1,5 +1,7 @@
 package com.csci5308.g17.user;
 
+import java.util.List;
+
 public interface IUserRepository {
     User getUserById(Integer Id);
 
@@ -17,4 +19,7 @@ public interface IUserRepository {
 
     void clearUserToken(Integer userId);
 
+    void setVerifiedFlag(Integer userId, Boolean flag);
+    List<User> findAll();
+    void deleteUser(int id);
 };
