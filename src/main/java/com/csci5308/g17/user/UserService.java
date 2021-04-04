@@ -135,4 +135,11 @@ public class UserService implements IUserService {
 
         this.userRepo.save(user);
     }
+
+    @Override
+    public List<User> find(){
+        List<User> user=this.userRepo.findAll();
+        return user;
+
+    }
 }

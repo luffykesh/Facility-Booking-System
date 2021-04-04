@@ -47,6 +47,10 @@ public class UserController {
         return serverUrl;
     }
 
+    @GetMapping("/admin_dashboard")
+    public String getAdminDashboard(){
+        return "/admin_dashboard";
+    }
     @GetMapping("/admin/user_upload")
     public String userCSVUploadForm(){
         return "upload";
@@ -66,7 +70,7 @@ public class UserController {
                 addAndEmailUserToken(userEmails.get(i),request,content,link);
             }
         }
-        return "redirect:/admin/home";
+        return "redirect:/admin_dashboard";
     }
 
     @GetMapping("/verification_form/{token}")
@@ -158,7 +162,12 @@ public class UserController {
                 + "<p><a href=\"%s\">Verify Account</a></p>";
         addAndEmailUserToken(user.getEmail(),request,content,link);
         model.addAttribute("message", "User added successfully");
-        return "user_registration_form";
+        return "/admin_dashboard";
     }
 
+    @GetMapping("/display_users")
+    public String showUsers(Model model){
+        model.addAttribute("users",userService.find());
+        return "/display_users";
+    }
 }

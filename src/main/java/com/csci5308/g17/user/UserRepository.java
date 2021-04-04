@@ -24,6 +24,7 @@ public class UserRepository implements IUserRepository {
     private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
     private String QCLEAR_USER_TOKEN = "UPDATE user SET token=null where id = ?";
     private String QSET_VERIFY_FLAG="UPDATE user SET verified=? where id = ?";
+    private String QUERY_FINDALL="Select * from user";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -76,6 +77,12 @@ public class UserRepository implements IUserRepository {
         db.update(
             QSAVE_USER, user.getName(), user.getEmail(),
              user.getRole(), user.getBannerId());
+    }
+
+    @Override
+    public List<User> findAll() {
+        List<User> userList = this.db.query(QUERY_FINDALL, new UserRowMapper());
+        return userList;
     }
 
     @Override
