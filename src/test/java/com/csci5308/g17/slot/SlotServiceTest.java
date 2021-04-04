@@ -60,7 +60,7 @@ public class SlotServiceTest {
 
         List<Slot> SLOTS = Collections.singletonList(slot);
 
-        Mockito.when(slotRepo.getSlotsForFacility(FACILITY_ID, Mockito.any(LocalDateTime.class), Mockito.any(LocalDateTime.class))).thenReturn(SLOTS);
+        Mockito.when(slotRepo.getSlotsForFacility(Mockito.eq(FACILITY_ID), Mockito.any(LocalDateTime.class), Mockito.any(LocalDateTime.class))).thenReturn(SLOTS);
         Assertions.assertEquals(slotService.getSlotsForFacility(FACILITY_ID, DATE), SLOTS);
     }
 
