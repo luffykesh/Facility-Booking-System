@@ -9,12 +9,12 @@
     <h1>User Registration</h1>
     <form th:action="@{/user_registration_form}" method="post" th:object="${user}">
         <label>Full name:</label>
-        <input type="text" th:field="*{name}" placeholder="Enter name"/><br /><br />
+        <input type="text" th:field="*{name}" placeholder="Enter name" required/><br /><br />
 
         <label>E-mail:</label>
-        <input type="text" th:field="*{email}" placeholder="Enter e-mail" /><br /><br />
+        <input type="text" th:field="*{email}" placeholder="Enter e-mail" required/><br /><br />
         <label>Banner ID:</label>
-        <input type="text" th:field="*{bannerId}" placeholder="Enter BannerID"/><br /><br />
+        <input type="text" th:field="*{bannerId}" placeholder="Enter BannerID" required/><br /><br />
 
         <label>Role:</label>
         <select th:field="*{role}" >
