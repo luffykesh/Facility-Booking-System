@@ -10,6 +10,15 @@ public class FormFacility {
     private String timeSlot;
     private Boolean active;
     private Boolean approvalRequired;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public int getOccupancy() {
         return occupancy;

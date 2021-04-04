@@ -17,9 +17,21 @@ public class FacilityController {
     }
 
     @GetMapping(value = "/{id}")
-    public Facility getFacilityById(@PathVariable(value = "id") int id) {
-        System.out.println(id);
-        return this.facilityService.getFacilityById(id);
+    public String getFacilityById(@PathVariable(value = "id") int id,Model model) {
+        FormFacility facility = this.facilityService.getFacilityById(id);
+        System.out.println("desc  " + facility.getDescription());
+        System.out.println(facility.getActive());
+        System.out.println(facility.getApprovalRequired());
+        model.addAttribute("name",facility.getName());
+        model.addAttribute("description",facility.getDescription());
+        model.addAttribute("location",facility.getLocation());
+        model.addAttribute("manager",facility.getManagerEmail());
+        model.addAttribute("occupancy",facility.getOccupancy());
+        model.addAttribute("timeslot",facility.getTimeSlot());
+        model.addAttribute("active",facility.getActive());
+        model.addAttribute("approvalRequired",facility.getApprovalRequired());
+        model.addAttribute("id",facility.getId());
+        return "updateFacility";
     }
 
     @GetMapping(value = "/addFacility")
@@ -35,13 +47,26 @@ public class FacilityController {
     }
 
     @GetMapping()
-    public List<Facility> findAll() {
-        return this.facilityService.findAll();
+    public String findAll(Model model) {
+        List<FormFacility> facilityList = this.facilityService.findAll();
+        model.addAttribute("facilities",facilityList);
+        return "displayFacility";
+
     }
 
-    @PutMapping(value = "/{id}")
-    public void updateFacility(@PathVariable(value = "id") int id, @ModelAttribute("facility") FormFacility formFacility) {
-
+    @PostMapping(value = "/update/{id}")
+    public String updateFacility(@PathVariable(value = "id") int id, @ModelAttribute("facility") FormFacility formFacility) {
+        System.out.println("in update");
+        System.out.println(formFacility.getDescription());
+        System.out.println(formFacility.getActive());
+        System.out.println(formFacility.getApprovalRequired());
         this.facilityService.updateFacility(id, formFacility);
+        return "redirect:/facility";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String deleteFacility(@PathVariable(value="id") int id) {
+        this.facilityService.deleteFacility(id);
+        return "redirect:/facility";
     }
 }
