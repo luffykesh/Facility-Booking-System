@@ -58,6 +58,7 @@
                 <td th:text="${user.role}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.bannerId}"></td>
+                <td><a th:href="@{delete/{id} (id=${user.id})}">Delete</a></td>
             </tr>
         </table>
 
