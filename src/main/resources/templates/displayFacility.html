@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Facility List</h2>
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>description</th>
+        <th>location</th>
+        <th>managerId</th>
+        <th>timeSlot</th>
+        <th>active</th>
+        <th>approvalRequired</th>
+    </tr>
+    <tr th:each = "facility: ${facilities}">
+        <td th:text="${facility.name}"></td>
+        <td th:text="${facility.description}"></td>
+        <td th:text="${facility.location}"></td>
+        <td th:text="${facility.managerEmail}"></td>
+        <td th:text="${facility.timeSlot}"></td>
+        <td th:text="${facility.active}"></td>
+        <td th:text="${facility.approvalRequired}"></td>
+        <td><a th:href="@{/facility/{id} (id=${facility.id})}">Edit</a></td>
+        <td><a th:href="@{/facility/delete/{id} (id=${facility.id})}">Delete</a></td>
+    </tr>
+</table>
+</body>
+</html>
