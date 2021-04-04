@@ -108,10 +108,6 @@ public class SlotServiceTest {
 
         List<Slot> slots = slotService.createSlotsForTiming(timing, SLOT_DURATION, SEAT_COUNT, FROM_DATE);
         Assertions.assertEquals(expectedSlotCount, slots.size());
-
-        Slot firstSlot = slots.get(0);
-        Slot lastSlot = slots.get(slots.size()-1);
-        Assertions.assertEquals(WEEKS.between(firstSlot.getStartTime(), lastSlot.getEndTime()), SlotService.ADVANCE_SLOT_CREATE_WEEKS);
     }
 
     @Test
