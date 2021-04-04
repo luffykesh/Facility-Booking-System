@@ -18,8 +18,8 @@ public class SlotRepository implements ISlotRepository{
     private static SlotRepository instance;
 
     private final String Q_DELETE_SLOT = "DELETE FROM slot where id = ?";
-    private final String Q_SLOTS_OF_FACILITY_ON_DATE = "SELECT * FROM slot WHERE facility_id = ? and start_time >= ? and end_time < ?";
-    private final String Q_SLOTS_OF_TIMING = "SELECT * FROM slot where timing_id = ?";
+    private final String Q_SLOTS_OF_FACILITY_ON_DATE = "SELECT * FROM slot WHERE facility_id = ? and start_time >= ? and end_time < ? ORDER BY start_time";
+    private final String Q_SLOTS_OF_TIMING = "SELECT * FROM slot where timing_id = ? ORDER BY start_time";
     private final String Q_INSERT_SLOT = "INSERT INTO slot(facility_id, timing_id, total_seats, available_seats, start_time, end_time) VALUES(?,?,?,?,?,?)";
     private final String Q_DELETE_SLOTS_OF_TIMING = "DELETE FROM slot WHERE timing_id = ?";
 
@@ -42,7 +42,7 @@ public class SlotRepository implements ISlotRepository{
     @Override
     public List<Slot> getSlotsForFacility(Integer facilityId, LocalDateTime fromInclusive, LocalDateTime toExclusive) {
         List<Slot> slots = null;
-        slots = db.query(Q_SLOTS_OF_FACILITY_ON_DATE, new SlotRowMapper(), new Object[]{fromInclusive.toString(), toExclusive.toString()});
+        slots = db.query(Q_SLOTS_OF_FACILITY_ON_DATE, new SlotRowMapper(), new Object[]{facilityId, fromInclusive.toString(), toExclusive.toString()});
         return slots;
     }
 
