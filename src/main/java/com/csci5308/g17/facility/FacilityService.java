@@ -1,5 +1,6 @@
 package com.csci5308.g17.facility;
 
+import com.csci5308.g17.user.IUserRepository;
 import com.csci5308.g17.user.User;
 import com.csci5308.g17.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,20 @@ import java.util.List;
 @Service
 public class FacilityService implements IFacilityService {
 
+    private static FacilityService instance;
     private final IFacilityRepository facilityRepo;
-    private final UserRepository userRepo;
+    private final IUserRepository userRepo;
 
     public FacilityService(IFacilityRepository facilityRepo, UserRepository userRepo) {
         this.facilityRepo = facilityRepo;
         this.userRepo = userRepo;
+    }
+
+    public static FacilityService getInstance() {
+        if (instance == null) {
+            instance = new FacilityService(FacilityRepository.getInstance(), UserRepository.getInstance());
+        }
+        return instance;
     }
 
     @Override
@@ -46,7 +55,7 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public void updateFacility(int id, FormFacility formFacility){
+    public void updateFacility(int id, FormFacility formFacility) {
 
         User u = userRepo.getUserByEmail(formFacility.getManagerEmail());
         Facility facility = new Facility();
@@ -59,7 +68,7 @@ public class FacilityService implements IFacilityService {
         facility.setName(formFacility.getName());
         facility.setDescription(formFacility.getDescription());
 
-        this.facilityRepo.updateFacility(id,facility);
+        this.facilityRepo.updateFacility(id, facility);
 
     }
 }
