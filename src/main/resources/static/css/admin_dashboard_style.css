@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  background-color: #f2edd7;
+}
+
+.header {
+  background-color: #3a6351;
+  padding: 20px;
+  text-align: center;
+  color: #f2edd7;
+}
+
+body {
+  margin: 0;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.column.side {
+  width: 15%;
+  height: 100%;
+}
+
+.column.middle {
+  width: 50%;
+}
+td {
+  padding: 15px;
+  width: 400px;
+}
+
+.button {
+  width: 150px;
+  height: 30px;
+  border-radius: 12px;
+  background-color: #f2edd7;
+}
+
+td.addUser {
+  position: relative;
+  left: 400px;
+}
+div.CSV {
+  background-color: #e48257;
+  text-align: center;
+  color: #3a6351;
+}
+
+.addUser {
+  border: 1px solid black;
+}
+
+.button.positon {
+  position: relative;
+  left: 50px;
+}

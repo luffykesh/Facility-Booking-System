@@ -14,6 +14,7 @@ class FacilityTest {
         Assertions.assertEquals(id, facility.getId());
     }
 
+
     @Test
     void setIdTest() {
         int id = 1;

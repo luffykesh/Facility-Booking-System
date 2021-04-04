@@ -24,6 +24,8 @@ public class UserRepository implements IUserRepository {
     private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
     private String QCLEAR_USER_TOKEN = "UPDATE user SET token=null where id = ?";
     private String QSET_VERIFY_FLAG="UPDATE user SET verified=? where id = ?";
+    private String QUERY_FINDALL="Select * from user";
+    private String QUERY_DELETE = "delete from user where id = ?";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -79,6 +81,12 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public List<User> findAll() {
+        List<User> userList = this.db.query(QUERY_FINDALL, new UserRowMapper());
+        return userList;
+    }
+
+    @Override
     public void setUserToken(String email, String token) {
         db.update(this.QSET_TOKEN,token,email);
     }
@@ -91,5 +99,11 @@ public class UserRepository implements IUserRepository {
     @Override
     public void clearUserToken(Integer userId) {
         db.update(QCLEAR_USER_TOKEN, userId);
+    }
+
+
+    @Override
+    public void deleteUser(int id) {
+        this.db.update(QUERY_DELETE,id);
     }
 }
