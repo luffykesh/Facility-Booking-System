@@ -55,8 +55,6 @@ public class TimingRepository implements ITimingRepository {
         );
         timing.setId(keyHolder.getKey().intValue());
         return timing;
-        // db.update(Q_INSERT_TIMING,
-        //     timing.getFacilityId(), timing.getDay().getValue(), start_time, end_time, isBlocking);
     }
 
     @Override
