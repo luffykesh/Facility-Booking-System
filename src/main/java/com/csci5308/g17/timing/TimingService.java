@@ -57,6 +57,7 @@ public class TimingService implements ITimingService{
 
     @Override
     public void deleteTiming(Integer timingId) {
+        slotService.deleteTimingSlots(timingId);
         timingRepository.deleteTimingById(timingId);
     }
 

@@ -90,14 +90,14 @@ public class TimingController {
         try{
             timingService.deleteTiming(timingId);
             logger.info("Deleted timing: "+ timingId);
+            responseData = new JsonResponseDTO(true, "Timing deleted", null, null);
+            response = new ResponseEntity(responseData, HttpStatus.OK);
         }
         catch(Exception e) {
             logger.error("Error deleting exception", e);
+            responseData = new JsonResponseDTO(true, "Error deleting", null, null);
+            response = new ResponseEntity(responseData, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        responseData = new JsonResponseDTO(true, "Timing deleted", null, null);
-        response = new ResponseEntity(responseData, HttpStatus.OK);
-
         return response;
     }
 
