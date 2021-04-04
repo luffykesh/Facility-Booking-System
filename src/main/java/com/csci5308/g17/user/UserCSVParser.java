@@ -18,7 +18,14 @@ public class UserCSVParser implements  IUserCSVParser {
 
     private final String CSV_MIME = "text/csv";
     private final String MS_EXCEL_MIME = "application/vnd.ms-excel";
+    private static UserCSVParser instance;
 
+    public static UserCSVParser getInstance(){
+        if(instance == null){
+            instance = new UserCSVParser();
+        }
+        return instance;
+    }
     //https://www.pixeltrice.com/import-the-csv-file-into-mysql-database-using-spring-boot-application/
     @Override
     public boolean isCSVFormat(MultipartFile file) {

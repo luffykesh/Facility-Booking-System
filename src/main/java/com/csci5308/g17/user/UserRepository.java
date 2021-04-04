@@ -18,11 +18,12 @@ public class UserRepository implements IUserRepository {
     private String QCOUNT_USERS = "SELECT count(*) FROM user";
     private String QUSER_BY_EMAIL = "SELECT * from user where email = ?";
     private String QUSER_BY_ID = "SELECT * from user where id = ?";
-    private String QSAVE_USER = "INSERT INTO user(name, email, password, role, bannerId) VALUES (?,?,?,?,?)";
+    private String QSAVE_USER = "INSERT INTO user(name, email, role, bannerId) VALUES (?,?,?,?)";
     private String QUSER_BY_TOKEN = "SELECT * FROM user where token= ?";
     private String QSET_TOKEN = "UPDATE user SET token = ? WHERE Email= ?";
     private String QUPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id= ?";
     private String QCLEAR_USER_TOKEN = "UPDATE user SET token=null where id = ?";
+    private String QSET_VERIFY_FLAG="UPDATE user SET verified=? where id = ?";
 
     public UserRepository(JdbcTemplate db) {
         this.db = db;
@@ -33,6 +34,10 @@ public class UserRepository implements IUserRepository {
             instance = new UserRepository(DatabaseConfig.getJdbcTemplate());
         }
         return instance;
+    }
+    @Override
+    public void setVerifiedFlag(Integer userId, Boolean flag){
+        db.update(this.QSET_VERIFY_FLAG, flag, userId);
     }
 
     @Override
@@ -70,7 +75,7 @@ public class UserRepository implements IUserRepository {
     public void save(User user) {
         db.update(
             QSAVE_USER, user.getName(), user.getEmail(),
-            user.getPassword(), user.getRole(), user.getBannerId());
+             user.getRole(), user.getBannerId());
     }
 
     @Override

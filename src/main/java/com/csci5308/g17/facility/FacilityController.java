@@ -8,10 +8,10 @@ import java.util.List;
 @RequestMapping("/facility")
 public class FacilityController {
 
-    IFacilityService facilityService;
+    private final IFacilityService facilityService;
 
-    public FacilityController(IFacilityService facilityService) {
-        this.facilityService = facilityService;
+    public FacilityController() {
+        facilityService = FacilityService.getInstance();
     }
 
     @GetMapping(value = "/{id}")
@@ -31,8 +31,8 @@ public class FacilityController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateFacility(@PathVariable(value = "id") int id,@ModelAttribute("facility") FormFacility formFacility){
+    public void updateFacility(@PathVariable(value = "id") int id, @ModelAttribute("facility") FormFacility formFacility) {
 
-        this.facilityService.updateFacility(id,formFacility);
+        this.facilityService.updateFacility(id, formFacility);
     }
 }
