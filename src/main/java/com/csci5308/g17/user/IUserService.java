@@ -25,4 +25,8 @@ public interface IUserService extends UserDetailsService {
     void clearUserToken(Integer userId);
 
     void verifyUser(Integer id);
+
+    List<User> find();
+
+    public void deleteUser(int id);
 }
