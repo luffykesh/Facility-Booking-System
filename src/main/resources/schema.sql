@@ -39,3 +39,6 @@ CREATE TABLE IF NOT EXISTS timing (
   PRIMARY KEY(id),
   CONSTRAINT timing_fk_1 FOREIGN KEY (facility_id) REFERENCES facility (id)
 );
+
+ALTER TABLE facility
+MODIFY time_slot int;

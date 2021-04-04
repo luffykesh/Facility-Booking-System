@@ -8,7 +8,7 @@ public class Facility {
     private String name;
     private String description;
     private String location;
-    private String timeSlot;
+    private Integer timeSlotDuration;
     private Boolean active;
     private Boolean approvalRequired;
 
@@ -20,11 +20,11 @@ public class Facility {
         this.id = id;
     }
 
-    public int getOccupancy() {
+    public Integer getOccupancy() {
         return occupancy;
     }
 
-    public void setOccupancy(int occupancy) {
+    public void setOccupancy(Integer occupancy) {
         this.occupancy = occupancy;
     }
 
@@ -60,12 +60,12 @@ public class Facility {
         this.managerId = managerId;
     }
 
-    public String getTimeSlot() {
-        return timeSlot;
+    public Integer getTimeSlot() {
+        return timeSlotDuration;
     }
 
-    public void setTimeSlot(String timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setTimeSlot(Integer timeSlotDuration) {
+        this.timeSlotDuration = timeSlotDuration;
     }
 
     public Boolean getActive() {
