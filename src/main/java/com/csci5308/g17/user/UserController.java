@@ -102,7 +102,7 @@ public class UserController {
 
     @GetMapping("/forgot_password")
     public String getForgetPasswordForm() {
-        return "Forgot_Password_Form";
+        return "forgot_password_form";
     }
 
     @PostMapping("/forgot_password")
@@ -114,7 +114,7 @@ public class UserController {
         addAndEmailUserToken(email,request,content,link);
 
         model.addAttribute("message", "Password reset link has been sent to your email");
-        return "Forgot_Password_Form";
+        return "forgot_password_form";
     }
 
     @GetMapping("/reset_password/{token}")
