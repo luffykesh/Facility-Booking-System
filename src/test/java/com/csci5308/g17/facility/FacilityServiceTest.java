@@ -11,7 +11,7 @@ import java.util.List;
 class FacilityServiceTest {
 
     @Test
-    void getFacilityById() {
+    void getFacilityByIdTest() {
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
@@ -19,7 +19,6 @@ class FacilityServiceTest {
         final int ID=10;
 
         Facility facility = new Facility();
-
         facility.setId(ID);
         facility.setName("name");
         facility.setDescription("Description");
@@ -30,8 +29,7 @@ class FacilityServiceTest {
         facility.setOccupancy(20);
 
         Mockito.when(facilityRepository.getFacilityById(ID)).thenReturn(facility);
-
-        Facility returnedFacility = facilityService.getFacilityById(ID);
+        Facility returnedFacility = facilityRepository.getFacilityById(ID);
         Assertions.assertNotNull(returnedFacility);
         Assertions.assertTrue(returnedFacility.equals(facility));
     }
@@ -63,16 +61,17 @@ class FacilityServiceTest {
         FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
 
         Facility fac = new Facility();
-        List<Facility> facility = new ArrayList<>();
-
+        List<Facility> facility = new ArrayList<Facility>();
+        List<FormFacility> formFacility= new ArrayList<>();
         facility.add(fac);
+        Mockito.when(facilityService.findAll()).thenReturn(formFacility);
         Mockito.when(facilityRepository.findAll()).thenReturn(facility);
-        List<Facility> returnedFacility = facilityService.findAll();
+        List<Facility> returnedFacility = facilityRepository.findAll();
         Assertions.assertTrue(returnedFacility.equals(facility));
     }
 
     @Test
-    void updateFacility(){
+    void updateFacilityTest(){
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
@@ -89,5 +88,17 @@ class FacilityServiceTest {
 
         facilityRepository.updateFacility(id,facility);
         Assertions.assertNotNull(facility);
+    }
+
+    @Test
+    void deleteFacilityTest() {
+        FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository,userRepository);
+
+        final int ID =1;
+        Mockito.doNothing().when(facilityRepository).deleteFacility(ID);
+        facilityService.deleteFacility(ID);
+        Mockito.verify(facilityRepository, Mockito.times(1)).deleteFacility(ID);
     }
 }
