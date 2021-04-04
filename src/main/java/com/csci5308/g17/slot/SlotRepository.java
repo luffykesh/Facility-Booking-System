@@ -2,7 +2,7 @@ package com.csci5308.g17.slot;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.csci5308.g17.config.DatabaseConfig;
@@ -40,11 +40,9 @@ public class SlotRepository implements ISlotRepository{
     }
 
     @Override
-    public List<Slot> getSlotsForFacility(Integer facilityId, LocalDate date) {
+    public List<Slot> getSlotsForFacility(Integer facilityId, LocalDateTime fromInclusive, LocalDateTime toExclusive) {
         List<Slot> slots = null;
-        String start_time = date.toString();
-        String end_time = date.plusDays(1).toString();
-        slots = db.query(Q_SLOTS_OF_FACILITY_ON_DATE, new SlotRowMapper(), new Object[]{start_time, end_time});
+        slots = db.query(Q_SLOTS_OF_FACILITY_ON_DATE, new SlotRowMapper(), new Object[]{fromInclusive.toString(), toExclusive.toString()});
         return slots;
     }
 

@@ -1,13 +1,13 @@
 package com.csci5308.g17.slot;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ISlotRepository {
 
     public void insertSlots(List<Slot> slots);
 
-    public List<Slot> getSlotsForFacility(Integer facilityId, LocalDate date);
+    public List<Slot> getSlotsForFacility(Integer facilityId, LocalDateTime fromInclusive, LocalDateTime toExclusive);
 
     public List<Slot> getSlotsOfTiming(Integer timingId);
 

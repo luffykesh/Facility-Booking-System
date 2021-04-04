@@ -71,8 +71,8 @@ public class Slot {
     @Override
     public String toString() {
         return String.format(
-            "Slot(id=%d, facilityId=%d, timingId=%d, totalSeats=%d, availableSeats=%d, startTime%s, endTime=%s)",
-            getId(), getFacilityId(), getTimingId(), getAvailableSeats(), getStartTime(), getEndTime()
+            "Slot(id=%d, facilityId=%d, timingId=%d, totalSeats=%d, availableSeats=%d, startTime=%s, endTime=%s)",
+            id, facilityId, timingId, totalSeats ,availableSeats, startTime, endTime
         );
     }
 }
