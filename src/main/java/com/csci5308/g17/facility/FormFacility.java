@@ -7,7 +7,7 @@ public class FormFacility {
     private String description;
     private String location;
     private String managerEmail;
-    private String timeSlot;
+    private Integer timeSlotDuration;
     private Boolean active;
     private Boolean approvalRequired;
 
@@ -51,12 +51,12 @@ public class FormFacility {
         this.managerEmail = managerEmail;
     }
 
-    public String getTimeSlot() {
-        return timeSlot;
+    public Integer getTimeSlot() {
+        return timeSlotDuration;
     }
 
-    public void setTimeSlot(String timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setTimeSlot(Integer timeSlotDuration) {
+        this.timeSlotDuration = timeSlotDuration;
     }
 
     public Boolean getActive() {

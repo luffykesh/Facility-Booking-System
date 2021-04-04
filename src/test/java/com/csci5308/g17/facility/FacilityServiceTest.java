@@ -26,7 +26,7 @@ class FacilityServiceTest {
         facility.setLocation("Location");
         facility.setActive(true);
         facility.setApprovalRequired(true);
-        facility.setTimeSlot("09:00:00");
+        facility.setTimeSlot(30);
         facility.setOccupancy(20);
 
         Mockito.when(facilityRepository.getFacilityById(ID)).thenReturn(facility);
@@ -49,7 +49,7 @@ class FacilityServiceTest {
         facility.setLocation("Location");
         facility.setActive(true);
         facility.setApprovalRequired(true);
-        facility.setTimeSlot("09:00:00");
+        facility.setTimeSlot(30);
         facility.setOccupancy(20);
 
         facilityRepository.save(facility);
@@ -84,7 +84,7 @@ class FacilityServiceTest {
         facility.setLocation("Location");
         facility.setActive(true);
         facility.setApprovalRequired(true);
-        facility.setTimeSlot("09:00:00");
+        facility.setTimeSlot(30);
         facility.setOccupancy(20);
 
         facilityRepository.updateFacility(id,facility);

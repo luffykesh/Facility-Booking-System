@@ -94,16 +94,16 @@ class FacilityTest {
 
     @Test
     void getTimeSlotTest() {
-        String time_slot = "09:00:00";
-        facility.setTimeSlot(time_slot);
-        Assertions.assertEquals(time_slot, facility.getTimeSlot());
+        Integer timeSlotDuration = 60;
+        facility.setTimeSlot(timeSlotDuration);
+        Assertions.assertEquals(timeSlotDuration, facility.getTimeSlot());
     }
 
     @Test
     void setTimeSlotTest() {
-        String time_slot = "09:00:00";
-        facility.setTimeSlot(time_slot);
-        Assertions.assertEquals(time_slot, facility.getTimeSlot());
+        Integer timeSlotDuration = 60;
+        facility.setTimeSlot(timeSlotDuration);
+        Assertions.assertEquals(timeSlotDuration, facility.getTimeSlot());
     }
 
     @Test
