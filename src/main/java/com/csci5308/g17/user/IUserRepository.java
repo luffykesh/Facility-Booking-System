@@ -21,4 +21,5 @@ public interface IUserRepository {
 
     void setVerifiedFlag(Integer userId, Boolean flag);
     List<User> findAll();
+    void deleteUser(int id);
 };

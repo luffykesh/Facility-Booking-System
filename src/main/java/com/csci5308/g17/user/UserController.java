@@ -170,4 +170,11 @@ public class UserController {
         model.addAttribute("users",userService.find());
         return "/display_users";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteFacility(@PathVariable(value="id") int id) {
+        this.userService.deleteUser(id);
+        return "redirect:/admin_dashboard";
+    }
+
 }
