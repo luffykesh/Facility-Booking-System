@@ -3,13 +3,13 @@ package com.csci5308.g17.facility;
 import java.util.List;
 
 public interface IFacilityService {
-    FormFacility getFacilityById(int id);
+    Facility getFacilityById(int id);
 
-    void save(FormFacility formFacility);
+    void save(Facility facility);
 
-    List<FormFacility> findAll();
+    List<Facility> findAll();
 
-    void updateFacility(int id, FormFacility formFacility);
+    void updateFacility(int id, Facility facility);
 
     public void deleteFacility(int id);
 }

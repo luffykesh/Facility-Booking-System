@@ -1,9 +1,13 @@
 package com.csci5308.g17.facility;
 
+import com.csci5308.g17.user.IUserService;
+import com.csci5308.g17.user.User;
+import com.csci5308.g17.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -11,26 +15,38 @@ import java.util.List;
 public class FacilityController {
 
     private final IFacilityService facilityService;
-
+    private final IUserService userService;
     public FacilityController() {
         facilityService = FacilityService.getInstance();
+        userService = UserService.getInstance();
     }
 
     @GetMapping(value = "/{id}")
     public String getFacilityById(@PathVariable(value = "id") int id,Model model) {
-        FormFacility facility = this.facilityService.getFacilityById(id);
-        System.out.println("desc  " + facility.getDescription());
-        System.out.println(facility.getActive());
-        System.out.println(facility.getApprovalRequired());
-        model.addAttribute("name",facility.getName());
-        model.addAttribute("description",facility.getDescription());
-        model.addAttribute("location",facility.getLocation());
-        model.addAttribute("manager",facility.getManagerEmail());
-        model.addAttribute("occupancy",facility.getOccupancy());
-        model.addAttribute("timeslot",facility.getTimeSlot());
-        model.addAttribute("active",facility.getActive());
-        model.addAttribute("approvalRequired",facility.getApprovalRequired());
-        model.addAttribute("id",facility.getId());
+        Facility facility = this.facilityService.getFacilityById(id);
+
+        FormFacility formFacility = new FormFacility();
+
+        User u = userService.getUserById(facility.getManagerId());
+        formFacility.setApprovalRequired(facility.getApprovalRequired());
+        formFacility.setManagerEmail(u.getEmail());
+        formFacility.setActive(facility.getActive());
+        formFacility.setOccupancy(facility.getOccupancy());
+        formFacility.setTimeSlot(facility.getTimeSlot());
+        formFacility.setLocation(facility.getLocation());
+        formFacility.setName(facility.getName());
+        formFacility.setDescription(facility.getDescription());
+        formFacility.setId(facility.getId());
+
+        model.addAttribute("name",formFacility.getName());
+        model.addAttribute("description",formFacility.getDescription());
+        model.addAttribute("location",formFacility.getLocation());
+        model.addAttribute("manager",formFacility.getManagerEmail());
+        model.addAttribute("occupancy",formFacility.getOccupancy());
+        model.addAttribute("timeslot",formFacility.getTimeSlot());
+        model.addAttribute("active",formFacility.getActive());
+        model.addAttribute("approvalRequired",formFacility.getApprovalRequired());
+        model.addAttribute("id",formFacility.getId());
         return "updateFacility";
     }
 
@@ -41,26 +57,73 @@ public class FacilityController {
 
     @PostMapping()
     public String save(@ModelAttribute("facility") FormFacility formFacility, Model model) {
-        this.facilityService.save(formFacility);
+        User u = userService.getUserByEmail(formFacility.getManagerEmail());
+
+        if (formFacility.getActive() == null) {
+            formFacility.setActive(false);
+        }
+        if (formFacility.getApprovalRequired() == null) {
+            formFacility.setApprovalRequired(false);
+        }
+        Facility facility = new Facility();
+        facility.setApprovalRequired(formFacility.getApprovalRequired());
+        facility.setManagerId(u.getId());
+        facility.setActive(formFacility.getActive());
+        facility.setOccupancy(formFacility.getOccupancy());
+        facility.setTimeSlot(formFacility.getTimeSlot());
+        facility.setLocation(formFacility.getLocation());
+        facility.setName(formFacility.getName());
+        facility.setDescription(formFacility.getDescription());
+
+        this.facilityService.save(facility);
         model.addAttribute("message","Facility added Successfully.");
         return "addFacility";
     }
 
     @GetMapping()
     public String findAll(Model model) {
-        List<FormFacility> facilityList = this.facilityService.findAll();
-        model.addAttribute("facilities",facilityList);
+        List<Facility> facilityList = this.facilityService.findAll();
+        List<FormFacility> formFacilityList = new ArrayList<FormFacility>();
+
+        for(Facility f1 : facilityList) {
+            FormFacility formFacility = new FormFacility();
+            User u = userService.getUserById(f1.getManagerId());
+            formFacility.setApprovalRequired(f1.getApprovalRequired());
+            formFacility.setManagerEmail(u.getEmail());
+            formFacility.setActive(f1.getActive());
+            formFacility.setOccupancy(f1.getOccupancy());
+            formFacility.setTimeSlot(f1.getTimeSlot());
+            formFacility.setLocation(f1.getLocation());
+            formFacility.setName(f1.getName());
+            formFacility.setDescription(f1.getDescription());
+            formFacility.setId(f1.getId());
+            formFacilityList.add(formFacility);
+        }
+        model.addAttribute("facilities",formFacilityList);
         return "displayFacility";
 
     }
 
     @PostMapping(value = "/update/{id}")
     public String updateFacility(@PathVariable(value = "id") int id, @ModelAttribute("facility") FormFacility formFacility) {
-        System.out.println("in update");
-        System.out.println(formFacility.getDescription());
-        System.out.println(formFacility.getActive());
-        System.out.println(formFacility.getApprovalRequired());
-        this.facilityService.updateFacility(id, formFacility);
+        User u = userService.getUserByEmail(formFacility.getManagerEmail());
+
+        if (formFacility.getActive() == null) {
+            formFacility.setActive(false);
+        }
+        if (formFacility.getApprovalRequired() == null) {
+            formFacility.setApprovalRequired(false);
+        }
+        Facility facility = new Facility();
+        facility.setApprovalRequired(formFacility.getApprovalRequired());
+        facility.setManagerId(u.getId());
+        facility.setActive(formFacility.getActive());
+        facility.setOccupancy(formFacility.getOccupancy());
+        facility.setTimeSlot(formFacility.getTimeSlot());
+        facility.setLocation(formFacility.getLocation());
+        facility.setName(formFacility.getName());
+        facility.setDescription(formFacility.getDescription());
+        this.facilityService.updateFacility(id, facility);
         return "redirect:/facility";
     }
 
