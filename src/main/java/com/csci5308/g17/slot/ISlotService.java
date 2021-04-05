@@ -19,4 +19,8 @@ public interface ISlotService {
     public void deleteSlot(Integer Id);
 
     public void deleteTimingSlots(Integer timingId);
+
+    public void reserveSeat(Integer slotId);
+
+    public void releaseSeat(Integer slotId);
 }

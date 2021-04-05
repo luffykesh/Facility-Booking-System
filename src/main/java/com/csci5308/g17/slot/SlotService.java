@@ -119,4 +119,16 @@ public class SlotService implements ISlotService{
         }
         return slots;
     }
+
+    @Override
+    public void releaseSeat(Integer slotId) {
+        slotRepo.releaseSeat(slotId);
+
+    }
+
+    @Override
+    public void reserveSeat(Integer slotId) {
+        slotRepo.reserveSeat(slotId);
+    }
+
 }

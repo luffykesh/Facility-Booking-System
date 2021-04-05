@@ -14,4 +14,8 @@ public interface ISlotRepository {
     public void deleteSlot(Integer id);
 
     public void deleteTimingSlots(Integer timingId);
+
+    public void reserveSeat(Integer slotId);
+
+    public void releaseSeat(Integer slotId);
 }
