@@ -127,7 +127,11 @@ public class SlotService implements ISlotService{
     }
 
     @Override
-    public void reserveSeat(Integer slotId) {
+    public void reserveSeat(Integer slotId) throws SlotFullException {
+        Slot slot = getSlotById(slotId);
+        if(slot.getAvailableSeats() == 0) {
+            throw new SlotFullException();
+        }
         slotRepo.reserveSeat(slotId);
     }
 

@@ -20,7 +20,7 @@ public interface ISlotService {
 
     public void deleteTimingSlots(Integer timingId);
 
-    public void reserveSeat(Integer slotId);
+    public void reserveSeat(Integer slotId) throws SlotFullException;
 
     public void releaseSeat(Integer slotId);
 
