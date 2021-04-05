@@ -39,9 +39,9 @@
     <label>Active</label><br/><br/>
     <input type="checkbox" name="approvalRequired" th:checked="${approvalRequired} ? 'checked'"/>
     <label>Approval Required</label><br/><br/>
-    <a th:href="@{/facility/update/{id} (id=${id})}">update</a>
-    <a th:href="@{/admin/home}">home</a>
-    <input type="submit" value="Update"/>
+
+    <input type="submit" value="Update"/> <br/><br/>
+    <a th:href="@{/admin_dashboard}">home</a>
 </form>
 </body>
 </html>
