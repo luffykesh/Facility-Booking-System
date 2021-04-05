@@ -2,10 +2,11 @@ package com.csci5308.g17.config;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 
-@Component("ApplicationContextProvider")
+@Configuration("ApplicationContextProvider")
 public class ApplicationContextProvider implements ApplicationContextAware {
     private static ApplicationContext context;
 
