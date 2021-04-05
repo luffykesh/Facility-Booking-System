@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.csci5308.g17.auth.CurrentUserService;
 import com.csci5308.g17.utils.JsonResponseDTO;
 
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,20 +23,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
+@Controller
 @RequestMapping("/timing")
 public class TimingController {
 
     ITimingService timingService;
+    CurrentUserService currentUserService;
     Logger logger = LoggerFactory.getLogger(TimingController.class);
 
     public TimingController() {
         timingService = TimingService.getInstance();
+        currentUserService = CurrentUserService.getInstance();
     }
 
     @GetMapping("")
-    public ResponseEntity<JsonResponseDTO> getTimingsForFacility(@RequestParam(name="facility_id") Integer facilityId) {
+    public String getTimingsForFacility(@RequestParam(name="facility_id") Integer facilityId, Model model) {
         List<Timing> timings = timingService.getFacilityTimings(facilityId);
         JsonResponseDTO<List<TimingDTO>> responseData = null;
         ResponseEntity<JsonResponseDTO> response = null;
@@ -49,12 +56,19 @@ public class TimingController {
             responseData = new JsonResponseDTO(false, null, errMessage, null);
             response = new ResponseEntity(responseData, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return response;
+        model.addAttribute("facilityId",facilityId);
+        model.addAttribute("user",currentUserService.getCurrentUser());
+        model.addAttribute("timingList",timings);
+        return "timing";
     }
 
-    @PostMapping(path = "", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<JsonResponseDTO> addTiming(@ModelAttribute("timing") TimingDTO requestTiming) {
-
+    //@PostMapping(path = "", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})  ResponseEntity<JsonResponseDTO>
+    @PostMapping()
+    public RedirectView addTiming(@ModelAttribute("timing") TimingDTO requestTiming, RedirectAttributes attributes) {
+        System.out.println(requestTiming.getStartTime());
+        System.out.println(requestTiming.getEndTime());
+        System.out.println(requestTiming.getDay());
+        System.out.println(requestTiming.getFacilityId());
         JsonResponseDTO<String> responseData = null;
         ResponseEntity<JsonResponseDTO> response = null;
         Timing newTiming = new Timing();
@@ -79,7 +93,8 @@ public class TimingController {
             responseData = new JsonResponseDTO(false, e.getMessage(), "Invalid time range", null);
             response = new ResponseEntity(responseData, HttpStatus.BAD_REQUEST);
         }
-        return response;
+        attributes.addAttribute("facility_id",requestTiming.getFacilityId());
+        return new RedirectView("/timing");
     }
 
     @DeleteMapping("/{id}")
