@@ -65,5 +65,9 @@ CREATE TABLE IF NOT EXISTS booking (
   slot_id INT NOT NULL,
   start_time DATETIME NOT NULL,
   end_time DATETIME NOT NULL,
-  status varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT booking_facility_fk FOREIGN KEY (facility_id) REFERENCES facility (id),
+  CONSTRAINT booking_user_fk FOREIGN KEY (user_id) REFERENCES user (id),
+  CONSTRAINT booking_slot_fk FOREIGN KEY (slot_id) REFERENCES slot (id)
 );
