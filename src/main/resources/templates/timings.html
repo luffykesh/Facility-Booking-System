@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="timings_list">
+        <table id="timing_table">
+            <tr>
+                <th> Day </th>
+                <th> Start </th>
+                <th> End </th>
+            </tr>
+        </table>
+    </div>
+    <script th:inline='javascript'>
+        $(document).ready(function () {
+            /*<![CDATA[*/
+                var role = [[${user.role}]];
+            /*]]>*/
+            console.log("fetching timings for facility" + role)
+            $.getJSON("/timing?facility_id=1", function (response) {
+            console.log(response.data);
+            if (response.success && response.data.length > 0) {
+                $.each(response.data, function (key, timing) {
+                    timing_row =
+                    "<tr>"
+                    + "<td>" + timing['day'] + "</td>"
+                    + "<td>" + timing['startTime'] + "</td>"
+                    + "<td>" + timing['endTime'] + "</td>";
+                    if(role=="MANAGER"){
+                        timing_row += "<td>" + "<a href='#' onclick='deleteTiming(" + timing["id"] + ")'> Delete </a>" + "</td>"
+                    }
+                    timing_row += "</tr>";
+                $("#timing_table").append(timing_row)
+                });
+            } else {
+                $("#timing_table").remove();
+                // $("#timing_list").html("<h1>No timings set</h1>")
+            }
+            });
+        });
+
+        function deleteTiming(timingId) {
+            $.ajax(
+                {
+                url: "/timing/" + timingId,
+                type: "DELETE",
+                error: deleteTimingError,
+                success: deleteTimingSuccess
+                }
+            )
+            console.log("timing :"+ timingId + " deleted")
+        }
+
+        function deleteTimingSuccess(response, textStatus, jqXHR) {
+            window.location.reload();
+        }
+
+        function deleteTimingError(jqXHR, textStatus, errorThrown) {
+            console.log(`timing delete failed. Status: ${textStatus}; error: ${errorThrown}`)
+            console.log(`response: status: ${jqXHR.status}, body: ${jqXHR.responseText}`)
+            alert("Timing delete failed");
+        }
+    </script>
+</body>
+</html>

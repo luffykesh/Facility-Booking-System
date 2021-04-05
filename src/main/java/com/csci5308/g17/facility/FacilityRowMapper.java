@@ -15,7 +15,7 @@ public class FacilityRowMapper implements RowMapper<Facility> {
         facility.setLocation(rs.getString("location"));
         facility.setOccupancy(rs.getInt("occupancy"));
         facility.setManagerId(rs.getInt("manager_id"));
-        facility.setTimeSlot(rs.getString("time_slot"));
+        facility.setTimeSlot(rs.getInt("time_slot"));
         facility.setActive(rs.getBoolean("active"));
         facility.setApprovalRequired(rs.getBoolean("approval_required"));
         return facility;
