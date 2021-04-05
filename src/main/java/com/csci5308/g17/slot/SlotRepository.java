@@ -24,6 +24,7 @@ public class SlotRepository implements ISlotRepository{
     private final String Q_DELETE_SLOTS_OF_TIMING = "DELETE FROM slot WHERE timing_id = ?";
     private final String Q_RESERVE_SEAT = "UPDATE slot SET available_seats=available_seats-1 where id=?";
     private final String Q_RELEASE_SEAT = "UPDATE slot SET available_seats=available_seats+1 where id=?";
+    private final String Q_SLOT_BY_ID = "SELECT * FROM slot where id = ?";
 
     public SlotRepository(JdbcTemplate jdbcTemplate) {
         db = jdbcTemplate;
@@ -86,5 +87,14 @@ public class SlotRepository implements ISlotRepository{
     @Override
     public void reserveSeat(Integer slotId) {
         db.update(Q_RESERVE_SEAT, slotId);
+    }
+
+    @Override
+    public Slot getSlotById(Integer slotId) {
+        List<Slot> slot = db.query(Q_SLOT_BY_ID, new SlotRowMapper(), new Object[] {slotId});
+        if(slot == null || slot.size() == 0) {
+            return null;
+        }
+        return slot.get(0);
     }
 }

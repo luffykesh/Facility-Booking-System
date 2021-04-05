@@ -23,4 +23,6 @@ public interface ISlotService {
     public void reserveSeat(Integer slotId);
 
     public void releaseSeat(Integer slotId);
+
+    public Slot getSlotById(Integer slotId);
 }

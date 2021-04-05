@@ -131,4 +131,9 @@ public class SlotService implements ISlotService{
         slotRepo.reserveSeat(slotId);
     }
 
+    @Override
+    public Slot getSlotById(Integer slotId) {
+        return slotRepo.getSlotById(slotId);
+    }
+
 }
