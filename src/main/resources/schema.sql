@@ -56,3 +56,14 @@ CREATE TABLE IF NOT EXISTS slot (
   CONSTRAINT slot_facility_fk FOREIGN KEY (facility_id) REFERENCES facility (id),
   CONSTRAINT slot_timing_fk FOREIGN KEY (timing_id) REFERENCES timing (id)
 );
+
+
+CREATE TABLE IF NOT EXISTS booking (
+  id INT NOT NULL AUTO_INCREMENT,
+  facility_id INT NOT NULL,
+  user_id INT NOT NULL,
+  slot_id INT NOT NULL,
+  start_time DATETIME NOT NULL,
+  end_time DATETIME NOT NULL,
+  status varchar(255) NOT NULL,
+);
