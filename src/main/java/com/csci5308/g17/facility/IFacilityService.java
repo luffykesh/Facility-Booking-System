@@ -12,4 +12,6 @@ public interface IFacilityService {
     void updateFacility(int id, Facility facility);
 
     public void deleteFacility(int id);
+
+    List<Facility> getManagerFacilities(Integer managerUserId);
 }

@@ -51,4 +51,9 @@ public class FacilityService implements IFacilityService {
     public void deleteFacility(int id) {
         this.facilityRepo.deleteFacility(id);
     }
+
+    @Override
+    public List<Facility>getManagerFacilities(Integer managerUserId) {
+        return this.facilityRepo.getFacilitiesByManagerId(managerUserId);
+    }
 }
