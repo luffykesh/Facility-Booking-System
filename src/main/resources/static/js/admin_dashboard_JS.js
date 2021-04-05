@@ -7,3 +7,10 @@ function userRegistration() {
 function displayUsers(){
   location.replace("display_users")
 }
+function adminFacility(){
+    location.replace("facility");
+}
+
+function addFacility(){
+    location.replace("facility/addFacility")
+}

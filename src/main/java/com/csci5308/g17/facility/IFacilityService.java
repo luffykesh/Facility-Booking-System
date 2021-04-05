@@ -5,9 +5,11 @@ import java.util.List;
 public interface IFacilityService {
     Facility getFacilityById(int id);
 
-    void save(FormFacility formFacility);
+    void save(Facility facility);
 
     List<Facility> findAll();
 
-    void updateFacility(int id, FormFacility formFacility);
+    void updateFacility(int id, Facility facility);
+
+    public void deleteFacility(int id);
 }
