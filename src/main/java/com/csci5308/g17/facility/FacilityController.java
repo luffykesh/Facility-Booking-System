@@ -1,8 +1,10 @@
 package com.csci5308.g17.facility;
 
+import com.csci5308.g17.auth.CurrentUserService;
 import com.csci5308.g17.user.IUserService;
 import com.csci5308.g17.user.User;
 import com.csci5308.g17.user.UserService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,12 @@ public class FacilityController {
 
     private final IFacilityService facilityService;
     private final IUserService userService;
+    private final CurrentUserService currentUserService;
     public FacilityController() {
+
         facilityService = FacilityService.getInstance();
         userService = UserService.getInstance();
+        currentUserService=CurrentUserService.getInstance();
     }
 
     @GetMapping(value = "/{id}")
@@ -47,7 +52,12 @@ public class FacilityController {
         model.addAttribute("active",formFacility.getActive());
         model.addAttribute("approvalRequired",formFacility.getApprovalRequired());
         model.addAttribute("id",formFacility.getId());
-        return "updateFacility";
+        if(currentUserService.getCurrentUser().getRole()=="ADMIN") {
+            return "updateFacility";
+        }
+        else {
+            return "update_facility_manager";
+        }
     }
 
     @GetMapping(value = "/addFacility")
@@ -132,4 +142,11 @@ public class FacilityController {
         this.facilityService.deleteFacility(id);
         return "redirect:/facility";
     }
+    @GetMapping("/display_manager_facility")
+    public String getUserEmail(Model model){
+        model.addAttribute("facility",facilityService.getFacility(currentUserService.getCurrentUser().getId()));
+        return "display_manager_facility";
+    }
+
+
 }
