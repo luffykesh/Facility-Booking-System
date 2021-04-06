@@ -1,8 +1,5 @@
 package com.csci5308.g17.user;
 
-import com.csci5308.g17.facility.Facility;
-import com.csci5308.g17.facility.FacilityRepository;
-import com.csci5308.g17.facility.FacilityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

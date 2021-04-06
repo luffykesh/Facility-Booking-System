@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csci5308.g17.auth.CurrentUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +19,11 @@ public class UserController {
     private IUserService userService;
     private IUserCSVParser csvService;
     private IEmailService emailService;
-    private CurrentUserService currentUserService;
 
     public UserController() {
         userService = UserService.getInstance();
         csvService = UserCSVParser.getInstance();
         emailService = EmailService.getInstance();
-        currentUserService=CurrentUserService.getInstance();
     }
 
     private void addAndEmailUserToken(String email,HttpServletRequest request,String content,String link){

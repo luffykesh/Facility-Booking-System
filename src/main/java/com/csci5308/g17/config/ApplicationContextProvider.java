@@ -3,8 +3,6 @@ package com.csci5308.g17.config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-
 
 @Configuration("ApplicationContextProvider")
 public class ApplicationContextProvider implements ApplicationContextAware {
@@ -18,5 +16,4 @@ public class ApplicationContextProvider implements ApplicationContextAware {
     public static ApplicationContext getContext() {
         return context;
     }
-
 }
