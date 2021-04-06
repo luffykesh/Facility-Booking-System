@@ -13,4 +13,6 @@ public interface IFacilityRepository {
     void updateFacility(int id, Facility facility);
 
     void deleteFacility(int id);
+
+    List<Facility> findAllFacility(int id);
 }

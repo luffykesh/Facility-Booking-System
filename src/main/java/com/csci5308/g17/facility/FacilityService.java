@@ -11,8 +11,10 @@ public class FacilityService implements IFacilityService {
     private final IFacilityRepository facilityRepo;
 
 
+
     public FacilityService(IFacilityRepository facilityRepo) {
         this.facilityRepo = facilityRepo;
+
     }
 
     public static FacilityService getInstance() {
@@ -50,5 +52,11 @@ public class FacilityService implements IFacilityService {
     @Override
     public void deleteFacility(int id) {
         this.facilityRepo.deleteFacility(id);
+    }
+
+    @Override
+    public List<Facility> getFacility(int id){
+        return facilityRepo.findAllFacility(id);
+
     }
 }

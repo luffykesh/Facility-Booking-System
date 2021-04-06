@@ -1,4 +1,4 @@
-function adminFacility() {
+function adminUsers() {
   location.replace("admin_dashboard.html");
 }
 function userRegistration() {

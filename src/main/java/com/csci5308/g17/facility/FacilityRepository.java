@@ -16,6 +16,7 @@ public class FacilityRepository implements IFacilityRepository {
     private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
     private final String QUERY_UPDATE = "update facility set name = ?,description = ?, location = ?, occupancy = ?, manager_id = ?, time_slot = ?, active = ?, approval_required =? where id = ?";
     private final String QUERY_DELETE = "delete from facility where id = ?";
+    private final String QUERY_FINDMANAGER = "Select * from facility WHERE manager_id=?";
     private final JdbcTemplate db;
 
     public FacilityRepository(JdbcTemplate db) {
@@ -60,6 +61,13 @@ public class FacilityRepository implements IFacilityRepository {
     @Override
     public void deleteFacility(int id) {
         this.db.update(QUERY_DELETE,id);
+    }
+
+    @Override
+    public List<Facility> findAllFacility(int id) {
+
+        List<Facility> facilityList = this.db.query(QUERY_FINDMANAGER,new FacilityRowMapper(),id);
+        return facilityList;
     }
 
 }

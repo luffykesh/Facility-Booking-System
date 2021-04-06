@@ -36,7 +36,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/reset_password/**",
                     "/user_registration_form"
                 ).permitAll()
-                .antMatchers("/upload", "/admin/**").hasAuthority(UserConstants.USER_ROLE_ADMIN)
+                .antMatchers( "/admin_dashboard").hasAuthority(UserConstants.USER_ROLE_ADMIN)
+                .antMatchers( "/manager_dashboard").hasAuthority(UserConstants.USER_ROLE_MANAGER)
+                .antMatchers( "/user_dashboard").hasAuthority(UserConstants.USER_ROLE_USER)
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
