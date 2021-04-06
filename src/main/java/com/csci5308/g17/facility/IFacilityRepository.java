@@ -14,5 +14,5 @@ public interface IFacilityRepository {
 
     void deleteFacility(int id);
 
-    List<Facility> findAllFacility(int id);
+    List<Facility> getFacilitiesByManagerId(Integer managerId);
 }

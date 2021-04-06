@@ -13,5 +13,5 @@ public interface IFacilityService {
 
     public void deleteFacility(int id);
 
-    List<Facility> getFacility(int id);
+    List<Facility> getManagerFacilities(Integer managerUserId);
 }

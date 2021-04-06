@@ -1,7 +1,6 @@
 package com.csci5308.g17.slot;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
-import static java.time.temporal.ChronoUnit.WEEKS;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

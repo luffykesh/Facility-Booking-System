@@ -19,4 +19,10 @@ public interface ISlotService {
     public void deleteSlot(Integer Id);
 
     public void deleteTimingSlots(Integer timingId);
+
+    public void reserveSeat(Integer slotId) throws SlotFullException;
+
+    public void releaseSeat(Integer slotId);
+
+    public Slot getSlotById(Integer slotId);
 }

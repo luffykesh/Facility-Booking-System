@@ -1,4 +1,4 @@
-package com.csci5308.g17.user;
+package com.csci5308.g17.email;
 
 import com.csci5308.g17.config.ApplicationContextProvider;
 import org.springframework.context.ApplicationContext;

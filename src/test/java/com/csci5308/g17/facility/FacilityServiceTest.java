@@ -114,8 +114,8 @@ class FacilityServiceTest {
         facility.setManagerId(MANAGER_ID);
 
 
-        Mockito.when(facilityRepository.findAllFacility(MANAGER_ID)).thenReturn(facilityList);
-        List<Facility> returnedFacility = facilityService.getFacility(MANAGER_ID);
+        Mockito.when(facilityRepository.getFacilitiesByManagerId(MANAGER_ID)).thenReturn(facilityList);
+        List<Facility> returnedFacility = facilityService.getManagerFacilities(MANAGER_ID);
         Assertions.assertNotNull(returnedFacility);
         Assertions.assertTrue(returnedFacility.equals(facilityList));
     }
