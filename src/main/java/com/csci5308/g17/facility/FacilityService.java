@@ -1,7 +1,5 @@
 package com.csci5308.g17.facility;
 
-import com.csci5308.g17.user.IUserRepository;
-import com.csci5308.g17.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
