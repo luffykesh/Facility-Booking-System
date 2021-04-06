@@ -64,7 +64,7 @@ public class BookingRepository implements IBookingRepository {
     }
 
     public void setBookingStatus(Integer bookingId, BookingStatus status) {
-        db.update(Q_SET_BOOKING_STATUS, bookingId, status);
+        db.update(Q_SET_BOOKING_STATUS, status.toString(), bookingId);
     }
 
     public Booking getById(Integer bookingId) {

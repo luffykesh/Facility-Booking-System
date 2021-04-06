@@ -67,6 +67,7 @@ public class BookingController {
     @PostMapping("/{bookingId}/cancel")
     public String cancelBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
         Booking booking = bookingService.getById(bookingId);
+        bookingService.cancelBooking(booking.getId());
         Integer facilityId = booking.getFacilityId();
         redirectAttributes.addAttribute("facility_id", facilityId);
         return "redirect:/booking";
