@@ -14,13 +14,17 @@ public class MainController {
     public String loginPage() {
         return "login";
     }
-
-    @GetMapping("/admin/home")
-    public ModelAndView adminHome() {
-        User currentUser = CurrentUserService.getInstance().getCurrentUser();
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("admin");
-        mav.addObject("user", currentUser);
-        return mav;
+    @GetMapping("/admin_dashboard")
+    public String getAdminDashboard(){
+        return "/admin_dashboard";
     }
+    @GetMapping("/manager_dashboard")
+    public String getManagerDashboard(){
+        return "/manager_dashboard";
+    }
+    @GetMapping("/user_dashboard")
+    public String getUserDashboard(){
+        return "/user_dashboard";
+    }
+
 }
