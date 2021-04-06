@@ -94,4 +94,29 @@ class FacilityServiceTest {
         facilityService.deleteFacility(ID);
         Mockito.verify(facilityRepository, Mockito.times(1)).deleteFacility(ID);
     }
+    @Test
+    void getFacilityByManagerIdTest() {
+        FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
+        FacilityService facilityService = new FacilityService(facilityRepository);
+        List<Facility> facilityList = new ArrayList<Facility>();
+
+        final int MANAGER_ID=10;
+
+        Facility facility = new Facility();
+        facility.setId(1);
+        facility.setName("name");
+        facility.setDescription("Description");
+        facility.setLocation("Location");
+        facility.setActive(true);
+        facility.setApprovalRequired(true);
+        facility.setTimeSlot(30);
+        facility.setOccupancy(20);
+        facility.setManagerId(MANAGER_ID);
+
+
+        Mockito.when(facilityRepository.findAllFacility(MANAGER_ID)).thenReturn(facilityList);
+        List<Facility> returnedFacility = facilityService.getFacility(MANAGER_ID);
+        Assertions.assertNotNull(returnedFacility);
+        Assertions.assertTrue(returnedFacility.equals(facilityList));
+    }
 }
