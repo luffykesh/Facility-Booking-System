@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.g17.email.EmailService;
+import com.csci5308.g17.email.IEmailService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
