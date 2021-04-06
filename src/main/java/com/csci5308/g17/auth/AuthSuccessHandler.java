@@ -22,13 +22,13 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler{
         Authentication authentication) throws IOException{
         Set<String> userRoles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if(userRoles.contains(UserConstants.USER_ROLE_ADMIN)) {
-            response.sendRedirect("/admin/home");
+            response.sendRedirect("/admin_dashboard");
         }
         else if(userRoles.contains(UserConstants.USER_ROLE_MANAGER)) {
-            response.sendRedirect("/manager/home");
+            response.sendRedirect("/manager_dashboard");
         }
         else {
-            response.sendRedirect("/user/home");
+            response.sendRedirect("/user_dashboard");
         }
     }
 }
