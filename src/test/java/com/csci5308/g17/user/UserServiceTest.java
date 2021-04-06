@@ -1,9 +1,15 @@
 package com.csci5308.g17.user;
 
+import com.csci5308.g17.facility.Facility;
+import com.csci5308.g17.facility.FacilityRepository;
+import com.csci5308.g17.facility.FacilityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserServiceTest {
@@ -147,5 +153,17 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.times(1)).clearUserToken(ID);
 
 
+    }
+    @Test
+    void findAllTest(){
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+        User user = new User();
+        List<User> userList = new ArrayList<User>();
+        userList.add(user);
+        Mockito.when(userService.find()).thenReturn(userList);
+        Mockito.when(userRepository.findAll()).thenReturn(userList);
+        List<User> returnedUser = userRepository.findAll();
+        Assertions.assertTrue(returnedUser.equals(userList));
     }
 }
