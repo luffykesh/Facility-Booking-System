@@ -6,19 +6,32 @@
 
 </head>
 <body>
+<div th:if="${message != null}">
+    <p class="text-warning">[[${message}]]</p>
+</div>
 <form id="facility_details" modelAttribute="timing" action="/timing" method="post">
 
-    <input type="hidden" name="facilityId" th:value="${facilityId}"/><br>
+    <input type="hidden" name="facilityId" th:value="${facilityId}" required/><br>
     <label>Day:</label>
-    <input type="text" name="day"/><br/>
+    <select id="cars" name="day" required>
+        <option value="SUNDAY">SUNDAY</option>
+        <option value="MONDAY">MONDAY</option>
+        <option value="TUESDAY">TUESDAY</option>
+        <option value="WEDNESDAY">WEDNESDAY</option>
+        <option value="THURSDAY">THURSDAY</option>
+        <option value="FRIDAY">FRIDAY</option>
+        <option value="SATURDAY">SATURDAY</option>
+    </select>
     <br/>
     <label>Start Time:</label>
-    <input type="time" name="startTime"/><br/>
+    <input type="time" name="startTime" required/><br/>
     <br/>
     <label>End Time:</label>
-    <input type="time" name="endTime"/><br/>
+    <input type="time" name="endTime" required/><br/>
     <br/>
     <button type="submit">Add timing</button>
+    <br>
+    <a th:href="@{/manager_dashboard}">home</a><br>
 
     <table border="1">
         <tr>
@@ -26,7 +39,7 @@
             <th>Start Time</th>
             <th>End Time</th>
         </tr>
-        <tr th:each = "timing: ${timingList}">
+        <tr th:each="timing: ${timingList}">
             <td th:text="${timing.day}"></td>
             <td th:text="${timing.startTime}"></td>
             <td th:text="${timing.endTime}"></td>
