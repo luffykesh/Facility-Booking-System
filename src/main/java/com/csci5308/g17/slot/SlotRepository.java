@@ -22,8 +22,8 @@ public class SlotRepository implements ISlotRepository{
     private final String Q_SLOTS_OF_TIMING = "SELECT * FROM slot where timing_id = ? ORDER BY start_time";
     private final String Q_INSERT_SLOT = "INSERT INTO slot(facility_id, timing_id, total_seats, available_seats, start_time, end_time) VALUES(?,?,?,?,?,?)";
     private final String Q_DELETE_SLOTS_OF_TIMING = "DELETE FROM slot WHERE timing_id = ?";
-    private final String Q_RESERVE_SEAT = "UPDATE slot SET available_seats=available_seats-1 where id=?";
-    private final String Q_RELEASE_SEAT = "UPDATE slot SET available_seats=available_seats+1 where id=?";
+    private final String Q_RESERVE_SEAT = "UPDATE slot SET available_seats=available_seats-1 where id=? and available_seats>0";
+    private final String Q_RELEASE_SEAT = "UPDATE slot SET available_seats=available_seats+1 where id=? and available_seats<total_seats";
     private final String Q_SLOT_BY_ID = "SELECT * FROM slot where id = ?";
 
     public SlotRepository(JdbcTemplate jdbcTemplate) {
