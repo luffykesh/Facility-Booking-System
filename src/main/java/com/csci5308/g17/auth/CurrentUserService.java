@@ -47,4 +47,8 @@ public class CurrentUserService {
         User currentUser = getCurrentUser();
         return currentUser.getRole().equals(UserConstants.USER_ROLE_MANAGER);
     }
+    public boolean isUser() {
+        User currentUser = getCurrentUser();
+        return currentUser.getRole().equals(UserConstants.USER_ROLE_USER);
+    }
 }
