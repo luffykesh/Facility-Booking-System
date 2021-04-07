@@ -109,8 +109,12 @@ public class FacilityController {
             formFacilityList.add(formFacility);
         }
         model.addAttribute("facilities",formFacilityList);
-        return "displayFacility";
-
+        if(currentUserService.isAdmin()) {
+            return "displayFacility";
+        }
+        else{
+            return "display_user_facility";
+        }
     }
 
     @PostMapping(value = "/update/{id}")
@@ -142,8 +146,9 @@ public class FacilityController {
         return "redirect:/facility";
     }
     @GetMapping("/display_manager_facility")
-    public String getUserEmail(Model model){
+    public String getManagerFacilityList(Model model){
         model.addAttribute("facility",facilityService.getManagerFacilities(currentUserService.getCurrentUser().getId()));
-        return "display_manager_facility";
+        return  "/display_manager_facility";
     }
+
 }
