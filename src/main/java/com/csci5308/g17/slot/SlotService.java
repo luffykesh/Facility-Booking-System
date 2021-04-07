@@ -119,4 +119,25 @@ public class SlotService implements ISlotService{
         }
         return slots;
     }
+
+    @Override
+    public void releaseSeat(Integer slotId) {
+        slotRepo.releaseSeat(slotId);
+
+    }
+
+    @Override
+    public void reserveSeat(Integer slotId) throws SlotFullException {
+        Slot slot = getSlotById(slotId);
+        if(slot.getAvailableSeats() == 0) {
+            throw new SlotFullException();
+        }
+        slotRepo.reserveSeat(slotId);
+    }
+
+    @Override
+    public Slot getSlotById(Integer slotId) {
+        return slotRepo.getSlotById(slotId);
+    }
+
 }

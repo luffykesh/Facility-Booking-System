@@ -9,18 +9,18 @@
   </head>
   <body>
     <div class="header">
-      <h1>Dashboard</h1>
+      <h1>Admin Dashboard</h1>
     </div>
     <div class="CSV">
       <table>
         <tr>
           <td class="addUser">
             <form
-              th:action="@{/admin/user_upload}"
+              th:action="@{/user_upload}"
               method="post"
               enctype="multipart/form-data">
               <input type="file" th:name="file" required />
-              <button type="submit" class="button" onclick="adminFacility()" >upload CSV file</button>
+              <button type="submit" class="button" onclick="adminUsers()" >upload CSV file</button>
             </form>
           </td>
           <td class="addUser">

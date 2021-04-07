@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.g17.email.EmailService;
+import com.csci5308.g17.email.IEmailService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,16 +50,12 @@ public class UserController {
         return serverUrl;
     }
 
-    @GetMapping("/admin_dashboard")
-    public String getAdminDashboard(){
-        return "/admin_dashboard";
-    }
-    @GetMapping("/admin/user_upload")
+    @GetMapping("/user_upload")
     public String userCSVUploadForm(){
         return "upload";
     }
 
-    @PostMapping("/admin/user_upload")
+    @PostMapping("/user_upload")
     public String userCSVData(@RequestParam(name="file") MultipartFile file,HttpServletRequest request,Model model) throws IOException {
         if(csvService.isCSVFormat(file)) {
             List<User> userList = csvService.readCSV(file.getInputStream());
@@ -162,7 +161,7 @@ public class UserController {
                 + "<p><a href=\"%s\">Verify Account</a></p>";
         addAndEmailUserToken(user.getEmail(),request,content,link);
         model.addAttribute("message", "User added successfully");
-        return "/admin_dashboard";
+        return "/user_registration_form";
     }
 
     @GetMapping("/display_users")
@@ -174,7 +173,7 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String deleteFacility(@PathVariable(value="id") int id) {
         this.userService.deleteUser(id);
-        return "redirect:/admin_dashboard";
+        return "redirect:/display_users";
     }
 
 }

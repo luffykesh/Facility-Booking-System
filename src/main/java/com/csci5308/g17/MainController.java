@@ -1,11 +1,7 @@
 package com.csci5308.g17;
 
-import com.csci5308.g17.auth.CurrentUserService;
-import com.csci5308.g17.user.User;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
@@ -14,13 +10,17 @@ public class MainController {
     public String loginPage() {
         return "login";
     }
-
-    @GetMapping("/admin/home")
-    public ModelAndView adminHome() {
-        User currentUser = CurrentUserService.getInstance().getCurrentUser();
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("admin");
-        mav.addObject("user", currentUser);
-        return mav;
+    @GetMapping("/admin_dashboard")
+    public String getAdminDashboard(){
+        return "/admin_dashboard";
     }
+    @GetMapping("/manager_dashboard")
+    public String getManagerDashboard(){
+        return "/manager_dashboard";
+    }
+    @GetMapping("/user_dashboard")
+    public String getUserDashboard(){
+        return "/user_dashboard";
+    }
+
 }
