@@ -10,7 +10,9 @@
 </head>
 
 <body>
-
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
 <form th:action="@{/facility/update/} + ${id}" modelAttribute="facility" method="POST" >
     <label>Facility Name:</label>
     <input type="text" name="name" th:value="${name}"/><br/>

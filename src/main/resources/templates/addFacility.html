@@ -9,6 +9,9 @@
 </head>
 
 <body>
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
     <div th:if="${message != null}">
         <p class="text-warning">[[${message}]]</p>
     </div>
