@@ -23,6 +23,10 @@
             th:text="${description}"></textarea><br/><br/>
     <label>Location:</label>
     <input type="text" name="location" th:value="${location}"/><br/><br/>
+    <input
+            type="hidden"
+            name="managerEmail"
+            placeholder="Email" th:value="${manager}"/><br/><br/>
     <label>Max occupancy per slot:</label>
     <input type="text" name="occupancy" th:value="${occupancy}"/><br/><br/>
     <label>Time slot duration</label>
@@ -37,7 +41,7 @@
     <label>Approval Required</label><br/><br/>
 
     <input type="submit" value="Update"/> <br/><br/>
-    <a th:href="@{/manager_dashboard}">home</a>
+    <a th:href="@{/facility/display_manager_facility}">home</a>
 </form>
 </body>
 </html>

@@ -43,6 +43,7 @@
                 <td th:text="${facility.occupancy}"></td>
                 <td><a th:href="@{/facility/{id} (id=${facility.id})}">Edit</a></td>
                 <td><a th:href="@{/timing?facility_id={id} (id=${facility.id})}">Edit Timings</a></td>
+                <td><a th:href="@{/booking?facility_id={id} (id=${facility.id})}">Booking History</a></td>
             </tr>
         </table>
 
