@@ -3,6 +3,7 @@ package com.csci5308.g17.booking;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.csci5308.g17.config.DatabaseConfig;
 
@@ -58,7 +59,8 @@ public class BookingRepository implements IBookingRepository {
     public List<Booking> getUserBookings(Integer userId, List<BookingStatus> bookingStatues) {
         NamedParameterJdbcTemplate ndb = new NamedParameterJdbcTemplate(db);
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("status_list", bookingStatues);
+        List<String> statusList = bookingStatues.stream().map((status) -> status.toString()).collect(Collectors.toList());
+        params.addValue("status_list", statusList);
         params.addValue("user_id", userId);
         return ndb.query(Q_GET_USER_BOOKING, params, new BookingRowMapper());
     }

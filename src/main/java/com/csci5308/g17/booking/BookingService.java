@@ -54,7 +54,7 @@ public class BookingService implements IBookingService {
 
     public List<Booking> getUserBookings(Integer userId) {
         List<Booking> bookings = null;
-        List<BookingStatus> requiredBookingStatus = Arrays.asList(BookingStatus.CANCELLED, BookingStatus.CANCELLED);
+        List<BookingStatus> requiredBookingStatus = Arrays.asList(BookingStatus.CONFIRMED, BookingStatus.CANCELLED);
         bookings = bookingRepository.getUserBookings(userId, requiredBookingStatus);
         return bookings;
     }
