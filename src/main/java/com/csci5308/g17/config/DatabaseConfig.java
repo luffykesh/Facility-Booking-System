@@ -1,11 +1,13 @@
 package com.csci5308.g17.config;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 
-@Component
+@Configuration
+@DependsOn("ApplicationContextProvider")
 public class DatabaseConfig {
 
     public static JdbcTemplate getJdbcTemplate() {
