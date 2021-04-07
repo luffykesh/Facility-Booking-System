@@ -1,6 +1,8 @@
 package com.csci5308.g17.booking;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.csci5308.g17.slot.Slot;
 import com.csci5308.g17.slot.SlotFullException;
@@ -69,5 +71,50 @@ public class BookingServiceTest {
         bookingService.cancelBooking(BOOKING_ID);
 
         Mockito.verify(slotService, Mockito.times(1)).releaseSeat(SLOT_ID);
+    }
+
+    @Test
+    public void getUserBookingsTest() {
+        BookingRepository bookingRepo = Mockito.mock(BookingRepository.class);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService);
+
+        List<Booking> bookingList = new ArrayList<>();
+        final Integer USER_ID = 10;
+        final List<BookingStatus> status = new ArrayList<BookingStatus>();
+        Mockito.when(bookingRepo.getUserBookings(USER_ID,status)).thenReturn(bookingList);
+        List<Booking> returnedBooking = bookingService.getUserBookings(USER_ID);
+        Assertions.assertNotNull(returnedBooking);
+        Assertions.assertEquals(bookingList, returnedBooking);
+    }
+
+    @Test
+    public void getFacilityBookingsTest() {
+        BookingRepository bookingRepo = Mockito.mock(BookingRepository.class);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService);
+
+        List<Booking> bookingList = new ArrayList<>();
+        final Integer USER_ID = 10;
+        final List<BookingStatus> status = new ArrayList<BookingStatus>();
+        Mockito.when(bookingRepo.getFacilityBookings(USER_ID)).thenReturn(bookingList);
+        List<Booking> returnedBooking = bookingService.getFacilityBookings(USER_ID);
+        Assertions.assertNotNull(returnedBooking);
+        Assertions.assertEquals(bookingList, returnedBooking);
+    }
+
+    @Test
+    public void getByIdTest() {
+        BookingRepository bookingRepo = Mockito.mock(BookingRepository.class);
+        SlotService slotService = Mockito.mock(SlotService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService);
+
+        Booking booking = new Booking();
+        final Integer BOOKING_ID = 10;
+        final List<BookingStatus> status = new ArrayList<BookingStatus>();
+        Mockito.when(bookingRepo.getById(BOOKING_ID)).thenReturn(booking);
+        Booking returnedBooking = bookingService.getById(BOOKING_ID);
+        Assertions.assertNotNull(returnedBooking);
+        Assertions.assertEquals(booking, returnedBooking);
     }
 }
