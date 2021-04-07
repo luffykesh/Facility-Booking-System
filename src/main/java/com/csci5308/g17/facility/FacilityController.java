@@ -54,8 +54,11 @@ public class FacilityController {
         if(currentUserService.isAdmin()) {
             return "updateFacility";
         }
-        else {
+        else if(currentUserService.isManager()){
             return "update_facility_manager";
+        }
+        else {
+            return "user_slot_display";
         }
     }
 
@@ -112,7 +115,10 @@ public class FacilityController {
         if(currentUserService.isAdmin()) {
             return "displayFacility";
         }
-        else{
+        else if(currentUserService.isManager()){
+            return "display_manager_facility";
+        }
+        else {
             return "display_user_facility";
         }
     }
@@ -137,7 +143,13 @@ public class FacilityController {
         facility.setName(formFacility.getName());
         facility.setDescription(formFacility.getDescription());
         this.facilityService.updateFacility(id, facility);
-        return "redirect:/facility";
+        if(currentUserService.isManager()){
+            return "redirect:/facility/display_manager_facility";
+        }
+        else {
+            return "redirect:/facility";
+        }
+
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -145,6 +157,7 @@ public class FacilityController {
         this.facilityService.deleteFacility(id);
         return "redirect:/facility";
     }
+
     @GetMapping("/display_manager_facility")
     public String getManagerFacilityList(Model model){
         model.addAttribute("facility",facilityService.getManagerFacilities(currentUserService.getCurrentUser().getId()));
