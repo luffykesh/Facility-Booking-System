@@ -3,6 +3,8 @@ package com.csci5308.g17.booking;
 import java.util.Arrays;
 import java.util.List;
 
+import com.csci5308.g17.email.EmailService;
+import com.csci5308.g17.email.IEmailService;
 import com.csci5308.g17.facility.Facility;
 import com.csci5308.g17.facility.FacilityService;
 import com.csci5308.g17.facility.IFacilityService;
@@ -20,16 +22,20 @@ public class BookingService implements IBookingService {
     private IBookingRepository bookingRepository;
     private ISlotService slotService;
     private IFacilityService facilityService;
+    private IEmailService emailService;
 
-    public BookingService(IBookingRepository bookingRepository, ISlotService slotService,IFacilityService facilityService) {
+    public BookingService(IBookingRepository bookingRepository, ISlotService slotService,IFacilityService facilityService,
+        IEmailService emailService) {
         this.bookingRepository = bookingRepository;
         this.slotService = slotService;
         this.facilityService = facilityService;
+        this.emailService = emailService;
     }
 
     public static BookingService getInstance() {
         if (instance == null) {
-            instance = new BookingService(BookingRepository.getInstance(), SlotService.getInstance(), FacilityService.getInstance());
+            instance = new BookingService(BookingRepository.getInstance(), SlotService.getInstance(),
+                FacilityService.getInstance(), EmailService.getInstance());
         }
         return instance;
     }
