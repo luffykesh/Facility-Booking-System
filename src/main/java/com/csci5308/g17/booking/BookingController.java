@@ -106,4 +106,24 @@ public class BookingController {
         redirectAttributes.addAttribute("facility_id", facilityId);
         return new RedirectView("/booking");
     }
+
+    @PostMapping("/{bookingId}/approve")
+    public RedirectView approveBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
+        Booking booking = bookingService.getById(bookingId);
+        User bookingUser = userService.getUserById(booking.getUserId());
+        bookingService.approveBooking(booking.getId());
+        Integer facilityId = booking.getFacilityId();
+        redirectAttributes.addAttribute("facility_id", facilityId);
+        return new RedirectView("/booking");
+    }
+
+    @PostMapping("/{bookingId}/deny")
+    public RedirectView denyBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
+        Booking booking = bookingService.getById(bookingId);
+        User bookingUser = userService.getUserById(booking.getUserId());
+        bookingService.denyBooking(booking.getId());
+        Integer facilityId = booking.getFacilityId();
+        redirectAttributes.addAttribute("facility_id", facilityId);
+        return new RedirectView("/booking");
+    }
 }
