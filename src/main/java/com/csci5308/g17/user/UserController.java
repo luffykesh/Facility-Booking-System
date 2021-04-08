@@ -122,7 +122,7 @@ public class UserController {
         if (user == null) {
             model.addAttribute("message", "Invalid Token");
         }
-        return "Reset_Password_Form";
+        return "reset_password_form";
     }
 
     @PostMapping("/reset_password")
@@ -131,7 +131,7 @@ public class UserController {
 
         if (user == null) {
             model.addAttribute("message", "Invalid Token");
-            return "Reset_Password_Form";
+            return "reset_password_form";
         }
         else {
             userService.updatePassword(user.getId(), password);
