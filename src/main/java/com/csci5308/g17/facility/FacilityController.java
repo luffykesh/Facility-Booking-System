@@ -1,6 +1,7 @@
 package com.csci5308.g17.facility;
 
 import com.csci5308.g17.auth.CurrentUserService;
+import com.csci5308.g17.auth.ICurrentUserService;
 import com.csci5308.g17.user.IUserService;
 import com.csci5308.g17.user.User;
 import com.csci5308.g17.user.UserService;
@@ -17,7 +18,7 @@ public class FacilityController {
 
     private final IFacilityService facilityService;
     private final IUserService userService;
-    private final CurrentUserService currentUserService;
+    private final ICurrentUserService currentUserService;
     public FacilityController() {
 
         facilityService = FacilityService.getInstance();

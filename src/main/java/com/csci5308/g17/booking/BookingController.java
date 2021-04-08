@@ -3,6 +3,7 @@ package com.csci5308.g17.booking;
 import java.util.List;
 
 import com.csci5308.g17.auth.CurrentUserService;
+import com.csci5308.g17.auth.ICurrentUserService;
 import com.csci5308.g17.slot.SlotFullException;
 import com.csci5308.g17.user.User;
 
@@ -26,7 +27,7 @@ public class BookingController {
 
     private Logger logger = LoggerFactory.getLogger(BookingController.class);
     private IBookingService bookingService;
-    private CurrentUserService currentUserService;
+    private ICurrentUserService currentUserService;
 
     public BookingController() {
         bookingService = BookingService.getInstance();
