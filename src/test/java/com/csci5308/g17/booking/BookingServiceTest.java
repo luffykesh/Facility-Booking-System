@@ -12,6 +12,8 @@ import com.csci5308.g17.facility.FacilityService;
 import com.csci5308.g17.slot.Slot;
 import com.csci5308.g17.slot.SlotFullException;
 import com.csci5308.g17.slot.SlotService;
+import com.csci5308.g17.user.User;
+import com.csci5308.g17.user.UserService;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,9 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
         Booking newBooking;
 
         final Integer USER_ID = 500;
@@ -36,8 +40,12 @@ public class BookingServiceTest {
         slot.setFacilityId(FACILITY_ID);
         slot.setStartTime(LocalDateTime.now());
         slot.setEndTime(LocalDateTime.now().plusHours(1));
+        User user = new User();
+        user.setId(USER_ID);
+        user.setEmail("janedoe@dal.ca");
 
         Mockito.when(slotService.getSlotById(SLOT_ID)).thenReturn(slot);
+        Mockito.when(userService.getUserById(USER_ID)).thenReturn(user);
         try{
             Mockito.doNothing().when(slotService).reserveSeat(SLOT_ID);
         }
@@ -46,7 +54,7 @@ public class BookingServiceTest {
         }
 
         Facility facility = new Facility();
-        facility.setId(1);
+        facility.setId(FACILITY_ID);
         facility.setName("GYM");
         facility.setApprovalRequired(true);
         Mockito.when(facilityService.getFacilityById(slot.getFacilityId())).thenReturn(facility);
@@ -70,6 +78,7 @@ public class BookingServiceTest {
         facility.setApprovalRequired(false);
         Mockito.clearInvocations(slotService);
         Mockito.clearInvocations(emailService);
+        Mockito.clearInvocations(userService);
         try {
             newBooking = bookingService.createBooking(USER_ID, SLOT_ID);
 
@@ -77,9 +86,12 @@ public class BookingServiceTest {
             Assertions.assertEquals(USER_ID, newBooking.getUserId());
             Assertions.assertEquals(BookingStatus.CONFIRMED, newBooking.getStatus());
             Mockito.verify(slotService, Mockito.times(1)).reserveSeat(SLOT_ID);
-            Mockito.verify(emailService, Mockito.times(1));
+            Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());;
         }
-        catch(SlotFullException e){
+        catch(SlotFullException e) {
+            Assertions.fail();
+        }
+        catch(MessagingException e) {
             Assertions.fail();
         }
     }
@@ -90,22 +102,42 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
 
         final Integer SLOT_ID = 100;
         final Integer BOOKING_ID = 500;
+        final Integer USER_ID = 1000;
+        final Integer FACILITY_ID = 1234;
+
+        Facility facility = new Facility();
+        facility.setId(FACILITY_ID);
+        facility.setName("GYM");
+        facility.setApprovalRequired(true);
+
+        User user = new User();
+        user.setId(USER_ID);
+        user.setEmail("janedoe@dal.ca");
 
         Booking booking = new Booking();
         booking.setSlotId(SLOT_ID);
         booking.setId(BOOKING_ID);
+        booking.setUserId(USER_ID);
+        booking.setFacilityId(FACILITY_ID);
+        booking.setStartTime(LocalDateTime.now());
+        booking.setEndTime(LocalDateTime.now().plusDays(1));
 
         Mockito.when(bookingRepo.getById(BOOKING_ID)).thenReturn(booking);
         Mockito.doNothing().when(slotService).releaseSeat(SLOT_ID);
         Mockito.doNothing().when(bookingRepo).setBookingStatus(BOOKING_ID, BookingStatus.CANCELLED);
+        Mockito.when(userService.getUserById(USER_ID)).thenReturn(user);
+        Mockito.when(facilityService.getFacilityById(FACILITY_ID)).thenReturn(facility);
 
         bookingService.cancelBooking(BOOKING_ID);
 
         Mockito.verify(slotService, Mockito.times(1)).releaseSeat(SLOT_ID);
+        Mockito.verify(emailService, Mockito.times(1));
     }
 
     @Test
@@ -114,7 +146,9 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
 
         List<Booking> bookingList = new ArrayList<>();
         final Integer USER_ID = 10;
@@ -133,8 +167,9 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
-
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
         List<Booking> bookingList = new ArrayList<>();
         final Integer USER_ID = 10;
         Mockito.when(bookingRepo.getFacilityBookings(USER_ID)).thenReturn(bookingList);
@@ -149,8 +184,9 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
-
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
         Booking booking = new Booking();
         final Integer BOOKING_ID = 10;
         Mockito.when(bookingRepo.getById(BOOKING_ID)).thenReturn(booking);
@@ -165,34 +201,52 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
 
         final Integer SLOT_ID = 100;
         final Integer BOOKING_ID = 500;
+        final Integer USER_ID = 1000;
+        final Integer FACILITY_ID = 1234;
+
+        User user = new User();
+        user.setId(USER_ID);
+        user.setEmail("janedoe@dal.ca");
+
+        Facility facility = new Facility();
+        facility.setId(FACILITY_ID);
+        facility.setName("GYM");
+        facility.setApprovalRequired(true);
 
         Booking booking = new Booking();
         booking.setSlotId(SLOT_ID);
+        booking.setUserId(USER_ID);
         booking.setId(BOOKING_ID);
+        booking.setFacilityId(FACILITY_ID);
+        booking.setStartTime(LocalDateTime.now());
+        booking.setEndTime(LocalDateTime.now().plusDays(1));
 
-        try{
-            Mockito.doNothing().when(emailService).sendEmail(Mockito.anyString(), Mockito.anyString());
-        }
-        catch(MessagingException e) {
-            Assertions.fail();
-        }
-
+        Mockito.when(userService.getUserById(USER_ID)).thenReturn(user);
         Mockito.when(bookingRepo.getById(BOOKING_ID)).thenReturn(booking);
         Mockito.doNothing().when(bookingRepo).setBookingStatus(BOOKING_ID, BookingStatus.CONFIRMED);
+        Mockito.when(facilityService.getFacilityById(FACILITY_ID)).thenReturn(facility);
+        try {
+            Mockito.doNothing().when(emailService).sendEmail(Mockito.anyString(), Mockito.anyString());
+        }
+        catch (MessagingException e) {
+            Assertions.fail();
+        }
 
         bookingService.approveBooking(BOOKING_ID);
         Assertions.assertNotNull(booking);
-        try{
-            Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());
+        try {
+            Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());;
         }
-        catch(MessagingException e) {
+        catch (MessagingException e) {
             Assertions.fail();
         }
-
+        Mockito.verify(userService, Mockito.times(1)).getUserById(USER_ID);
     }
 
     @Test
@@ -201,27 +255,41 @@ public class BookingServiceTest {
         SlotService slotService = Mockito.mock(SlotService.class);
         FacilityService facilityService = Mockito.mock(FacilityService.class);
         EmailService emailService = Mockito.mock(EmailService.class);
-        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService, emailService);
+        UserService userService = Mockito.mock(UserService.class);
+        BookingService bookingService = new BookingService(bookingRepo, slotService, facilityService,
+            emailService, userService);
 
         final Integer SLOT_ID = 100;
         final Integer BOOKING_ID = 500;
+        final Integer USER_ID = 1000;
+        final Integer FACILITY_ID = 1234;
+
+        User user = new User();
+        user.setId(USER_ID);
+        user.setEmail("janedoe@dal.ca");
+
+        Facility facility = new Facility();
+        facility.setId(FACILITY_ID);
+        facility.setName("GYM");
+        facility.setApprovalRequired(true);
 
         Booking booking = new Booking();
         booking.setSlotId(SLOT_ID);
+        booking.setUserId(USER_ID);
         booking.setId(BOOKING_ID);
+        booking.setFacilityId(FACILITY_ID);
+        booking.setStartTime(LocalDateTime.now());
+        booking.setEndTime(LocalDateTime.now().plusDays(1));
 
         Mockito.when(bookingRepo.getById(BOOKING_ID)).thenReturn(booking);
         Mockito.doNothing().when(slotService).releaseSeat(SLOT_ID);
         Mockito.doNothing().when(bookingRepo).setBookingStatus(BOOKING_ID, BookingStatus.REJECTED);
-        try{
-            Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());
-        }
-        catch(MessagingException e) {
-            Assertions.fail();
-        }
+        Mockito.when(facilityService.getFacilityById(FACILITY_ID)).thenReturn(facility);
+        Mockito.when(userService.getUserById(USER_ID)).thenReturn(user);
 
         bookingService.denyBooking(BOOKING_ID);
 
+        Mockito.verify(userService, Mockito.times(1)).getUserById(USER_ID);
         Mockito.verify(slotService, Mockito.times(1)).releaseSeat(SLOT_ID);
         try{
             Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());

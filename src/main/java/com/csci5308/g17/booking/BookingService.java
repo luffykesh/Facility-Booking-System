@@ -25,17 +25,18 @@ public class BookingService implements IBookingService {
     private IEmailService emailService;
 
     public BookingService(IBookingRepository bookingRepository, ISlotService slotService,IFacilityService facilityService,
-        IEmailService emailService) {
+        IEmailService emailService, IUserService userService) {
         this.bookingRepository = bookingRepository;
         this.slotService = slotService;
         this.facilityService = facilityService;
         this.emailService = emailService;
+        this.userService = userService;
     }
 
     public static BookingService getInstance() {
         if (instance == null) {
             instance = new BookingService(BookingRepository.getInstance(), SlotService.getInstance(),
-                FacilityService.getInstance(), EmailService.getInstance());
+                FacilityService.getInstance(), EmailService.getInstance(), UserService.getInstance());
         }
         return instance;
     }
