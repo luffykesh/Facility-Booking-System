@@ -42,11 +42,13 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Total Seats</th>
+            <th>Available Seats</th>
         </tr>
         <tr th:each = "slot: ${slotList}">
             <td th:text="${slot.getStartTime()}"></td>
             <td th:text="${slot.endTime}"></td>
             <td th:text="${slot.totalSeats}"></td>
+            <td th:text="${slot.availableSeats}"></td>
             <form method="post" th:action="@{/booking?slot_id=} + ${slot.id}">
                 <td><input type="submit" value="Book now"/></td>
             </form>
