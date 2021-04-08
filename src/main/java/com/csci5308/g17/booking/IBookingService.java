@@ -14,4 +14,8 @@ public interface IBookingService {
     public Booking getById(Integer bookingId);
 
     public List<Booking> getFacilityBookings(Integer facilityId);
+
+    public void approveBooking(Integer bookingId);
+
+    public void denyBooking(Integer bookingId);
 }

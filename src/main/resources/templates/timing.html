@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
+<div th:if="${message != null}">
+    <p class="text-warning">[[${message}]]</p>
+</div>
+<form id="facility_details" modelAttribute="timing" action="/timing" method="post">
+
+    <input type="hidden" name="facilityId" th:value="${facilityId}" required/><br>
+    <label>Day:</label>
+    <select id="cars" name="day" required>
+        <option value="SUNDAY">SUNDAY</option>
+        <option value="MONDAY">MONDAY</option>
+        <option value="TUESDAY">TUESDAY</option>
+        <option value="WEDNESDAY">WEDNESDAY</option>
+        <option value="THURSDAY">THURSDAY</option>
+        <option value="FRIDAY">FRIDAY</option>
+        <option value="SATURDAY">SATURDAY</option>
+    </select>
+    <br/>
+    <label>Start Time:</label>
+    <input type="time" name="startTime" required/><br/>
+    <br/>
+    <label>End Time:</label>
+    <input type="time" name="endTime" required/><br/>
+    <br/>
+    <button type="submit">Add timing</button>
+    <br>
+    <a th:href="@{/facility/display_manager_facility}">home</a><br>
+
+    <table border="1">
+        <tr>
+            <th>name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+        <tr th:each="timing: ${timingList}">
+            <td th:text="${timing.day}"></td>
+            <td th:text="${timing.startTime}"></td>
+            <td th:text="${timing.endTime}"></td>
+            <td><a th:href="@{/timing/{id} (id=${timing.id})}">Delete</a></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

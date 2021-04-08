@@ -9,6 +9,9 @@
 </head>
 
 <body>
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
     <div th:if="${message != null}">
         <p class="text-warning">[[${message}]]</p>
     </div>
@@ -43,7 +46,7 @@
         <label>Approval Required</label><br/><br/>
         <input type="submit" value="Submit"/>
 
-        <a th:href="@{/admin_dashboard}">home</a>
+        <a th:href="@{/facility}">home</a>
     </form>
 </body>
 </html>

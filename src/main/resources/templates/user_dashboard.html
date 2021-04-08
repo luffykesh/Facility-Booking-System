@@ -20,6 +20,20 @@
                     <button onclick="displayFacility()" class="button">Facility</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <form method="get" th:action="@{/booking}">
+                    <input type="submit" class="button" value="View Booking">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form th:action="@{/logout}">
+                        <input  type="submit" value="Logout" class="button">
+                    </form>
+                </td>
+            </tr>
         </table>
     </div>
 </div>

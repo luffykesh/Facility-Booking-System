@@ -7,6 +7,9 @@
 <body>
 <div>
     <h1>User Registration</h1>
+    <form th:action="@{/logout}">
+        <input  type="submit" value="Logout" class="button">
+    </form>
     <form th:action="@{/user_registration_form}" method="post" th:object="${user}">
         <label>Full name:</label>
         <input type="text" th:field="*{name}" placeholder="Enter name" required/><br /><br />

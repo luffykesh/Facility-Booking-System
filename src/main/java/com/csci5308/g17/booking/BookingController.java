@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -89,7 +90,7 @@ public class BookingController {
     }
 
     @PostMapping("/{bookingId}/cancel")
-    public String cancelBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
+    public RedirectView cancelBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
         Booking booking = bookingService.getById(bookingId);
         User bookingUser = userService.getUserById(booking.getUserId());
         bookingService.cancelBooking(booking.getId());
@@ -103,6 +104,26 @@ public class BookingController {
         }
         Integer facilityId = booking.getFacilityId();
         redirectAttributes.addAttribute("facility_id", facilityId);
-        return "redirect:/booking";
+        return new RedirectView("/booking");
+    }
+
+    @PostMapping("/{bookingId}/approve")
+    public RedirectView approveBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
+        Booking booking = bookingService.getById(bookingId);
+        User bookingUser = userService.getUserById(booking.getUserId());
+        bookingService.approveBooking(booking.getId());
+        Integer facilityId = booking.getFacilityId();
+        redirectAttributes.addAttribute("facility_id", facilityId);
+        return new RedirectView("/booking");
+    }
+
+    @PostMapping("/{bookingId}/deny")
+    public RedirectView denyBooking(@PathVariable("bookingId") Integer bookingId, RedirectAttributes redirectAttributes) {
+        Booking booking = bookingService.getById(bookingId);
+        User bookingUser = userService.getUserById(booking.getUserId());
+        bookingService.denyBooking(booking.getId());
+        Integer facilityId = booking.getFacilityId();
+        redirectAttributes.addAttribute("facility_id", facilityId);
+        return new RedirectView("/booking");
     }
 }
