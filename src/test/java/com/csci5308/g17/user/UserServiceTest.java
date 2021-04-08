@@ -12,17 +12,6 @@ import java.util.List;
 public class UserServiceTest {
 
     @Test
-    void getUserCountTest() {
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        UserService userService = new UserService(userRepository);
-
-        final Integer USER_COUNT = 10;
-
-        Mockito.when(userRepository.count()).thenReturn(USER_COUNT);
-        Assertions.assertEquals(userService.getUserCount(), new Long(USER_COUNT));
-    }
-
-    @Test
     void getUserByEmailTest() {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         UserService userService = new UserService(userRepository);
@@ -152,15 +141,15 @@ public class UserServiceTest {
 
     }
     @Test
-    void findAllTest(){
+    void getAllUsersTest(){
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         UserService userService = new UserService(userRepository);
         User user = new User();
         List<User> userList = new ArrayList<User>();
         userList.add(user);
-        Mockito.when(userService.find()).thenReturn(userList);
-        Mockito.when(userRepository.findAll()).thenReturn(userList);
-        List<User> returnedUser = userRepository.findAll();
+        Mockito.when(userService.getAllUsers()).thenReturn(userList);
+        Mockito.when(userRepository.getAllUsers()).thenReturn(userList);
+        List<User> returnedUser = userRepository.getAllUsers();
         Assertions.assertTrue(returnedUser.equals(userList));
     }
 }

@@ -18,10 +18,10 @@ public class TimingRepository implements ITimingRepository {
     private JdbcTemplate db;
     private static TimingRepository instance;
 
-    private String Q_DELETE_BY_ID = "DELETE FROM timing where id=?";
+    private String Q_DELETE_BY_ID = "DELETE FROM timing WHERE id=?";
     private String Q_INSERT_TIMING = "INSERT INTO timing(facility_id, day, start_time, end_time, is_blocking) VALUES (?,?,?,?,?)";
-    private String Q_GET_BY_ID = "SELECT * FROM timing where id=?";
-    private String Q_GET_BY_FACILITY_ID = "SELECT * FROM timing where facility_id=?";
+    private String Q_GET_BY_ID = "SELECT * FROM timing WHERE id=?";
+    private String Q_GET_BY_FACILITY_ID = "SELECT * FROM timing WHERE facility_id=?";
 
     public TimingRepository(JdbcTemplate jdbcTemplate) {
         db = jdbcTemplate;

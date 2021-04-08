@@ -11,12 +11,12 @@ import java.util.List;
 public class FacilityRepository implements IFacilityRepository {
 
     private static FacilityRepository instance;
-    private final String QUERY_BY_ID = "SELECT * from facility where id = ?";
-    private final String QUERY_FINDALL = "Select * from facility;";
-    private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?);";
-    private final String QUERY_UPDATE = "update facility set name = ?,description = ?, location = ?, occupancy = ?, manager_id = ?, time_slot = ?, active = ?, approval_required =? where id = ?";
-    private final String QUERY_DELETE = "delete from facility where id = ?";
-    private final String QUERY_MANAGER_FACILITIES = "select * from facility where manager_id = ?";
+    private final String QUERY_BY_ID = "SELECT * FROM facility WHERE id = ?";
+    private final String QUERY_FINDALL = "SELECT * FROM facility";
+    private final String QUERY_SAVE = "INSERT INTO facility (name, description, location, occupancy, manager_id, time_slot, active, approval_required) VALUES (?,?,?,?,?,?,?,?)";
+    private final String QUERY_UPDATE = "UPDATE facility SET name = ?,description = ?, location = ?, occupancy = ?, manager_id = ?, time_slot = ?, active = ?, approval_required =? WHERE id = ?";
+    private final String QUERY_DELETE = "DELETE FROM facility WHERE id = ?";
+    private final String QUERY_MANAGER_FACILITIES = "SELECT * FROM facility WHERE manager_id = ?";
 
     private final JdbcTemplate db;
 
@@ -48,7 +48,7 @@ public class FacilityRepository implements IFacilityRepository {
     }
 
     @Override
-    public List<Facility> findAll() {
+    public List<Facility> getAllFacilities() {
 
         List<Facility> facilityList = this.db.query(QUERY_FINDALL, new FacilityRowMapper());
         return facilityList;

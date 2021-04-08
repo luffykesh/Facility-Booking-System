@@ -83,5 +83,4 @@ public class Facility {
     public void setApprovalRequired(Boolean approvalRequired) {
         this.approvalRequired = approvalRequired;
     }
-
 }

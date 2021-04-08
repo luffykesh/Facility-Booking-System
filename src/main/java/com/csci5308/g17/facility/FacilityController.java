@@ -70,7 +70,7 @@ public class FacilityController {
     }
 
     @PostMapping()
-    public String save(@ModelAttribute("facility") FormFacility formFacility, Model model) {
+    public String addFacility(@ModelAttribute("facility") FormFacility formFacility, Model model) {
         User u = userService.getUserByEmail(formFacility.getManagerEmail());
 
         if (formFacility.getActive() == null) {
@@ -95,8 +95,8 @@ public class FacilityController {
     }
 
     @GetMapping()
-    public String findAll(Model model) {
-        List<Facility> facilityList = this.facilityService.findAll();
+    public String getAllFacilities(Model model) {
+        List<Facility> facilityList = this.facilityService.getAllFacilities();
         List<FormFacility> formFacilityList = new ArrayList<FormFacility>();
 
         for(Facility f1 : facilityList) {
@@ -151,7 +151,6 @@ public class FacilityController {
         else {
             return "redirect:/facility";
         }
-
     }
 
     @GetMapping(value = "/delete/{id}")

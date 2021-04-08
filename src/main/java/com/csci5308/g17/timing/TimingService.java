@@ -89,8 +89,6 @@ public class TimingService implements ITimingService{
             // first timing is after second
             return false;
         }
-
         return true;
     }
-
 }

@@ -59,9 +59,9 @@ class FacilityServiceTest {
         Facility fac = new Facility();
         List<Facility> facility = new ArrayList<Facility>();
         facility.add(fac);
-        Mockito.when(facilityService.findAll()).thenReturn(facility);
-        Mockito.when(facilityRepository.findAll()).thenReturn(facility);
-        List<Facility> returnedFacility = facilityRepository.findAll();
+        Mockito.when(facilityService.getAllFacilities()).thenReturn(facility);
+        Mockito.when(facilityRepository.getAllFacilities()).thenReturn(facility);
+        List<Facility> returnedFacility = facilityRepository.getAllFacilities();
         Assertions.assertTrue(returnedFacility.equals(facility));
     }
 

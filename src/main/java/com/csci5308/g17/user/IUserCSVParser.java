@@ -7,5 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IUserCSVParser {
      boolean isCSVFormat(MultipartFile file);
+
      List<User> readCSV(InputStream is);
 }

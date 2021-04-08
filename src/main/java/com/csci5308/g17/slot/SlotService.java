@@ -123,7 +123,6 @@ public class SlotService implements ISlotService{
     @Override
     public void releaseSeat(Integer slotId) {
         slotRepo.releaseSeat(slotId);
-
     }
 
     @Override
@@ -139,5 +138,4 @@ public class SlotService implements ISlotService{
     public Slot getSlotById(Integer slotId) {
         return slotRepo.getSlotById(slotId);
     }
-
 }

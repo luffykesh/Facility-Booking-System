@@ -87,5 +87,4 @@ public class TimingController {
         attributes.addFlashAttribute("message", responseData.getMessage());
         return new RedirectView("/timing");
     }
-
 }
