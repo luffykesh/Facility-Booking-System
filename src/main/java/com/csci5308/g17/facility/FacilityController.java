@@ -51,6 +51,7 @@ public class FacilityController {
         model.addAttribute("active",formFacility.getActive());
         model.addAttribute("approvalRequired",formFacility.getApprovalRequired());
         model.addAttribute("id",formFacility.getId());
+        model.addAttribute("facility", formFacility);
         if(currentUserService.isAdmin()) {
             return "updateFacility";
         }

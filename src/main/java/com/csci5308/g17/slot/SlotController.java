@@ -5,6 +5,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.csci5308.g17.facility.Facility;
+import com.csci5308.g17.facility.FacilityService;
+import com.csci5308.g17.facility.IFacilityService;
 import com.csci5308.g17.utils.JsonResponseDTO;
 
 import org.springframework.http.HttpStatus;
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SlotController {
 
     private ISlotService slotService;
+    private IFacilityService facilityService;
 
     public SlotController() {
         slotService = SlotService.getInstance();
+        facilityService = FacilityService.getInstance();
     }
 
     @GetMapping("")
@@ -39,9 +44,11 @@ public class SlotController {
             slots = slotService.getSlotsForFacility(
                 facilityId, date.atTime(LocalTime.now()), date.plusDays(1).atTime(LocalTime.MIN));
         }
+        Facility facility = facilityService.getFacilityById(facilityId);
         responseBody = new JsonResponseDTO(true, "Slot list", null, slots);
         response = new ResponseEntity(responseBody, HttpStatus.OK);
         System.out.println(slots);
+        model.addAttribute("facility", facility);
         model.addAttribute("slotList",slots);
         model.addAttribute("id",facilityId);
         return "user_slot_display";
