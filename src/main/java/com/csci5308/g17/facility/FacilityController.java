@@ -161,7 +161,7 @@ public class FacilityController {
     @GetMapping("/display_manager_facility")
     public String getManagerFacilityList(Model model){
         model.addAttribute("facility",facilityService.getManagerFacilities(currentUserService.getCurrentUser().getId()));
-        return  "/display_manager_facility";
+        return  "display_manager_facility";
     }
 
 }
