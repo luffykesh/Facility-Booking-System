@@ -137,7 +137,11 @@ public class BookingServiceTest {
         bookingService.cancelBooking(BOOKING_ID);
 
         Mockito.verify(slotService, Mockito.times(1)).releaseSeat(SLOT_ID);
-        Mockito.verify(emailService, Mockito.times(1));
+        try{
+            Mockito.verify(emailService, Mockito.times(1)).sendEmail(Mockito.anyString(), Mockito.anyString());
+        } catch(MessagingException e) {
+            Assertions.fail();
+        }
     }
 
     @Test
