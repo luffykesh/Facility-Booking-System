@@ -43,7 +43,7 @@
         <th>occupancy</th>
 
       </tr>
-      <tr th:each = "facility: ${facilities}">
+      <tr th:if="${facility.active}" th:each = "facility: ${facilities}">
         <td th:text="${facility.name}"></td>
         <td th:text="${facility.description}"></td>
         <td th:text="${facility.location}"></td>
