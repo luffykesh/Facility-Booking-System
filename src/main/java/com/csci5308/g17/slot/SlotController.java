@@ -8,10 +8,7 @@ import java.util.List;
 import com.csci5308.g17.facility.Facility;
 import com.csci5308.g17.facility.FacilityService;
 import com.csci5308.g17.facility.IFacilityService;
-import com.csci5308.g17.utils.JsonResponseDTO;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +29,6 @@ public class SlotController {
 
     @GetMapping("")
     public String getSlotByFacilityId(@RequestParam("facility_id") Integer facilityId, @RequestParam("date") String dateStr, Model model) {
-        ResponseEntity response = null;
-        JsonResponseDTO responseBody = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("y-M-d");
         LocalDate date = LocalDate.parse(dateStr, formatter);
         List<Slot> slots = null;
@@ -45,9 +40,6 @@ public class SlotController {
                 facilityId, date.atTime(LocalTime.now()), date.plusDays(1).atTime(LocalTime.MIN));
         }
         Facility facility = facilityService.getFacilityById(facilityId);
-        responseBody = new JsonResponseDTO(true, "Slot list", null, slots);
-        response = new ResponseEntity(responseBody, HttpStatus.OK);
-        System.out.println(slots);
         model.addAttribute("facility", facility);
         model.addAttribute("slotList",slots);
         model.addAttribute("id",facilityId);
