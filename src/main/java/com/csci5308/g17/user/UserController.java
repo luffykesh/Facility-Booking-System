@@ -96,7 +96,7 @@ public class UserController {
             userService.clearUserToken(user.getId());
             model.addAttribute("message", "Verified");
         }
-        return "verification_form";
+        return "redirect:/login";
     }
 
     @GetMapping("/forgot_password")
@@ -138,7 +138,7 @@ public class UserController {
             userService.clearUserToken(user.getId());
             model.addAttribute("message", "Password Reset Successful");
         }
-        return "Reset_Password_Form";
+        return "redirect:/login";
     }
 
     @GetMapping("/user_registration_form")

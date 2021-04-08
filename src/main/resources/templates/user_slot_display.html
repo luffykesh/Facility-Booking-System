@@ -13,28 +13,23 @@
     <input  type="submit" value="Logout" class="button">
 </form>
     <label>Facility Name:</label>
-    <input type="text" name="name" th:value="${name}" readonly/><br/>
+    <input type="text" name="name" th:value="${facility.name}" readonly/><br/>
     <br/>
     <label>Description:</label>
     <textarea
             name="description"
             rows="5"
             cols="50"
-            th:text="${description}" readonly></textarea><br/><br/>
+            th:text="${facility.description}" readonly></textarea><br/><br/>
     <label>Location:</label>
-    <input type="text" name="location" th:value="${location}" readonly/><br/><br/>
+    <input type="text" name="location" th:value="${facility.location}" readonly/><br/><br/>
     <label>Max occupancy per slot:</label>
-    <input type="text" name="occupancy" th:value="${occupancy}" readonly/><br/><br/>
-    <label>Facility Manager:</label>
-    <input
-            type="text"
-            name="managerEmail"
-            placeholder="Email" th:value="${manager}" readonly/><br/><br/>
+    <input type="text" name="occupancy" th:value="${facility.occupancy}" readonly/><br/><br/>
     <label>Time slot duration</label>
     <input
             type="text"
             name="timeSlot"
-            th:value="${timeslot}" readonly/><br/><br/>
+            th:value="${facility.timeSlot}" readonly/><br/><br/>
 
     <form modelAttribute="facility" th:action="@{/slot}" method="get">
         <input type="hidden" name="facility_id" th:value="${id}">

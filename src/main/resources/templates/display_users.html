@@ -64,12 +64,14 @@
                 <th>Role</th>
                 <th>Email</th>
                 <th>BannerID</th>
+                <th>Verified</th>
             </tr>
             <tr th:each = "user: ${users}">
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.role}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.bannerId}"></td>
+                <td th:text="${user.verified}"></td>
                 <td><a th:href="@{delete/{id} (id=${user.id})}">Delete</a></td>
             </tr>
         </table>

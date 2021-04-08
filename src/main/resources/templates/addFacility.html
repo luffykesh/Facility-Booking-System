@@ -18,27 +18,28 @@
 
     <form action="/facility" modelAttribute="facility" method="POST">
         <label>Facility Name:</label>
-        <input type="text" name="name"/><br/>
+        <input type="text" name="name" required/><br/>
         <br/>
         <label>Description:</label>
         <textarea
                 name="description"
                 rows="5"
                 cols="50"
-                placeholder="Text"></textarea><br/><br/>
+                placeholder="Text" required></textarea><br/><br/>
         <label>Location:</label>
-        <input type="text" name="location"/><br/><br/>
+        <input type="text" name="location" required/><br/><br/>
         <label>Max occupancy per slot:</label>
-        <input type="text" name="occupancy"/><br/><br/>
+        <input type="text" name="occupancy" required/><br/><br/>
         <label>Facility Manager:</label>
         <input
                 type="text"
                 name="managerEmail"
-                placeholder="Email"/><br/><br/>
-        <label>Time slot duration</label>
+                placeholder="Email" required/><br/><br/>
+        <label>Time slot duration(minutes)</label>
         <input
                 type="text"
                 name="timeSlot"
+                required
         /><br/><br/>
         <input type="checkbox" name="active"/>
         <label>Active</label><br/><br/>
