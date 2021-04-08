@@ -161,13 +161,13 @@ public class UserController {
                 + "<p><a href=\"%s\">Verify Account</a></p>";
         addAndEmailUserToken(user.getEmail(),request,content,link);
         model.addAttribute("message", "User added successfully");
-        return "/user_registration_form";
+        return "user_registration_form";
     }
 
     @GetMapping("/display_users")
     public String showUsers(Model model){
         model.addAttribute("users",userService.find());
-        return "/display_users";
+        return "display_users";
     }
 
     @GetMapping("/delete/{id}")
