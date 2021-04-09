@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking View</title>
+</head>
+<body>
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
+<table border="1">
+    <tr>
+        <th>facilityId</th>
+        <th>UserId</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+    </tr>
+    <tr th:each = "booking: ${bookings}">
+        <td th:text="${booking.facilityId}"></td>
+        <td th:text="${booking.userId}"></td>
+        <td th:text="${booking.startTime}"></td>
+        <td th:text="${booking.endTime}"></td>
+        <td th:text="${booking.status}"></td>
+
+        <div th:if="${booking.status.toString() == 'CONFIRMED'}">
+        <form method="post" th:action="@{/booking/{id}/cancel (id =${booking.id})}">
+            <td><input type="submit" value="Cancel Booking"/></td>
+        </form>
+        </div>
+        <div th:if="${booking.status.toString() == 'APPROVAL_PENDING' and isManager}">
+            <form method="post" th:action="@{/booking/{id}/approve (id =${booking.id})}">
+                <td><input type="submit" value="Approve"/></td>
+            </form>
+            <form method="post" th:action="@{/booking/{id}/deny (id =${booking.id})}">
+                <td><input type="submit" value="Deny"/></td>
+            </form>
+        </div>
+    </tr>
+    <div th:if="${isManager}">
+        <a th:href="@{/facility/display_manager_facility}">Home</a>
+    </div>
+    <div th:if="!${isManager}">
+        <a th:href="@{/facility}">home</a>
+    </div>
+</table>
+</body>
+</html>

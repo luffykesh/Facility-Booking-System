@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Update Facility</title>
+</head>
+
+<body>
+
+        <form th:action="@{/logout}">
+            <input  type="submit" value="Logout" class="button">
+        </form>
+<form th:action="@{/facility/update/} + ${id}" modelAttribute="facility" method="POST" >
+    <label>Facility Name:</label>
+    <input type="text" name="name" th:value="${name}"/><br/>
+    <br/>
+    <label>Description:</label>
+    <textarea
+            name="description"
+            rows="5"
+            cols="50"
+            th:text="${description}"></textarea><br/><br/>
+    <label>Location:</label>
+    <input type="text" name="location" th:value="${location}"/><br/><br/>
+    <input
+            type="hidden"
+            name="managerEmail"
+            placeholder="Email" th:value="${manager}"/><br/><br/>
+    <label>Max occupancy per slot:</label>
+    <input type="text" name="occupancy" th:value="${occupancy}"/><br/><br/>
+    <label>Time slot duration</label>
+    <input
+            type="text"
+            name="timeSlot"
+            th:value="${timeslot}"
+    /><br/><br/>
+    <input type="checkbox" name="active" th:checked="${active} ? 'checked'"/>
+    <label>Active</label><br/><br/>
+    <input type="checkbox" name="approvalRequired" th:checked="${approvalRequired} ? 'checked'"/>
+    <label>Approval Required</label><br/><br/>
+
+    <input type="submit" value="Update"/> <br/><br/>
+    <a th:href="@{/facility/display_manager_facility}">home</a>
+</form>
+</body>
+</html>

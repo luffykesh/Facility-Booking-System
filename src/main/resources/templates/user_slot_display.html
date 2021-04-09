@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Slot Display</title>
+</head>
+
+<body>
+<form th:action="@{/logout}">
+    <input  type="submit" value="Logout" class="button">
+</form>
+    <label>Facility Name:</label>
+    <input type="text" name="name" th:value="${facility.name}" readonly/><br/>
+    <br/>
+    <label>Description:</label>
+    <textarea
+            name="description"
+            rows="5"
+            cols="50"
+            th:text="${facility.description}" readonly></textarea><br/><br/>
+    <label>Location:</label>
+    <input type="text" name="location" th:value="${facility.location}" readonly/><br/><br/>
+    <label>Max occupancy per slot:</label>
+    <input type="text" name="occupancy" th:value="${facility.occupancy}" readonly/><br/><br/>
+    <label>Time slot duration</label>
+    <input
+            type="text"
+            name="timeSlot"
+            th:value="${facility.timeSlot}" readonly/><br/><br/>
+
+    <form modelAttribute="facility" th:action="@{/slot}" method="get">
+        <input type="hidden" name="facility_id" th:value="${id}">
+        <input type="date" name="date"> <br><br>
+        <input type="submit" value="Find slot"/> <br/><br/>
+    </form> <br><br>
+    <a th:href="@{/facility}">home</a><br><br>
+    <table border="1">
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Total Seats</th>
+            <th>Available Seats</th>
+        </tr>
+        <tr th:each = "slot: ${slotList}">
+            <td th:text="${slot.getStartTime()}"></td>
+            <td th:text="${slot.endTime}"></td>
+            <td th:text="${slot.totalSeats}"></td>
+            <td th:text="${slot.availableSeats}"></td>
+            <form method="post" th:action="@{/booking?slot_id=} + ${slot.id}">
+                <td><input type="submit" value="Book now"/></td>
+            </form>
+<!--            <td><a th:href="@{booking/{id} (id=${user.id})}">Delete</a></td>-->
+        </tr>
+    </table>
+
+</body>
+</html>

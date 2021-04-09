@@ -1,0 +1,3 @@
+name,email,role,bannerId
+Manager-2,rushikesh.patel.dal+manager2@gmail.com,MANAGER,B123
+Test-User, rushikesh.patel.dal+test@gmail.com,USER,B00TESTUSER

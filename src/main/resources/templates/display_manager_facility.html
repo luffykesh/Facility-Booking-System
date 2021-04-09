@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet", type="text/css" href="/css/admin_dashboard_style.css">
+    <title>Manager Dashboard</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{js/manager_dashboard_JS.js}"></script>
+
+</head>
+<body>
+<div th:action="@{/facility/display_manager_facility}" method="post" class="header">
+    <h1>Manager facility list</h1>
+</div>
+<div class="row">
+    <div class="column side">
+        <table>
+
+            <tr>
+                <td>
+                    <button onclick="displayFacility()" class="button">Facility</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="@{/manager_dashboard}">home</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form th:action="@{/logout}">
+                        <input  type="submit" value="Logout" class="button">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="column middle">
+        <table border="1">
+            <tr>
+                <th>name</th>
+                <th>description</th>
+                <th>location</th>
+                <th>occupancy</th>
+                <th>Duration</th>
+                <th>Active</th>
+                <th>Approval Required</th>
+            </tr>
+            <tr th:each = "facility: ${facility}">
+                <td th:text="${facility.name}"></td>
+                <td th:text="${facility.description}"></td>
+                <td th:text="${facility.location}"></td>
+                <td th:text="${facility.occupancy}"></td>
+                <td th:text="${facility.timeSlot}"></td>
+                <td th:text="${facility.active}"></td>
+                <td th:text="${facility.approvalRequired}"></td>
+                <td><a th:href="@{/facility/{id} (id=${facility.id})}">Edit</a></td>
+                <td><a th:href="@{/timing?facility_id={id} (id=${facility.id})}">Edit Timings</a></td>
+                <td><a th:href="@{/booking?facility_id={id} (id=${facility.id})}">Booking History</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

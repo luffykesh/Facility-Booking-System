@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Spring Boot CSV file Application</title>
+</head>
+<body>
+            <h3>Upload the CSV File </h3>
+            <form th:action="@{/user_upload}"  method="post" enctype="multipart/form-data">
+                <input id="singleFileUploadInput" type="file" th:name="file" required />
+                <button type="submit" class="primary submit-btn">Submit</button>
+            </form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet", type="text/css" href="css/admin_dashboard_style.css">
+    <title>Admin Dashboard</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{js/manager_dashboard_JS.js}"></script>
+
+</head>
+<body>
+<div class="header">
+    <h1>Manager Dashboard</h1>
+</div>
+<div class="row">
+    <div class="column side">
+        <h2>General</h2>
+        <table>
+            <tr>
+                <td>
+                    <button onclick="displayFacility()" class="button">Facility</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form th:action="@{/logout}">
+                        <input  type="submit" value="Logout" class="button">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

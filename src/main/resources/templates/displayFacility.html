@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet", type="text/css" href="css/admin_dashboard_style.css">
+    <title>Facility List</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{js/admin_dashboard_JS.js}"></script>
+
+</head>
+<body>
+<div class="header">
+    <h1>Admin facility list</h1>
+</div>
+<div class="row">
+    <div class="column side">
+        <table>
+            <tr>
+                <td><button onclick="displayUsers()"class="button">Users</button></td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="addFacility()" class="button">Add Facility</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form th:action="@{/logout}">
+                        <input  type="submit" value="Logout" class="button">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="@{/admin_dashboard}">home</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="column middle">
+        <table border="1">
+            <tr>
+                <th>name</th>
+                <th>description</th>
+                <th>location</th>
+                <th>managerEmail</th>
+                <th>occupancy</th>
+                <th>timeSlot</th>
+                <th>active</th>
+                <th>approvalRequired</th>
+            </tr>
+            <tr th:each = "facility: ${facilities}">
+                <td th:text="${facility.name}"></td>
+                <td th:text="${facility.description}"></td>
+                <td th:text="${facility.location}"></td>
+                <td th:text="${facility.managerEmail}"></td>
+                <td th:text="${facility.occupancy}"></td>
+                <td th:text="${facility.timeSlot}"></td>
+                <td th:text="${facility.active}"></td>
+                <td th:text="${facility.approvalRequired}"></td>
+                <td><a th:href="@{/facility/{id} (id=${facility.id})}">Edit</a></td>
+                <td><a th:href="@{/facility/delete/{id} (id=${facility.id})}">Delete</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

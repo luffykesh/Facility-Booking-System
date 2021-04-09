@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Facility Management</title>
+        <link rel="stylesheet", type="text/css" href="css/logincss.css">
+    </head>
+    <body>
+        <div class="log-form">
+        <!-- <div> -->
+            <div th:if="${param.error}" style="color:red;">
+                Invalid credentials or user not verified.
+            </div>
+            <div th:if="${param.logout}" style="color:green;">
+                You have been logged out.
+            </div>
+            <h2>Login to your account</h2>
+            <form modelAttribute="loginData" method="POST" action="login">
+                <input type="text" name="username" placeholder="email"/>
+                <input type="password" name="password" placeholder="password"/>
+                <a th:href="@{/forgot_password}" style="color:#1fb5bf;">Forgot Password</a></br></br>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <link rel="stylesheet", type="text/css" href="css/admin_dashboard_style.css">
+    <title>Admin Dashboard</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{js/admin_dashboard_JS.js}"></script>
+
+  </head>
+  <body>
+    <div class="header">
+      <h1>Admin Dashboard</h1>
+    </div>
+    <div class="CSV">
+      <table>
+        <tr>
+          <td class="addUser">
+            <form
+              action="/user_upload"
+              method="post"
+              enctype="multipart/form-data">
+              <input type="file" th:name="file" required />
+              <button type="submit" class="button" onclick="adminUsers()" >upload CSV file</button>
+            </form>
+          </td>
+          <td class="addUser">
+            <button  type="submit" onclick="userRegistration()" class="button">
+              Add User
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="row">
+      <div class="column side">
+        <h2>General</h2>
+        <table>
+          <tr>
+            <td><button onclick="displayUsers()"class="button">Users</button></td>
+          </tr>
+          <tr>
+            <td>
+              <button onclick="adminFacility()" class="button">Facility</button>
+            </td>
+          </tr>
+          <tr>
+          <td>
+            <form th:action="@{/logout}">
+              <input  type="submit" value="Logout" class="button">
+            </form>
+          </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
