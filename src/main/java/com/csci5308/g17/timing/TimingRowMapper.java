@@ -26,6 +26,4 @@ public class TimingRowMapper implements RowMapper<Timing> {
 
         return timing;
     }
-
-
 }

@@ -30,7 +30,7 @@ public class UserController {
     }
 
     private void addAndEmailUserToken(String email,HttpServletRequest request,String content,String link){
-        String serverUrl=getURL(request);
+        String serverUrl=getServerUrl(request);
         try {
             String token = userService.setUserToken(email);
             String resetPasswordLink = String.format("%s/%s/%s", serverUrl,link,token);
@@ -43,20 +43,15 @@ public class UserController {
         }
     }
 
-    private String getURL(HttpServletRequest request){
+    private String getServerUrl(HttpServletRequest request){
         String serverUrl = String.format(
                 "%s://%s:%d",
                 request.getScheme(), request.getServerName(), request.getServerPort());
         return serverUrl;
     }
 
-    @GetMapping("/user_upload")
-    public String userCSVUploadForm(){
-        return "upload";
-    }
-
     @PostMapping("/user_upload")
-    public String userCSVData(@RequestParam(name="file") MultipartFile file,HttpServletRequest request,Model model) throws IOException {
+    public String userCSVUpload(@RequestParam(name="file") MultipartFile file,HttpServletRequest request,Model model) throws IOException {
         if(csvService.isCSVFormat(file)) {
             List<User> userList = csvService.readCSV(file.getInputStream());
             userService.addAll(userList);
@@ -105,7 +100,7 @@ public class UserController {
     }
 
     @PostMapping("/forgot_password")
-    public String processPassword(@RequestParam(name="email") String email, Model model,HttpServletRequest request) {
+    public String processForgetPassword(@RequestParam(name="email") String email, Model model,HttpServletRequest request) {
         String link="reset_password";
         String content="<p>Hello,</p>"
                 + "<p>Click the link below to reset your password:</p>"
@@ -153,7 +148,7 @@ public class UserController {
     }
 
     @PostMapping("/user_registration_form")
-    public String processForm(@ModelAttribute("user") User user,Model model,HttpServletRequest request) {
+    public String processUserForm(@ModelAttribute("user") User user,Model model,HttpServletRequest request) {
         userService.save(user);
         String link="verification_form";
         String content="<p>Hello,</p>"
@@ -166,12 +161,12 @@ public class UserController {
 
     @GetMapping("/display_users")
     public String showUsers(Model model){
-        model.addAttribute("users",userService.find());
+        model.addAttribute("users",userService.getAllUsers());
         return "display_users";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteFacility(@PathVariable(value="id") int id) {
+    public String deleteUser(@PathVariable(value="id") int id) {
         this.userService.deleteUser(id);
         return "redirect:/display_users";
     }

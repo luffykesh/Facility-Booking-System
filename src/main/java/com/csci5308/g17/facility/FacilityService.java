@@ -10,7 +10,6 @@ public class FacilityService implements IFacilityService {
     private static FacilityService instance;
     private final IFacilityRepository facilityRepo;
 
-
     public FacilityService(IFacilityRepository facilityRepo) {
         this.facilityRepo = facilityRepo;
     }
@@ -34,17 +33,14 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public List<Facility> findAll() {
-
-        List<Facility> facilityList = this.facilityRepo.findAll();
+    public List<Facility> getAllFacilities() {
+        List<Facility> facilityList = this.facilityRepo.getAllFacilities();
         return facilityList;
     }
 
     @Override
     public void updateFacility(int id, Facility facility) {
-
         this.facilityRepo.updateFacility(id, facility);
-
     }
 
     @Override

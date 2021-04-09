@@ -7,8 +7,6 @@ public interface IUserRepository {
 
     User getUserByEmail(String email);
 
-    Integer count();
-
     User getUserByToken(String token);
 
     void save(User u);
@@ -20,6 +18,8 @@ public interface IUserRepository {
     void clearUserToken(Integer userId);
 
     void setVerifiedFlag(Integer userId, Boolean flag);
-    List<User> findAll();
-    void deleteUser(int id);
+
+    List<User> getAllUsers();
+
+    void deleteUser(Integer id);
 };

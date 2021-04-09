@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CurrentUserService {
+public class CurrentUserService implements ICurrentUserService {
 
     private IUserService userService;
     private static CurrentUserService instance;

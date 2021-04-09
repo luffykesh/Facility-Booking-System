@@ -7,7 +7,7 @@ public interface IFacilityService {
 
     void save(Facility facility);
 
-    List<Facility> findAll();
+    List<Facility> getAllFacilities();
 
     void updateFacility(int id, Facility facility);
 

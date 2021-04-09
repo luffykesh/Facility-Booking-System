@@ -41,11 +41,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public long getUserCount() {
-        return this.userRepo.count();
-    }
-
-    @Override
     public User getUserByEmail(String email) {
         return userRepo.getUserByEmail(email);
     }
@@ -137,11 +132,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> find(){
-        List<User> user=this.userRepo.findAll();
+    public List<User> getAllUsers(){
+        List<User> user=this.userRepo.getAllUsers();
         return user;
 
     }
+
     @Override
     public void deleteUser(int id) {
         userRepo.deleteUser(id);

@@ -47,8 +47,9 @@ class FacilityServiceTest {
         facility.setTimeSlot(30);
         facility.setOccupancy(20);
 
+        Mockito.doNothing().when(facilityRepository).save(facility);
         facilityService.save(facility);
-        Assertions.assertNotNull(facility);
+        Mockito.verify(facilityRepository, Mockito.times(1)).save(facility);
     }
 
     @Test
@@ -56,13 +57,13 @@ class FacilityServiceTest {
         FacilityRepository facilityRepository = Mockito.mock(FacilityRepository.class);
         FacilityService facilityService = new FacilityService(facilityRepository);
 
-        Facility fac = new Facility();
-        List<Facility> facility = new ArrayList<Facility>();
-        facility.add(fac);
-        Mockito.when(facilityService.findAll()).thenReturn(facility);
-        Mockito.when(facilityRepository.findAll()).thenReturn(facility);
-        List<Facility> returnedFacility = facilityRepository.findAll();
-        Assertions.assertTrue(returnedFacility.equals(facility));
+        Facility facility = new Facility();
+        List<Facility> facilities = new ArrayList<Facility>();
+        facilities.add(facility);
+        Mockito.when(facilityService.getAllFacilities()).thenReturn(facilities);
+        Mockito.when(facilityRepository.getAllFacilities()).thenReturn(facilities);
+        List<Facility> returnedFacility = facilityRepository.getAllFacilities();
+        Assertions.assertTrue(returnedFacility.equals(facilities));
     }
 
     @Test
@@ -80,6 +81,7 @@ class FacilityServiceTest {
         facility.setTimeSlot(30);
         facility.setOccupancy(20);
 
+        Mockito.doNothing().when(facilityRepository).updateFacility(id, facility);
         facilityService.updateFacility(id,facility);
         Assertions.assertNotNull(facility);
     }

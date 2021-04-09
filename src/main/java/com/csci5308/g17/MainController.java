@@ -15,13 +15,14 @@ public class MainController {
     public String getAdminDashboard(){
         return "admin_dashboard";
     }
+
     @GetMapping("manager_dashboard")
     public String getManagerDashboard(){
         return "manager_dashboard";
     }
+
     @GetMapping("/user_dashboard")
     public String getUserDashboard(){
         return "user_dashboard";
     }
-
 }

@@ -1,6 +1,7 @@
 package com.csci5308.g17.facility;
 
 import com.csci5308.g17.auth.CurrentUserService;
+import com.csci5308.g17.auth.ICurrentUserService;
 import com.csci5308.g17.user.IUserService;
 import com.csci5308.g17.user.User;
 import com.csci5308.g17.user.UserService;
@@ -17,7 +18,7 @@ public class FacilityController {
 
     private final IFacilityService facilityService;
     private final IUserService userService;
-    private final CurrentUserService currentUserService;
+    private final ICurrentUserService currentUserService;
     public FacilityController() {
 
         facilityService = FacilityService.getInstance();
@@ -69,7 +70,7 @@ public class FacilityController {
     }
 
     @PostMapping()
-    public String save(@ModelAttribute("facility") FormFacility formFacility, Model model) {
+    public String addFacility(@ModelAttribute("facility") FormFacility formFacility, Model model) {
         User u = userService.getUserByEmail(formFacility.getManagerEmail());
 
         if (formFacility.getActive() == null) {
@@ -94,8 +95,8 @@ public class FacilityController {
     }
 
     @GetMapping()
-    public String findAll(Model model) {
-        List<Facility> facilityList = this.facilityService.findAll();
+    public String getAllFacilities(Model model) {
+        List<Facility> facilityList = this.facilityService.getAllFacilities();
         List<FormFacility> formFacilityList = new ArrayList<FormFacility>();
 
         for(Facility f1 : facilityList) {
@@ -150,7 +151,6 @@ public class FacilityController {
         else {
             return "redirect:/facility";
         }
-
     }
 
     @GetMapping(value = "/delete/{id}")

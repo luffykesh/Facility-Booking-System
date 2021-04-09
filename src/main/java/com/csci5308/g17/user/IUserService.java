@@ -4,8 +4,6 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUserService extends UserDetailsService {
-    long getUserCount();
-
     User getUserByEmail(String email);
 
     User getUserById(Integer Id);
@@ -26,7 +24,7 @@ public interface IUserService extends UserDetailsService {
 
     void verifyUser(Integer id);
 
-    List<User> find();
+    List<User> getAllUsers();
 
     public void deleteUser(int id);
 }
